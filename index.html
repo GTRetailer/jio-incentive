@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Incentive Calculator for Retailer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img.logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 150px;
+    }
+    h2 {
+      text-align: center;
+      color: #d9272e;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ccc;
+    }
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      background: #eee;
+      border: 1px solid #ccc;
+      border-bottom: none;
+    }
+    .tab.active {
+      background: #fff;
+      border-bottom: 2px solid #fff;
+      font-weight: bold;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .section-title {
+      font-weight: bold;
+      margin: 20px 0 10px;
+      font-size: 18px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+    }
+    .sim-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .sim-group select, .sim-group input {
+      flex: 1;
+    }
+    #calculateBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    #summary {
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+    .next-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/3/3e/Jio_Logo.png" alt="Jio Logo" />
+  <h2>Incentive Calculator for Retailer</h2>
+
+  <div class="tabs">
+    <div class="tab active" onclick="openTab(event, 'mobility')">Mobility</div>
+    <div class="tab" onclick="openTab(event, 'home')">Home</div>
+    <div class="tab" onclick="openTab(event, 'devices')">Devices</div>
+  </div>
+
+  <!-- Mobility Tab -->
+  <div class="tab-content active" id="mobility">
+    <h3 class="section-title">SIM Activation</h3>
+    <div class="sim-group">
+      <select class="sim-plan">
+        <option value="">Select Plan</option>
+        <option value="299">₹299</option>
+        <option value="349">₹349</option>
+      </select>
+      <input type="number" class="sim-qty" placeholder="Qty" min="0">
+    </div>
+    <div class="sim-group">
+      <select class="sim-plan">
+        <option value="">Select Plan</option>
+        <option value="299">₹299</option>
+        <option value="349">₹349</option>
+      </select>
+      <input type="number" class="sim-qty" placeholder="Qty" min="0">
+    </div>
+
+    <h3 class="section-title">MNP Activation</h3>
+    <div class="sim-group">
+      <select class="mnp-plan">
+        <option value="">Select Plan</option>
+        <option value="299">₹299</option>
+        <option value="349">₹349</option>
+      </select>
+      <input type="number" class="mnp-qty" placeholder="Qty" min="0">
+    </div>
+    <div class="sim-group">
+      <select class="mnp-plan">
+        <option value="">Select Plan</option>
+        <option value="299">₹299</option>
+        <option value="349">₹349</option>
+      </select>
+      <input type="number" class="mnp-qty" placeholder="Qty" min="0">
+    </div>
+
+    <button class="next-btn" onclick="document.querySelector('.tab:nth-child(2)').click()">Next</button>
+  </div>
+
+  <!-- Home Tab -->
+  <div class="tab-content" id="home">
+    <h3 class="section-title">AirFiber Booking</h3>
+    <div class="sim-group">
+      <label for="booking1111">₹1111 Booking</label>
+      <input type="number" id="booking1111" min="0" value="0">
+    </div>
+    <div class="sim-group">
+      <label for="booking2222">₹2222 Booking</label>
+      <input type="number" id="booking2222" min="0" value="0">
+    </div>
+    <div class="sim-group">
+      <label for="bookingUnlimited">Unlimited Offer Booking</label>
+      <input type="number" id="bookingUnlimited" min="0" value="0">
+    </div>
+
+    <h3 class="section-title">Retailer Type</h3>
+    <div class="sim-group">
+      <select id="retailerTypeHome">
+        <option value="jpr">JPR</option>
+        <option value="non-jpr">Non-JPR</option>
+      </select>
+    </div>
+
+    <button class="next-btn" onclick="document.querySelector('.tab:nth-child(3)').click()">Next</button>
+  </div>
+
+  <!-- Devices Tab -->
+  <div class="tab-content" id="devices">
+    <h3 class="section-title">JioBharat Phone Sales</h3>
+    <div class="sim-group">
+      <label for="jbV4">JioBharat V4</label>
+      <input type="number" id="jbV4" min="0" value="0">
+    </div>
+    <div class="sim-group">
+      <label for="jbB2">JioBharat B2</label>
+      <input type="number" id="jbB2" min="0" value="0">
+    </div>
+    <div class="sim-group">
+      <label for="jbJ1">JioBharat J1</label>
+      <input type="number" id="jbJ1" min="0" value="0">
+    </div>
+
+    <h3 class="section-title">JioBharat New SIM Activation</h3>
+    <div class="sim-group">
+      <select class="jb-sim-plan">
+        <option value="">Select Plan</option>
+        <option value="FR">FR 123 / 234</option>
+        <option value="RF">RF 1234</option>
+      </select>
+      <input type="number" class="jb-sim-qty" placeholder="Qty" min="0">
+    </div>
+    <div class="sim-group">
+      <select class="jb-sim-plan">
+        <option value="">Select Plan</option>
+        <option value="FR">FR 123 / 234</option>
+        <option value="RF">RF 1234</option>
+      </select>
+      <input type="number" class="jb-sim-qty" placeholder="Qty" min="0">
+    </div>
+
+    <h3 class="section-title">JioBharat MNP Activation</h3>
+    <div class="sim-group">
+      <select class="jb-mnp-plan">
+        <option value="">Select Plan</option>
+        <option value="FR123">FR 123 / 234</option>
+        <option value="FR1234">FR 1234</option>
+      </select>
+      <input type="number" class="jb-mnp-qty" placeholder="Qty" min="0">
+    </div>
+    <div class="sim-group">
+      <select class="jb-mnp-plan">
+        <option value="">Select Plan</option>
+        <option value="FR123">FR 123 / 234</option>
+        <option value="FR1234">FR 1234</option>
+      </select>
+      <input type="number" class="jb-mnp-qty" placeholder="Qty" min="0">
+    </div>
+
+    <button id="calculateBtn">Calculate Incentive</button>
+    <div id="summary"></div>
+  </div>
+</div>
+
+<script>
+  function openTab(evt, tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+  }
+
+  document.getElementById('calculateBtn').addEventListener('click', function () {
+    let total = 0;
+
+    document.querySelectorAll('.sim-plan').forEach((el, i) => {
+      const qty = parseInt(document.querySelectorAll('.sim-qty')[i].value) || 0;
+      if (el.value === '299') total += qty * 122.45;
+      else if (el.value === '349') total += qty * 132.65;
+    });
+
+    document.querySelectorAll('.mnp-plan').forEach((el, i) => {
+      const qty = parseInt(document.querySelectorAll('.mnp-qty')[i].value) || 0;
+      if (el.value === '299') total += qty * 209;
+      else if (el.value === '349') total += qty * 234;
+    });
+
+    const type = document.getElementById('retailerTypeHome').value;
+    const qty1111 = parseInt(document.getElementById('booking1111').value) || 0;
+    const qty2222 = parseInt(document.getElementById('booking2222').value) || 0;
+    const qtyUnl = parseInt(document.getElementById('bookingUnlimited').value) || 0;
+
+    total += qty1111 * 96;
+    total += qty2222 * (type === 'jpr' ? 200 : 96);
+    total += qtyUnl * 120;
+
+    total += (parseInt(document.getElementById('jbV4').value) || 0) * 125;
+    total += (parseInt(document.getElementById('jbB2').value) || 0) * 160;
+    total += (parseInt(document.getElementById('jbJ1').value) || 0) * 200;
+
+    document.querySelectorAll('.jb-sim-plan').forEach((el, i) => {
+      const qty = parseInt(document.querySelectorAll('.jb-sim-qty')[i].value) || 0;
+      if (el.value === 'FR') total += qty * 18;
+      else if (el.value === 'RF') total += qty * 48;
+    });
+
+    document.querySelectorAll('.jb-mnp-plan').forEach((el, i) => {
+      const qty = parseInt(document.querySelectorAll('.jb-mnp-qty')[i].value) || 0;
+      if (el.value === 'FR123') total += qty * 96;
+      else if (el.value === 'FR1234') total += qty * 193;
+    });
+
+    document.getElementById('summary').innerHTML = `<strong>Total Incentive:</strong> ₹${total.toFixed(2)}`;
+  });
+</script>
+
+</body>
+</html>
