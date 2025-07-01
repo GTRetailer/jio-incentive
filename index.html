@@ -1,10 +1,10 @@
-<!-- VERSION C4.1 -->
+<!-- VERSION C8 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Incentive Calculator For Retailers - C4.1</title>
+  <title>Jio Partner Incentive Calculator - C8</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,6 +15,7 @@
     h2 {
       color: #0b57d0;
       text-align: center;
+
     }
     .emboss-line {
       height: 2px;
@@ -114,19 +115,19 @@
 </head>
 <body>
 
-<h2>Incentive Calculator For Retailers</h2>
+<h2>Jio Partner Incentive Calculator</h2>
 <div class="emboss-line"></div>
 
 <div class="section">
   <h3>1. MNP Activation</h3>
-  <div class="row"><label>1a. ₹299 Plan</label><input type="number" id="mnp299" value="0" min="0" max="999"></div>
-  <div class="row"><label>1b. ₹349 Plan</label><input type="number" id="mnp349" value="0" min="0" max="999"></div>
+  <div class="row"><label>1a. ₹299 Plan</label><input type="number" id="mnp299" min="0" max="999"></div>
+  <div class="row"><label>1b. ₹349 Plan</label><input type="number" id="mnp349" min="0" max="999"></div>
 </div>
 
 <div class="section">
-  <h3>2. SIM Activation</h3>
-  <div class="row"><label>2a. ₹299 Plan</label><input type="number" id="sim299" value="0" min="0" max="999"></div>
-  <div class="row"><label>2b. ₹349 Plan</label><input type="number" id="sim349" value="0" min="0" max="999"></div>
+  <h3>2. New SIM Activation</h3>
+  <div class="row"><label>2a. ₹299 Plan</label><input type="number" id="sim299" min="0" max="999"></div>
+  <div class="row"><label>2b. ₹349 Plan</label><input type="number" id="sim349" min="0" max="999"></div>
 </div>
 
 <div class="section">
@@ -143,29 +144,31 @@
 
 <div class="section">
   <h3>4. JAF Bookings</h3>
-  <div class="row"><label>4a. ₹1111 Booking</label><input type="number" id="jaf1111" value="0" min="0" max="999"></div>
-  <div class="row"><label>4b. ₹2222 Booking</label><input type="number" id="jaf2222" value="0" min="0" max="999"></div>
-  <div class="row"><label>4c. Unlimited Offer</label><input type="number" id="jafUnlimited" value="0" min="0" max="999"></div>
+  <div class="row"><label>4a. ₹1111 Booking</label><input type="number" id="jaf1111" min="0" max="999"></div>
+  <div class="row"><label>4b. ₹2222 Booking</label><input type="number" id="jaf2222" min="0" max="999"></div>
+  <div class="row"><label>4c. Unlimited Offer</label><input type="number" id="jafUnlimited" min="0" max="999"></div>
 </div>
 
 <div class="section">
-  <h3>5. JioBharat Sales - Model</h3>
-  <div class="row"><label>5a. V4</label><input type="number" id="jbV4" value="0" min="0" max="999"></div>
-  <div class="row"><label>5b. B2</label><input type="number" id="jbB2" value="0" min="0" max="999"></div>
-  <div class="row"><label>5c. J1</label><input type="number" id="jbJ1" value="0" min="0" max="999"></div>
+  <h3>5. JioBharat Sales</h3>
+  <div class="row"><label>5a. V4 (MOP - 799)</label><input type="number" id="jbV4" min="0" max="999"></div>
+  <div class="row"><label>5b. B2 (MOP - 1399)</label><input type="number" id="jbB2" min="0" max="999"></div>
+  <div class="row"><label>5c. J1 (MOP - 1799)</label><input type="number" id="jbJ1" min="0" max="999"></div>
 </div>
 
 <div class="section">
-  <h3>6. JioBharat – New SIM</h3>
-  <div class="row"><label>6a. FR 123/234</label><input type="number" id="jbNewSIM123" value="0" min="0" max="999"></div>
-  <div class="row"><label>6b. FR 1234</label><input type="number" id="jbNewSIM1234" value="0" min="0" max="999"></div>
+  <h3>6. JioBharat – MNP</h3>
+  <div class="row"><label>6a. FR 123/234</label><input type="number" id="jbMnp123" min="0" max="999"></div>
+  <div class="row"><label>6b. FR 1234</label><input type="number" id="jbMnp1234" min="0" max="999"></div>
 </div>
 
 <div class="section">
-  <h3>7. JioBharat – MNP</h3>
-  <div class="row"><label>7a. FR 123/234</label><input type="number" id="jbMnp123" value="0" min="0" max="999"></div>
-  <div class="row"><label>7b. FR 1234</label><input type="number" id="jbMnp1234" value="0" min="0" max="999"></div>
+  <h3>7. JioBharat – New SIM</h3>
+  <div class="row"><label>7a. FR 123/234</label><input type="number" id="jbNewSIM123" min="0" max="999"></div>
+  <div class="row"><label>7b. FR 1234</label><input type="number" id="jbNewSIM1234" min="0" max="999"></div>
 </div>
+
+
 
 <button onclick="calculate()">Calculate</button>
 
@@ -187,36 +190,41 @@
 </div>
 
 <script>
+  function get(id) {
+    const value = document.getElementById(id).value;
+    return parseInt(value) || 0; // 🔸 Treat blank as 0
+  }
+
   function calculate() {
     const retailer = document.getElementById("retailerType").value;
-    const get = id => parseInt(document.getElementById(id).value) || 0;
     let total = 0, breakdown = [];
 
     const mnp299 = get("mnp299");
     const mnp349 = get("mnp349");
+    const sim349 = get("sim349");
     const totalMNP = mnp299 + mnp349;
 
     let mnp = mnp299 * 209 + mnp349 * 234;
     breakdown.push(["MNP Activation", mnp]); total += mnp;
 
-    let sim = get("sim299") * 122.45 + get("sim349") * 132.65;
-    breakdown.push(["SIM Activation", sim]); total += sim;
+    let sim = get("sim299") * 122.45 + sim349 * 132.65;
+    breakdown.push(["New SIM Activation", sim]); total += sim;
 
     let jaf = get("jaf1111") * 96;
     jaf += get("jaf2222") * (retailer === "JPR" ? 200 : 96);
-    jaf += get("jafUnlimited") * 20;
+    jaf += get("jafUnlimited") * 120;
     breakdown.push(["JAF Booking", jaf]); total += jaf;
 
     let sales = get("jbV4") * 125 + get("jbB2") * 160 + get("jbJ1") * 200;
     breakdown.push(["JioBharat Sales", sales]); total += sales;
 
     let newSim = get("jbNewSIM123") * 18 + get("jbNewSIM1234") * 48;
-    breakdown.push(["JioBharat New SIM", newSim]); total += newSim;
+    breakdown.push(["JB New SIM", newSim]); total += newSim;
 
     let jbMnp = get("jbMnp123") * 96 + get("jbMnp1234") * 193;
-    breakdown.push(["JioBharat MNP", jbMnp]); total += jbMnp;
+    breakdown.push(["JB MNP", jbMnp]); total += jbMnp;
 
-    // Bonus 1: MNP Big Hitter
+    // Bonus 1
     let mnpBonus = 0;
     if (totalMNP >= 10 && totalMNP <= 19) mnpBonus = 387;
     else if (totalMNP >= 20 && totalMNP <= 29) mnpBonus = 775;
@@ -226,13 +234,14 @@
     else if (totalMNP >= 150) mnpBonus = 6785;
     total += mnpBonus;
 
-    // Bonus 2: FR 349 Slab
+    // Bonus 2
+    const fr349Total = mnp349 + sim349;
     let fr349Bonus = 0;
-    if (mnp349 >= 5 && mnp349 <= 9) fr349Bonus = mnp349 * 10;
-    else if (mnp349 >= 10) fr349Bonus = mnp349 * 20;
+    if (fr349Total >= 5 && fr349Total <= 9) fr349Bonus = fr349Total * 10;
+    else if (fr349Total >= 10) fr349Bonus = fr349Total * 20;
     total += fr349Bonus;
 
-    // Bonus 3: MNP Booster
+    // Bonus 3
     let M = Math.floor(totalMNP / 3);
     let mnpBoosterPer = 0;
     if (M >= 1 && M <= 3) mnpBoosterPer = 33;
@@ -241,7 +250,7 @@
     let mnpBoosterBonus = 3 * M * mnpBoosterPer;
     total += mnpBoosterBonus;
 
-    // Update UI
+    // UI
     const tbody = document.getElementById("resultTableBody");
     tbody.innerHTML = "";
     breakdown.forEach(([label, value]) => {
