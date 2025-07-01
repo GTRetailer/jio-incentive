@@ -114,7 +114,7 @@
 </head>
 <body>
 
-<h2>Jio Partner Incentive Calculator</h2>
+<h2>Incentive Calculator For Retailers</h2>
 <div class="emboss-line"></div>
 
 <div class="section">
@@ -149,7 +149,7 @@
 </div>
 
 <div class="section">
-  <h3>5. JioBharat Sales</h3>
+  <h3>5. JioBharat Sales - Model</h3>
   <div class="row"><label>5a. V4</label><input type="number" id="jbV4" value="0" min="0" max="999"></div>
   <div class="row"><label>5b. B2</label><input type="number" id="jbB2" value="0" min="0" max="999"></div>
   <div class="row"><label>5c. J1</label><input type="number" id="jbJ1" value="0" min="0" max="999"></div>
@@ -211,10 +211,10 @@
     breakdown.push(["JioBharat Sales", sales]); total += sales;
 
     let newSim = get("jbNewSIM123") * 18 + get("jbNewSIM1234") * 48;
-    breakdown.push(["JB New SIM", newSim]); total += newSim;
+    breakdown.push(["JioBharat New SIM", newSim]); total += newSim;
 
     let jbMnp = get("jbMnp123") * 96 + get("jbMnp1234") * 193;
-    breakdown.push(["JB MNP", jbMnp]); total += jbMnp;
+    breakdown.push(["JioBharat MNP", jbMnp]); total += jbMnp;
 
     // Bonus 1: MNP Big Hitter
     let mnpBonus = 0;
