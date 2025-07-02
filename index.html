@@ -130,6 +130,11 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+    .error-message {
+      color: red;
+      font-size: 11px;
+      margin-left: 6px;
+    }
     .share-btn {
       background-color: #25d366;
       color: white;
@@ -179,8 +184,16 @@
 
 <div class="section">
   <h3>1. MNP Activation</h3>
-  <div class="row"><label>₹299 Plan</label><input type="number" id="mnp299" min="0" max="999"></div>
-  <div class="row"><label>₹349 Plan</label><input type="number" id="mnp349" min="0" max="999"></div>
+  <div class="row">
+    <label>₹299 Plan</label>
+    <input type="number" id="mnp299" min="0" max="999">
+    <span class="error-message" id="err-mnp299"></span>
+  </div>
+  <div class="row">
+    <label>₹349 Plan</label>
+    <input type="number" id="mnp349" min="0" max="999">
+    <span class="error-message" id="err-mnp349"></span>
+  </div>
 </div>
 
 <div class="section">
@@ -380,6 +393,29 @@ function calculate() {
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
+
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.setAttribute('placeholder', '0');
+    input.setAttribute('min', '0');
+    input.setAttribute('step', '1');
+
+    input.addEventListener('input', () => {
+      const val = input.value;
+      const errEl = document.getElementById('err-' + input.id);
+
+      if (val.includes('.')) {
+        input.value = Math.floor(val);
+        errEl.innerText = 'Decimal not allowed';
+      } else if (val < 0) {
+        input.value = 0;
+        errEl.innerText = 'Only positive numbers allowed';
+      } else {
+        errEl.innerText = '';
+      }
+    });
+  });
+  
+  
 </script>
 
 </body>
