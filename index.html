@@ -18,24 +18,24 @@
       text-align: center;
     }
     .instruction {
-      text-align: center;
+      text-align: Left;
       color: #555;
-      font-size: 14px;
+      font-size: 12px;
       margin-top: -10px;
-      margin-bottom: 20px;
+      margin-bottom: 0px;
     }
     .emboss-line {
       height: 2px;
       background: linear-gradient(to right, #e0e0e0, #cfcfcf, #e0e0e0);
       box-shadow: inset 0 1px #fff, inset 0 -1px #aaa;
-      margin: 12px 0 24px;
+      margin: 2px 0 2px;
     }
     .section {
       padding: 12px 0;
       border-bottom: 1px solid #dcdcdc;
     }
     .section h3 {
-      margin-bottom: 12px;
+      margin-bottom: 4px;
       color: #333;
     }
     .row {
@@ -70,10 +70,10 @@
       width: 100%;
     }
     .post-instruction {
-      text-align: center;
+      text-align: Left;
       color: #777;
-      font-size: 13px;
-      margin-top: 8px;
+      font-size: 12px;
+      margin-top: 1px;
     }
     .modal {
       display: none;
@@ -152,7 +152,10 @@
 <body>
 
 <h2>Jio Retailer - Monthly Incentive Calculator</h2>
-<p class="instruction">Please fill in the number of activations/bookings per plan. Leave blank for 0.</p>
+<p class="instruction">*This calculator provides tentative payouts. Final incentives will be as per company system, subject to eligibility and conditions<br>
+*Enter your monthly committed numbers below.
+
+</p>
 <div class="emboss-line"></div>
 
 <div class="section">
@@ -207,14 +210,16 @@
 
 
 <button onclick="calculate()">Calculate</button>
-<p class="post-instruction">Scroll down for your detailed earnings summary.</p>
+<p class="post-instruction">*This calculator provides tentative payouts.<br>
+* Created by GT retailer.
+</p>
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 <div class="modal" id="resultModal">
-  <h3>Total Earning</h3>
+  <h3>Your Total Earning</h3><p class="post-instruction">*This calculator provides tentative payouts</p>
   <table>
     <thead>
-      <tr><th>Section</th><th>Input Count</th><th>Incentive (₹)</th></tr>
+      <tr><th>Section</th><th>Count</th><th>Incentive </th></tr>
     </thead>
     <tbody id="resultTableBody"></tbody>
     <tr class="bonus-row"><td colspan="2">MNP Big Hitter Inc.</td><td id="mnpBonusCell">₹0</td></tr>
@@ -297,7 +302,7 @@ function calculate() {
 
   const entries = [
     ["MNP Activation", get("mnp299") + get("mnp349"), get("mnp299") * 209 + get("mnp349") * 234],
-    ["New SIM Activation", get("sim299") + get("sim349"), get("sim299") * 122.45 + get("sim349") * 132.65],
+    ["New SIM Activation", get("sim299") + get("sim349"), get("sim299") * 122 + get("sim349") * 132],
     ["JAF Booking", get("jaf1111") + get("jaf2222") + get("jafUnlimited"), get("jaf1111") * 96 + get("jaf2222") * 96 + get("jafUnlimited") * 120],
     ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"), get("jbV4") * 125 + get("jbB2") * 160 + get("jbJ1") * 200],
     ["JB MNP", get("jbMnp123") + get("jbMnp1234"), get("jbMnp123") * 96 + get("jbMnp1234") * 193],
