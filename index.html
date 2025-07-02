@@ -1,10 +1,10 @@
-<!-- VERSION C8 -->
+<!-- VERSION C10 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Incentive Calculator - C8</title>
+  <title>Jio Retailer - Monthly Incentive Calculator - C10</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,7 +15,13 @@
     h2 {
       color: #0b57d0;
       text-align: center;
-
+    }
+    .instruction {
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 20px;
     }
     .emboss-line {
       height: 2px;
@@ -62,11 +68,18 @@
       margin-top: 20px;
       width: 100%;
     }
+    .post-instruction {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 8px;
+    }
     .modal {
       display: none;
       position: fixed;
-      top: 10%;
-      left: 10%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 80%;
       background: white;
       border: 1px solid #ccc;
@@ -100,6 +113,16 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+    .share-btn {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      margin-top: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
     @media screen and (max-width: 480px) {
       .row label {
         flex: 1;
@@ -116,6 +139,7 @@
 <body>
 
 <h2>Jio Retailer - Monthly Incentive Calculator</h2>
+<p class="instruction">Please fill in the number of activations/bookings per plan. Leave blank for 0.</p>
 <div class="emboss-line"></div>
 
 <div class="section">
@@ -169,92 +193,101 @@
 </div>
 
 
-
 <button onclick="calculate()">Calculate</button>
+<p class="post-instruction">Scroll down for your detailed earnings summary.</p>
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 <div class="modal" id="resultModal">
-  <h3>Total Incentive Summary</h3>
+  <h3>Total Earning</h3>
   <table>
     <thead>
-      <tr><th>Section</th><th>Incentive (₹)</th></tr>
+      <tr><th>Section</th><th>Input Count</th><th>Incentive (₹)</th></tr>
     </thead>
     <tbody id="resultTableBody"></tbody>
-    <tr class="bonus-row"><td>MNP Big Hitter Inc.</td><td id="mnpBonusCell">₹0</td></tr>
-    <tr class="bonus-row"><td>FR 349 Slab Inc.</td><td id="fr349BonusCell">₹0</td></tr>
-    <tr class="bonus-row"><td>MNP Booster Inc.</td><td id="mnpBoosterCell">₹0</td></tr>
+    <tr class="bonus-row"><td colspan="2">MNP Big Hitter Inc.</td><td id="mnpBonusCell">₹0</td></tr>
+    <tr class="bonus-row"><td colspan="2">FR 349 Slab Inc.</td><td id="fr349BonusCell">₹0</td></tr>
+    <tr class="bonus-row"><td colspan="2">MNP Booster Inc.</td><td id="mnpBoosterCell">₹0</td></tr>
     <tfoot>
-      <tr><th>Total</th><th id="grandTotal">₹0</th></tr>
+      <tr><th colspan="2">Total</th><th id="grandTotal">₹0</th></tr>
     </tfoot>
   </table>
+  <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
 </div>
 
 <script>
+  function closePopup() {
+    document.getElementById("resultModal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+
   function get(id) {
-    const value = document.getElementById(id).value;
-    return parseInt(value) || 0; // 🔸 Treat blank as 0
+    const value = document.getElementById(id)?.value;
+    return parseInt(value) || 0;
   }
 
   function calculate() {
-    const retailer = document.getElementById("retailerType").value;
+    const retailer = document.getElementById("retailerType")?.value;
     let total = 0, breakdown = [];
 
     const mnp299 = get("mnp299");
     const mnp349 = get("mnp349");
+    const sim299 = get("sim299");
     const sim349 = get("sim349");
     const totalMNP = mnp299 + mnp349;
+    const totalSIM = sim299 + sim349;
 
-    let mnp = mnp299 * 209 + mnp349 * 234;
-    breakdown.push(["MNP Activation", mnp]); total += mnp;
+    breakdown.push(["MNP Activation", totalMNP, mnp299 * 209 + mnp349 * 234]);
+    breakdown.push(["New SIM Activation", totalSIM, sim299 * 122.45 + sim349 * 132.65]);
 
-    let sim = get("sim299") * 122.45 + sim349 * 132.65;
-    breakdown.push(["New SIM Activation", sim]); total += sim;
+    const jaf1111 = get("jaf1111");
+    const jaf2222 = get("jaf2222");
+    const jafUnlimited = get("jafUnlimited");
+    const jafTotal = jaf1111 + jaf2222 + jafUnlimited;
+    let jafIncentive = jaf1111 * 96 + jafUnlimited * 120;
+    jafIncentive += jaf2222 * (retailer === "JPR" ? 200 : 96);
+    breakdown.push(["JAF Booking", jafTotal, jafIncentive]);
 
-    let jaf = get("jaf1111") * 96;
-    jaf += get("jaf2222") * (retailer === "JPR" ? 200 : 96);
-    jaf += get("jafUnlimited") * 120;
-    breakdown.push(["JAF Booking", jaf]); total += jaf;
+    const jbV4 = get("jbV4"), jbB2 = get("jbB2"), jbJ1 = get("jbJ1");
+    const jbSalesCount = jbV4 + jbB2 + jbJ1;
+    const jbSalesIncentive = jbV4 * 125 + jbB2 * 160 + jbJ1 * 200;
+    breakdown.push(["JioBharat Sales", jbSalesCount, jbSalesIncentive]);
 
-    let sales = get("jbV4") * 125 + get("jbB2") * 160 + get("jbJ1") * 200;
-    breakdown.push(["JioBharat Sales", sales]); total += sales;
+    const jbMnp123 = get("jbMnp123"), jbMnp1234 = get("jbMnp1234");
+    const jbMnpCount = jbMnp123 + jbMnp1234;
+    const jbMnpIncentive = jbMnp123 * 96 + jbMnp1234 * 193;
+    breakdown.push(["JB MNP", jbMnpCount, jbMnpIncentive]);
 
-    let newSim = get("jbNewSIM123") * 18 + get("jbNewSIM1234") * 48;
-    breakdown.push(["JB New SIM", newSim]); total += newSim;
+    const jbNewSIM123 = get("jbNewSIM123"), jbNewSIM1234 = get("jbNewSIM1234");
+    const jbNewSIMCount = jbNewSIM123 + jbNewSIM1234;
+    const jbNewSIMIncentive = jbNewSIM123 * 18 + jbNewSIM1234 * 48;
+    breakdown.push(["JB New SIM", jbNewSIMCount, jbNewSIMIncentive]);
 
-    let jbMnp = get("jbMnp123") * 96 + get("jbMnp1234") * 193;
-    breakdown.push(["JB MNP", jbMnp]); total += jbMnp;
-
-    // Bonus 1
     let mnpBonus = 0;
     if (totalMNP >= 10 && totalMNP <= 19) mnpBonus = 387;
-    else if (totalMNP >= 20 && totalMNP <= 29) mnpBonus = 775;
-    else if (totalMNP >= 30 && totalMNP <= 59) mnpBonus = 1163;
-    else if (totalMNP >= 60 && totalMNP <= 99) mnpBonus = 2423;
-    else if (totalMNP >= 100 && totalMNP <= 149) mnpBonus = 4846;
+    else if (totalMNP <= 29) mnpBonus = 775;
+    else if (totalMNP <= 59) mnpBonus = 1163;
+    else if (totalMNP <= 99) mnpBonus = 2423;
+    else if (totalMNP <= 149) mnpBonus = 4846;
     else if (totalMNP >= 150) mnpBonus = 6785;
-    total += mnpBonus;
 
-    // Bonus 2
     const fr349Total = mnp349 + sim349;
     let fr349Bonus = 0;
     if (fr349Total >= 5 && fr349Total <= 9) fr349Bonus = fr349Total * 10;
     else if (fr349Total >= 10) fr349Bonus = fr349Total * 20;
-    total += fr349Bonus;
 
-    // Bonus 3
     let M = Math.floor(totalMNP / 3);
     let mnpBoosterPer = 0;
     if (M >= 1 && M <= 3) mnpBoosterPer = 33;
-    else if (M >= 4 && M <= 9) mnpBoosterPer = 48;
+    else if (M <= 9) mnpBoosterPer = 48;
     else if (M >= 10) mnpBoosterPer = 63;
     let mnpBoosterBonus = 3 * M * mnpBoosterPer;
-    total += mnpBoosterBonus;
 
-    // UI
+    total = breakdown.reduce((sum, [, , val]) => sum + val, 0) + mnpBonus + fr349Bonus + mnpBoosterBonus;
+
     const tbody = document.getElementById("resultTableBody");
     tbody.innerHTML = "";
-    breakdown.forEach(([label, value]) => {
-      const row = `<tr><td>${label}</td><td>₹${value.toFixed(2)}</td></tr>`;
+    breakdown.forEach(([label, count, value]) => {
+      const row = `<tr><td>${label}</td><td>${count}</td><td>₹${value.toFixed(2)}</td></tr>`;
       tbody.insertAdjacentHTML("beforeend", row);
     });
 
@@ -267,9 +300,11 @@
     document.getElementById("overlay").style.display = "block";
   }
 
-  function closePopup() {
-    document.getElementById("resultModal").style.display = "none";
-    document.getElementById("overlay").style.display = "none";
+  function shareWhatsApp() {
+    const total = document.getElementById("grandTotal").innerText;
+    const text = `My total Jio Partner earning this month is ${total}.\nCheck your monthly incentive with this Jio Incentive Calculator.`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
   }
 </script>
 
