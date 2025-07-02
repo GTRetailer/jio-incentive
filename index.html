@@ -1,10 +1,10 @@
-<!-- VERSION C11 -->
+<!-- VERSION C13 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Incentive Calculator - C11</title>
+  <title>Jio Retailer - Monthly Incentive Calculator - C13</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
@@ -58,6 +58,23 @@
       border-radius: 4px;
       text-align: right;
     }
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .action-buttons button {
+      flex: 1;
+    }
+    .reset-btn {
+      background-color: #dc3545;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
     button {
       background-color: #28a745;
       color: white;
@@ -66,7 +83,6 @@
       font-size: 16px;
       border-radius: 4px;
       cursor: pointer;
-      margin-top: 20px;
       width: 100%;
     }
     .post-instruction {
@@ -146,6 +162,9 @@
         flex: 0 0 70px;
         font-size: 13px;
       }
+      .action-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -208,8 +227,10 @@
   <div class="row"><label>FR 1234</label><input type="number" id="jbNewSIM1234" min="0" max="999"></div>
 </div>
 
-
-<button onclick="calculate()">Calculate</button>
+<div class="action-buttons">
+  <button onclick="calculate()">Calculate</button>
+  <button class="reset-btn" onclick="resetFields()">Reset</button>
+</div>
 <p class="post-instruction">*This calculator provides tentative payouts.<br>
 * Created by GT retailer.
 </p>
@@ -234,6 +255,12 @@
 </div>
 
 <script>
+function resetFields() {
+  const inputs = document.querySelectorAll("input[type='number']");
+  inputs.forEach(input => input.value = "");
+  document.getElementById("retailerType").selectedIndex = 0;
+}
+
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
   const total = document.getElementById("grandTotal").innerText;
@@ -356,4 +383,5 @@ function calculate() {
 </script>
 
 </body>
+</html>
 </html>
