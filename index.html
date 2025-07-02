@@ -125,6 +125,17 @@
       margin-top: 15px;
       width: 100%;
     }
+    .download-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
     @media screen and (max-width: 480px) {
       .row label {
         flex: 1;
@@ -214,6 +225,7 @@
     </tfoot>
   </table>
   <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
+  <button class="download-btn" onclick="downloadImage()">Download as Image</button>
 </div>
 
 <script>
@@ -222,20 +234,50 @@ function shareWhatsApp() {
   const total = document.getElementById("grandTotal").innerText;
   const message = `My total Jio Partner earning this month is ${total}. Summary below 👇`;
 
-  html2canvas(modal).then(canvas => {
-    canvas.toBlob(function(blob) {
-      const file = new File([blob], "summary.png", { type: "image/png" });
+  const originalMaxHeight = modal.style.maxHeight;
+  const originalOverflow = modal.style.overflow;
+  modal.style.maxHeight = 'none';
+  modal.style.overflow = 'visible';
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          files: [file],
-          text: message
-        });
-      } else {
-        alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
-      }
+  setTimeout(() => {
+    html2canvas(modal).then(canvas => {
+      modal.style.maxHeight = originalMaxHeight;
+      modal.style.overflow = originalOverflow;
+
+      canvas.toBlob(function(blob) {
+        const file = new File([blob], "summary.png", { type: "image/png" });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({
+            files: [file],
+            text: message
+          });
+        } else {
+          alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
+        }
+      });
     });
-  });
+  }, 100);
+}
+
+function downloadImage() {
+  const modal = document.getElementById("resultModal");
+  const originalMaxHeight = modal.style.maxHeight;
+  const originalOverflow = modal.style.overflow;
+  modal.style.maxHeight = 'none';
+  modal.style.overflow = 'visible';
+
+  setTimeout(() => {
+    html2canvas(modal).then(canvas => {
+      modal.style.maxHeight = originalMaxHeight;
+      modal.style.overflow = originalOverflow;
+
+      const link = document.createElement("a");
+      link.download = "incentive-summary.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  }, 100);
 }
 
 function closePopup() {
@@ -249,61 +291,60 @@ function get(id) {
 }
 
 function calculate() {
-  // Mock form values (replace with actual IDs and logic)
-  const mnp299 = get("mnp299"), mnp349 = get("mnp349"), sim299 = get("sim299"), sim349 = get("sim349");
-  const retailer = document.getElementById("retailerType")?.value || "Non-JPR";
-  const jaf1111 = get("jaf1111"), jaf2222 = get("jaf2222"), jafUnlimited = get("jafUnlimited");
-  const jbV4 = get("jbV4"), jbB2 = get("jbB2"), jbJ1 = get("jbJ1");
-  const jbMnp123 = get("jbMnp123"), jbMnp1234 = get("jbMnp1234");
-  const jbNewSIM123 = get("jbNewSIM123"), jbNewSIM1234 = get("jbNewSIM1234");
+  // Placeholder for actual form IDs and calculations
+  const resultBody = document.getElementById("resultTableBody");
+  resultBody.innerHTML = "";
 
-  let total = 0, tbody = document.getElementById("resultTableBody");
-  tbody.innerHTML = "";
+  const entries = [
+    ["MNP Activation", get("mnp299") + get("mnp349"), get("mnp299") * 209 + get("mnp349") * 234],
+    ["New SIM Activation", get("sim299") + get("sim349"), get("sim299") * 122.45 + get("sim349") * 132.65],
+    ["JAF Booking", get("jaf1111") + get("jaf2222") + get("jafUnlimited"), get("jaf1111") * 96 + get("jaf2222") * 96 + get("jafUnlimited") * 120],
+    ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"), get("jbV4") * 125 + get("jbB2") * 160 + get("jbJ1") * 200],
+    ["JB MNP", get("jbMnp123") + get("jbMnp1234"), get("jbMnp123") * 96 + get("jbMnp1234") * 193],
+    ["JB New SIM", get("jbNewSIM123") + get("jbNewSIM1234"), get("jbNewSIM123") * 18 + get("jbNewSIM1234") * 48]
+  ];
 
-  function addRow(label, count, amount) {
+  let total = 0;
+  for (const [label, count, amount] of entries) {
     total += amount;
-    const row = `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
-    tbody.insertAdjacentHTML("beforeend", row);
+    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
   }
 
-  addRow("MNP Activation", mnp299 + mnp349, mnp299 * 209 + mnp349 * 234);
-  addRow("New SIM Activation", sim299 + sim349, sim299 * 122.45 + sim349 * 132.65);
-  const jafAmount = jaf1111 * 96 + jaf2222 * (retailer === "JPR" ? 200 : 96) + jafUnlimited * 120;
-  addRow("JAF Bookings", jaf1111 + jaf2222 + jafUnlimited, jafAmount);
-  addRow("JioBharat Sales", jbV4 + jbB2 + jbJ1, jbV4 * 125 + jbB2 * 160 + jbJ1 * 200);
-  addRow("JB MNP", jbMnp123 + jbMnp1234, jbMnp123 * 96 + jbMnp1234 * 193);
-  addRow("JB New SIM", jbNewSIM123 + jbNewSIM1234, jbNewSIM123 * 18 + jbNewSIM1234 * 48);
-
   // Bonuses
-  const totalMNP = mnp299 + mnp349;
+  let mnpTotal = get("mnp299") + get("mnp349");
+  let sim349 = get("sim349");
+  let mnp349 = get("mnp349");
+
   let mnpBonus = 0;
-  if (totalMNP >= 10 && totalMNP <= 19) mnpBonus = 387;
-  else if (totalMNP >= 20 && totalMNP <= 29) mnpBonus = 775;
-  else if (totalMNP >= 30 && totalMNP <= 59) mnpBonus = 1163;
-  else if (totalMNP >= 60 && totalMNP <= 99) mnpBonus = 2423;
-  else if (totalMNP >= 100 && totalMNP <= 149) mnpBonus = 4846;
-  else if (totalMNP >= 150) mnpBonus = 6785;
-  document.getElementById("mnpBonusCell").innerText = `₹${mnpBonus.toFixed(2)}`;
+  if (mnpTotal >= 10 && mnpTotal <= 19) mnpBonus = 387;
+  else if (mnpTotal >= 20 && mnpTotal <= 29) mnpBonus = 775;
+  else if (mnpTotal >= 30 && mnpTotal <= 59) mnpBonus = 1163;
+  else if (mnpTotal >= 60 && mnpTotal <= 99) mnpBonus = 2423;
+  else if (mnpTotal >= 100 && mnpTotal <= 149) mnpBonus = 4846;
+  else if (mnpTotal >= 150) mnpBonus = 6785;
+
+  document.getElementById("mnpBonusCell").innerText = `₹${mnpBonus}`;
   total += mnpBonus;
 
-  const fr349Total = mnp349 + sim349;
+  let fr349Total = mnp349 + sim349;
   let fr349Bonus = 0;
   if (fr349Total >= 5 && fr349Total <= 9) fr349Bonus = fr349Total * 10;
   else if (fr349Total >= 10) fr349Bonus = fr349Total * 20;
-  document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus.toFixed(2)}`;
+
+  document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
 
-  const M = Math.floor(totalMNP / 3);
-  let mnpBoosterPer = 0;
-  if (M >= 1 && M <= 3) mnpBoosterPer = 33;
-  else if (M >= 4 && M <= 9) mnpBoosterPer = 48;
-  else if (M >= 10) mnpBoosterPer = 63;
-  const mnpBoosterBonus = 3 * M * mnpBoosterPer;
-  document.getElementById("mnpBoosterCell").innerText = `₹${mnpBoosterBonus.toFixed(2)}`;
-  total += mnpBoosterBonus;
+  let M = Math.floor(mnpTotal / 3);
+  let mnpBoosterRate = 0;
+  if (M >= 1 && M <= 3) mnpBoosterRate = 33;
+  else if (M >= 4 && M <= 9) mnpBoosterRate = 48;
+  else if (M >= 10) mnpBoosterRate = 63;
+
+  const mnpBoosterInc = 3 * M * mnpBoosterRate;
+  document.getElementById("mnpBoosterCell").innerText = `₹${mnpBoosterInc}`;
+  total += mnpBoosterInc;
 
   document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
-
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
