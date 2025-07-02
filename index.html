@@ -1,10 +1,10 @@
-<!-- VERSION C12 -->
+<!-- VERSION C11 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Incentive Calculator - C12</title>
+  <title>Jio Retailer - Monthly Incentive Calculator - C11</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
@@ -114,14 +114,7 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
-    .share-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 16px;
-      gap: 12px;
-    }
-    .share-btn, .download-btn {
-      flex: 1;
+    .share-btn {
       background-color: #25d366;
       color: white;
       padding: 10px;
@@ -129,10 +122,19 @@
       border-radius: 6px;
       font-size: 15px;
       cursor: pointer;
-      text-align: center;
+      margin-top: 15px;
+      width: 100%;
     }
     .download-btn {
       background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
     }
     @media screen and (max-width: 480px) {
       .row label {
@@ -143,9 +145,6 @@
       .row select {
         flex: 0 0 70px;
         font-size: 13px;
-      }
-      .share-container {
-        flex-direction: row; /* ✅ Make buttons side-by-side even on mobile */
       }
     }
   </style>
@@ -225,42 +224,60 @@
       <tr><th colspan="2">Total</th><th id="grandTotal">₹0</th></tr>
     </tfoot>
   </table>
-  <div class="share-container">
-    <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
-    <button class="download-btn" onclick="downloadImage()">Download as Image</button>
-  </div>
+  <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
+  <button class="download-btn" onclick="downloadImage()">Download as Image</button>
 </div>
 
 <script>
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
   const total = document.getElementById("grandTotal").innerText;
-  const message = `Your Total earning is ${total}. See summary below 👇`;
+  const message = `My total Jio Partner earning this month is ${total}. Summary below 👇`;
 
-  html2canvas(modal).then(canvas => {
-    canvas.toBlob(function(blob) {
-      const file = new File([blob], "summary.png", { type: "image/png" });
+  const originalMaxHeight = modal.style.maxHeight;
+  const originalOverflow = modal.style.overflow;
+  modal.style.maxHeight = 'none';
+  modal.style.overflow = 'visible';
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          files: [file],
-          text: message
-        });
-      } else {
-        alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
-      }
+  setTimeout(() => {
+    html2canvas(modal).then(canvas => {
+      modal.style.maxHeight = originalMaxHeight;
+      modal.style.overflow = originalOverflow;
+
+      canvas.toBlob(function(blob) {
+        const file = new File([blob], "summary.png", { type: "image/png" });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({
+            files: [file],
+            text: message
+          });
+        } else {
+          alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
+        }
+      });
     });
-  });
+  }, 100);
 }
 
 function downloadImage() {
   const modal = document.getElementById("resultModal");
-  html2canvas(modal).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "incentive-summary.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
+  const originalMaxHeight = modal.style.maxHeight;
+  const originalOverflow = modal.style.overflow;
+  modal.style.maxHeight = 'none';
+  modal.style.overflow = 'visible';
+
+  setTimeout(() => {
+    html2canvas(modal).then(canvas => {
+      modal.style.maxHeight = originalMaxHeight;
+      modal.style.overflow = originalOverflow;
+
+      const link = document.createElement("a");
+      link.download = "incentive-summary.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  }, 100);
 }
 
 function closePopup() {
