@@ -1,16 +1,24 @@
 {
   "en": {
-    "title": "Jiolite - Incentive Calculator",
-    "mnp349": "MNP ₹349",
+    "title": "Jio Retailer - Monthly Incentive Calculator",
+    "goldNote": "💰 WIN A GOLD COIN! 📞 Call Team Jio – Don’t Miss Out!",
+    "disclaimer": "*This calculator provides tentative payouts. Final incentives will be as per company system, subject to eligibility and conditions.",
+    "mnpActivation": "MNP Activation",
     "recharge349": "Recharge ₹349",
+    "recharge349Label": "Recharge ₹349",
     "calculate": "Calculate",
-    "result": "Total Incentive"
+    "reset": "Reset",
+    "totalEarning": "Your Total Earning"
   },
   "hi": {
-    "title": "जिओलाइट - इंसेंटिव कैलकुलेटर",
-    "mnp349": "एमएनपी ₹349",
-    "recharge349": "रिचार्ज ₹349",
-    "calculate": "गणना करें",
-    "result": "कुल इंसेंटिव"
+    "title": "जिओ रिटेलर - मासिक इंसेंटिव कैलकुलेटर",
+    "goldNote": "💰 एक गोल्ड कॉइन जीतें! 📞 टीम जिओ को कॉल करें – मौका न चूकें!",
+    "disclaimer": "*यह कैलकुलेटर अनुमानित भुगतान दिखाता है। अंतिम इंसेंटिव कंपनी की प्रणाली के अनुसार पात्रता और शर्तों पर निर्भर करेगा।",
+    "mnpActivation": "एमएनपी सक्रियण",
+    "recharge349": "₹349 रिचार्ज",
+    "recharge349Label": "₹349 रिचार्ज",
+    "calculate": "कैलकुलेट करें",
+    "reset": "रीसेट करें",
+    "totalEarning": "आपकी कुल कमाई"
   }
 }
