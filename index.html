@@ -2,127 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jiolite - Incentive Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="title">Jio Retailer - Monthly Incentive Calculator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background: #f8f9fa;
-      margin: 20px;
+      margin: 15px;
+      background: #fafafa;
       font-size: 14px;
     }
     h2 {
-      text-align: center;
       color: #0b57d0;
-      font-size: 20px;
+      text-align: center;
+      font-size: 19px;
+      margin-bottom: 6px;
     }
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    .instruction {
+      color: #555;
+      font-size: 11px;
+      margin: -6px 0 4px;
+    }
+    .emboss-line {
+      height: 2px;
+      background: linear-gradient(to right, #e0e0e0, #cfcfcf, #e0e0e0);
+      box-shadow: inset 0 1px #fff, inset 0 -1px #aaa;
+      margin: 4px 0 8px;
+    }
+    .section {
+      padding: 6px 0;
+      border-bottom: 1px solid #dcdcdc;
+    }
+    .section h3 {
+      margin: 4px 0;
+      color: #333;
+      font-size: 15px;
     }
     .row {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 14px;
+      gap: 8px;
+      margin-bottom: 6px;
     }
-    label {
+    .row label {
+      flex: 1;
       font-weight: 500;
+      font-size: 13px;
     }
-    input[type="number"] {
-      width: 100px;
-      padding: 6px;
-      border-radius: 4px;
+    .row input {
+      flex: 0 0 70px;
+      padding: 4px;
+      font-size: 13px;
       border: 1px solid #ccc;
+      border-radius: 4px;
       text-align: right;
     }
+    input[type="number"] {
+      min: 0;
+      step: 1;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
     button {
-      width: 100%;
-      padding: 10px;
-      font-size: 15px;
       background-color: #28a745;
       color: white;
+      padding: 10px;
       border: none;
+      font-size: 14px;
       border-radius: 4px;
       cursor: pointer;
+      width: 100%;
     }
-    .result {
-      margin-top: 15px;
+    .reset-btn {
+      background-color: #dc3545;
+    }
+    .post-instruction {
+      color: #777;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-height: 80%;
+      overflow-y: auto;
+      font-size: 13px;
+    }
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .modal th, .modal td {
+      padding: 6px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    .modal .bonus-row td {
       font-weight: bold;
-      font-size: 16px;
-      text-align: center;
+      background-color: #f3f3f3;
     }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    .share-btn, .download-btn {
+      padding: 8px;
+      font-size: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      width: 48%;
+    }
+    .share-btn { background-color: #25d366; color: white; }
+    .download-btn { background-color: #007bff; color: white; }
     #languageSelector {
       float: right;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+  <label for="languageSelector"><strong>Language:</strong></label>
   <select id="languageSelector" onchange="changeLanguage(this.value)">
     <option value="en">English</option>
     <option value="hi">हिन्दी</option>
   </select>
 
-  <h2 id="title">Jiolite - Incentive Calculator</h2>
+  <h2 id="title">Jio Retailer - Monthly Incentive Calculator</h2>
 
-  <div class="row">
-    <label id="labelMnp349" for="mnp349">MNP ₹349</label>
-    <input type="number" id="mnp349" min="0" />
+  <p class="instruction" id="goldNote">💰 WIN A GOLD COIN! 📞 Call Team Jio – Don’t Miss Out!</p>
+  <p class="instruction" id="disclaimer">*This calculator provides tentative payouts. Final incentives will be as per company system, subject to eligibility and conditions.</p>
+
+  <div class="emboss-line"></div>
+
+  <div class="section">
+    <h3 id="mnpActivation">MNP Activation</h3>
+    <div class="row">
+      <label>₹299</label><input type="number" id="mnp299">
+      <label>₹349</label><input type="number" id="mnp349">
+    </div>
   </div>
 
-  <div class="row">
-    <label id="labelRecharge349" for="recharge349">Recharge ₹349</label>
-    <input type="number" id="recharge349" min="0" />
+  <div class="section">
+    <h3 id="recharge349">Recharge ₹349</h3>
+    <div class="row">
+      <label id="recharge349Label">Recharge ₹349</label><input type="number" id="recharge349Input">
+    </div>
   </div>
 
-  <button onclick="calculate()" id="calculateBtn">Calculate</button>
-  <div class="result" id="resultBox">Total Incentive: ₹0</div>
-</div>
+  <div class="action-buttons">
+    <button onclick="calculate()" id="calculate">Calculate</button>
+    <button class="reset-btn" onclick="resetFields()" id="reset">Reset</button>
+  </div>
 
-<script>
-let translations = {};
+  <p class="post-instruction">* Created by GT Retailer.</p>
 
-async function loadLanguageFile() {
-  const res = await fetch('translations.json');
-  translations = await res.json();
-  const currentLang = document.getElementById('languageSelector').value || 'en';
-  changeLanguage(currentLang);
-}
+  <div class="overlay" id="overlay" onclick="closePopup()"></div>
+  <div class="modal" id="resultModal">
+    <h3 id="totalEarning">Your Total Earning</h3>
+    <table>
+      <thead>
+        <tr><th>Section</th><th>Count</th><th>Incentive</th></tr>
+      </thead>
+      <tbody id="resultTableBody"></tbody>
+      <tfoot>
+        <tr><th colspan="2">Total</th><th id="grandTotal">₹0</th></tr>
+      </tfoot>
+    </table>
+    <button class="share-btn" onclick="downloadImage()">Download as Image</button>
+  </div>
 
-function changeLanguage(lang) {
-  const t = translations[lang];
-  if (!t) return;
+  <script>
+    let translations = {};
+    async function loadLanguageFile() {
+      const response = await fetch('translations.json');
+      translations = await response.json();
+      const currentLang = document.getElementById("languageSelector").value || 'en';
+      changeLanguage(currentLang);
+    }
+    function changeLanguage(lang) {
+      const langData = translations[lang];
+      if (!langData) return;
+      for (const key in langData) {
+        const el = document.getElementById(key);
+        if (el) el.innerText = langData[key];
+      }
+    }
+    loadLanguageFile();
 
-  document.getElementById("title").innerText = t.title;
-  document.getElementById("labelMnp349").innerText = t.mnp349;
-  document.getElementById("labelRecharge349").innerText = t.recharge349;
-  document.getElementById("calculateBtn").innerText = t.calculate;
-  document.getElementById("resultBox").innerText = t.result + ": ₹0";
-}
+    function resetFields() {
+      document.querySelectorAll("input[type='number']").forEach(input => input.value = "");
+    }
 
-function calculate() {
-  const mnp = parseInt(document.getElementById("mnp349").value) || 0;
-  const recharge = parseInt(document.getElementById("recharge349").value) || 0;
-  const total = mnp + recharge;
+    function closePopup() {
+      document.getElementById("resultModal").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
 
-  let bonus = 0;
-  if (total >= 10 && total <= 49) {
-    bonus = total * 10;
-  } else if (total >= 50) {
-    bonus = 1000;
-  }
+    function calculate() {
+      const mnp349 = parseInt(document.getElementById("mnp349").value) || 0;
+      const recharge349 = parseInt(document.getElementById("recharge349Input").value) || 0;
+      const resultBody = document.getElementById("resultTableBody");
+      resultBody.innerHTML = "";
 
-  document.getElementById("resultBox").innerText = `Total Incentive: ₹${bonus}`;
-}
+      const mnpInc = mnp349 * 234;
+      const rechargeInc = recharge349 * 10;
+      let total = mnpInc + rechargeInc;
 
-loadLanguageFile();
-</script>
+      resultBody.innerHTML += `<tr><td>MNP ₹349</td><td>${mnp349}</td><td>₹${mnpInc}</td></tr>`;
+      resultBody.innerHTML += `<tr><td>Recharge ₹349</td><td>${recharge349}</td><td>₹${rechargeInc}</td></tr>`;
+
+      document.getElementById("grandTotal").innerText = `₹${total}`;
+      document.getElementById("resultModal").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    function downloadImage() {
+      const modal = document.getElementById("resultModal");
+      html2canvas(modal).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "summary.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
 </body>
 </html>
