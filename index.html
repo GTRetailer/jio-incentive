@@ -1,526 +1,128 @@
-<!-- VERSION C13 Optimized -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Incentive Calculator - C13</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <!-- Google tag (gtag.js) -->
- <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GH8905Y6B"></script>
- <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9GH8905Y6B');
- </script>
-
-  
+  <title>Jiolite - Incentive Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      margin: 15px;
-      background: #fafafa;
+      background: #f8f9fa;
+      margin: 20px;
       font-size: 14px;
     }
     h2 {
-      color: #0b57d0;
       text-align: center;
-      font-size: 19px;
-      margin-bottom: 6px;
+      color: #0b57d0;
+      font-size: 20px;
     }
-    .instruction {
-      text-align: left;
-      color: #555;
-      font-size: 11px;
-      margin-top: -6px;
-      margin-bottom: 4px;
-    }
-    .emboss-line {
-      height: 2px;
-      background: linear-gradient(to right, #e0e0e0, #cfcfcf, #e0e0e0);
-      box-shadow: inset 0 1px #fff, inset 0 -1px #aaa;
-      margin: 4px 0 8px;
-    }
-    .section {
-      padding: 6px 0;
-      border-bottom: 1px solid #dcdcdc;
-    }
-    .section h3 {
-      margin: 4px 0;
-      color: #333;
-      font-size: 15px;
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .row {
       display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
+      justify-content: space-between;
+      margin-bottom: 14px;
     }
-    .row label {
-      flex: 1;
+    label {
       font-weight: 500;
-      font-size: 13px;
-    }
-    .row input,
-    .row select {
-      flex: 0 0 70px;
-      padding: 4px;
-      font-size: 13px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      text-align: right;
     }
     input[type="number"] {
-      min: 0;
-      step: 1;
-    }
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .action-buttons button {
-      flex: 1;
-    }
-    .reset-btn {
-      background-color: #dc3545;
-      color: white;
-      padding: 10px;
-      border: none;
-      font-size: 14px;
+      width: 100px;
+      padding: 6px;
       border-radius: 4px;
-      cursor: pointer;
+      border: 1px solid #ccc;
+      text-align: right;
     }
     button {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
       background-color: #28a745;
       color: white;
-      padding: 10px;
       border: none;
-      font-size: 14px;
       border-radius: 4px;
       cursor: pointer;
-      width: 100%;
     }
-    .post-instruction {
-      text-align: left;
-      color: #777;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 16px;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-height: 80%;
-      overflow-y: auto;
-      font-size: 13px;
-    }
-    .modal table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    .modal th,
-    .modal td {
-      padding: 6px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
-    .modal tr.bonus-row td {
+    .result {
+      margin-top: 15px;
       font-weight: bold;
-      background-color: #f3f3f3;
+      font-size: 16px;
+      text-align: center;
     }
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-    }
-    .share-btn, .download-btn {
-      padding: 8px;
-      font-size: 13px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      width: 48%;
-    }
-    .share-btn { background-color: #25d366; color: white; }
-    .download-btn { background-color: #007bff; color: white; }
-
-    @media screen and (max-width: 480px) {
-      .row label {
-        font-size: 12px;
-      }
-      .row input, .row select {
-        font-size: 12px;
-        flex: 0 0 60px;
-      }
-      .action-buttons {
-        flex-direction: column;
-      }
-      .share-btn, .download-btn {
-        width: 100%;
-      }
+    #languageSelector {
+      float: right;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
 
+<div class="container">
+  <select id="languageSelector" onchange="changeLanguage(this.value)">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी</option>
+  </select>
 
-<select id="languageSelector" onchange="changeLanguage(this.value)" style="margin-bottom: 10px;">
-  <option value="en">English</option>
-  <option value="hi">हिन्दी</option>
-</select>
+  <h2 id="title">Jiolite - Incentive Calculator</h2>
 
-  
-<h2 id="title">Jio Retailer - Monthly Incentive Calculator</h2>
-
-<p class="instruction" id="goldNote" style="font-weight: bold; color: #ff0000;">
-  💰 WIN A GOLD COIN! 📞 Call Team Jio – Don’t Miss Out!<br>
-</p>
-
-<p class="instruction">
-  *This calculator provides tentative payouts. Final incentives will be as per company system, subject to eligibility and conditions.<br>
-  *Enter your monthly committed numbers below.
-</p>
-<div class="emboss-line"></div>
-
-<div class="section">
-  <h3>1. MNP Activation</h3>
   <div class="row">
-    <label>₹299 Plan</label>
-    <input type="number" id="mnp299" min="0" max="999">
-    <span class="error-message" id="err-mnp299"></span>
-  
-    <label>₹349 Plan</label>
-    <input type="number" id="mnp349" min="0" max="999">
-    <span class="error-message" id="err-mnp349"></span>
+    <label id="labelMnp349" for="mnp349">MNP ₹349</label>
+    <input type="number" id="mnp349" min="0" />
   </div>
+
+  <div class="row">
+    <label id="labelRecharge349" for="recharge349">Recharge ₹349</label>
+    <input type="number" id="recharge349" min="0" />
+  </div>
+
+  <button onclick="calculate()" id="calculateBtn">Calculate</button>
+  <div class="result" id="resultBox">Total Incentive: ₹0</div>
 </div>
 
-<div class="section">
-  <h3>2. New SIM Activation</h3>
-  <div class="row">
-    <label>₹299 Plan</label>
-    <input type="number" id="sim299" min="0" max="999">
-    <span class="error-message" id="err-sim299"></span>
- 
-    <label>₹349 Plan</label>
-    <input type="number" id="sim349" min="0" max="999">
-    <span class="error-message" id="err-sim349"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>3. Type of Retailer</h3>
-  <div class="row">
-    <label>3a. Retailer Type</label>
-    <select id="retailerType">
-      <option value="" disabled selected>Select</option>
-      <option value="JPR">JPR</option>
-      <option value="Non-JPR">Non-JPR</option>
-    </select>
-  </div>
-</div>
-
-<div class="section">
-  <h3>4. JAF Bookings</h3>
-  <div class="row">
-    <label>₹1111 Booking</label>
-    <input type="number" id="jaf1111" min="0" max="999"><span class="error-message" id="jaf1111"></span>
-  
-    <label>₹2222 Booking</label>
-    <input type="number" id="jaf2222" min="0" max="999"><span class="error-message" id="jaf2222"></span>
-  </div>
-  <div class="row">
-    <label>Unlimited Offer</label>
-    <input type="number" id="jafUnlimited" min="0" max="999"><span class="error-message" id="jafUnlimited"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>5. JioBharat Sales</h3>
-  <div class="row">
-    <label>V4 (₹799)</label>
-    <input type="number" id="jbV4" min="0" max="999"><span class="error-message" id="jbV4"></span>
-  
-    <label>B2 (₹1399)</label>
-    <input type="number" id="jbB2" min="0" max="999"><span class="error-message" id="jbB2"></span>
-  </div>
-  <div class="row">
-    <label>J1 (₹1799)</label>
-    <input type="number" id="jbJ1" min="0" max="999"><span class="error-message" id="jbJ1"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>6. JioBharat – MNP</h3>
-  <div class="row">
-    <label>FR 123/234</label>
-    <input type="number" id="jbMnp123" min="0" max="999"><span class="error-message" id="jbMnp123"></span>
-  
-    <label>FR 1234</label>
-    <input type="number" id="jbMnp1234" min="0" max="999"><span class="error-message" id="jbMnp1234"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>7. JioBharat – New SIM</h3>
-  <div class="row">
-    <label>FR 123/234</label>
-    <input type="number" id="jbNewSIM123" min="0" max="999"><span class="error-message" id="jbNewSIM123"></span>
-  
-    <label>FR 1234</label>
-    <input type="number" id="jbNewSIM1234" min="0" max="999"><span class="error-message" id="jbNewSIM1234"></span>
-  </div>
-</div>
-
-<div class="action-buttons">
-  <button onclick="calculate()">Calculate</button>
-  <button class="reset-btn" onclick="resetFields()">Reset</button>
-</div>
-<p class="post-instruction">*This calculator provides tentative payouts.<br>
-* Created by GT retailer.
-</p>
-
-<div class="overlay" id="overlay" onclick="closePopup()"></div>
-<div class="modal" id="resultModal">
-  <h3>Your Total Earning</h3><p class="post-instruction">*This calculator provides tentative payouts</p>
-  <table>
-    <thead>
-      <tr><th>Section</th><th>Count</th><th>Incentive </th></tr>
-    </thead>
-    <tbody id="resultTableBody"></tbody>
-    <tr class="bonus-row"><td colspan="2">MNP Big Hitter Inc.</td><td id="mnpBonusCell">₹0</td></tr>
-    <tr class="bonus-row"><td colspan="2">FR 349 Slab Inc.</td><td id="fr349BonusCell">₹0</td></tr>
-    <tr class="bonus-row"><td colspan="2" id="mnpBoosterLabel">MNP Booster Inc.</td><td id="mnpBoosterCell">₹0</td></tr>
-    <tfoot>
-      <tr><th colspan="2">Total</th><th id="grandTotal">₹0</th></tr>
-    </tfoot>
-  </table>
-  <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
-  <button class="download-btn" onclick="downloadImage()">Download as Image</button>
-</div>
-
- <script>
+<script>
 let translations = {};
 
 async function loadLanguageFile() {
-  const response = await fetch('translations.json');
-  translations = await response.json();
-
-  const currentLang = document.getElementById("languageSelector").value || 'en';
+  const res = await fetch('translations.json');
+  translations = await res.json();
+  const currentLang = document.getElementById('languageSelector').value || 'en';
   changeLanguage(currentLang);
 }
 
 function changeLanguage(lang) {
-  const langData = translations[lang];
-  if (!langData) return;
+  const t = translations[lang];
+  if (!t) return;
 
-  for (const key in langData) {
-    const el = document.getElementById(key);
-    if (el) {
-      el.innerText = langData[key];
-    }
-  }
-}
-
-loadLanguageFile();
-</script> 
-  
-<script>
-function resetFields() {
-  const inputs = document.querySelectorAll("input[type='number']");
-  inputs.forEach(input => input.value = "");
-  document.getElementById("retailerType").selectedIndex = 0;
-}
-
-function shareWhatsApp() {
-  const modal = document.getElementById("resultModal");
-  const total = document.getElementById("grandTotal").innerText;
-  const message = `My total Jio Partner earning this month is ${total}. Summary below 👇`;
-
-  const originalMaxHeight = modal.style.maxHeight;
-  const originalOverflow = modal.style.overflow;
-  modal.style.maxHeight = 'none';
-  modal.style.overflow = 'visible';
-
-  setTimeout(() => {
-    html2canvas(modal).then(canvas => {
-      modal.style.maxHeight = originalMaxHeight;
-      modal.style.overflow = originalOverflow;
-
-      canvas.toBlob(function(blob) {
-        const file = new File([blob], "summary.png", { type: "image/png" });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({
-            files: [file],
-            text: message
-          });
-        } else {
-          alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
-        }
-      });
-    });
-  }, 100);
-}
-
-function downloadImage() {
-  const modal = document.getElementById("resultModal");
-  const originalMaxHeight = modal.style.maxHeight;
-  const originalOverflow = modal.style.overflow;
-  modal.style.maxHeight = 'none';
-  modal.style.overflow = 'visible';
-
-  setTimeout(() => {
-    html2canvas(modal).then(canvas => {
-      modal.style.maxHeight = originalMaxHeight;
-      modal.style.overflow = originalOverflow;
-
-      const link = document.createElement("a");
-      link.download = "incentive-summary.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    });
-  }, 100);
-}
-
-function closePopup() {
-  document.getElementById("resultModal").style.display = "none";
-  document.getElementById("overlay").style.display = "none";
-}
-
-function get(id) {
-  const value = document.getElementById(id)?.value;
-  return parseInt(value) || 0;
+  document.getElementById("title").innerText = t.title;
+  document.getElementById("labelMnp349").innerText = t.mnp349;
+  document.getElementById("labelRecharge349").innerText = t.recharge349;
+  document.getElementById("calculateBtn").innerText = t.calculate;
+  document.getElementById("resultBox").innerText = t.result + ": ₹0";
 }
 
 function calculate() {
+  const mnp = parseInt(document.getElementById("mnp349").value) || 0;
+  const recharge = parseInt(document.getElementById("recharge349").value) || 0;
+  const total = mnp + recharge;
 
-  gtag('event', 'calculate_clicked', {
-  'event_category': 'Calculator',
-  'event_label': 'Retailer Monthly Incentive'
-  });
-  
-  // Placeholder for actual form IDs and calculations
-  const resultBody = document.getElementById("resultTableBody");
-  resultBody.innerHTML = "";
-
-const retailerType = document.getElementById("retailerType").value;
-const jaf2222Rate = retailerType === "JPR" ? 200 : 96;
-
-const entries = [
-  ["MNP Activation", get("mnp299") + get("mnp349"), get("mnp299") * 127 + get("mnp349") * 234],
-  ["New SIM Activation", get("sim299") + get("sim349"), get("sim299") * 76 + get("sim349") * 132],
-  ["JAF Booking", get("jaf1111") + get("jaf2222") + get("jafUnlimited"),
-    get("jaf1111") * 96 + get("jaf2222") * jaf2222Rate + get("jafUnlimited") * 120],
-  ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"), get("jbV4") * 125 + get("jbB2") * 160 + get("jbJ1") * 200],
-  ["JB MNP", get("jbMnp123") + get("jbMnp1234"), get("jbMnp123") * 96 + get("jbMnp1234") * 193],
-  ["JB New SIM", get("jbNewSIM123") + get("jbNewSIM1234"), get("jbNewSIM123") * 18 + get("jbNewSIM1234") * 48]
-];
-
-
-  let total = 0;
-  for (const [label, count, amount] of entries) {
-    total += amount;
-    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
+  let bonus = 0;
+  if (total >= 10 && total <= 49) {
+    bonus = total * 10;
+  } else if (total >= 50) {
+    bonus = 1000;
   }
 
-  // Bonuses
-  let mnpTotal = get("mnp299") + get("mnp349");
-  let sim349 = get("sim349");
-  let mnp349 = get("mnp349");
-
-  let mnpBonus = 0;
-  if (mnpTotal >= 10 && mnpTotal <= 19) mnpBonus = 387;
-  else if (mnpTotal >= 20 && mnpTotal <= 29) mnpBonus = 775;
-  else if (mnpTotal >= 30 && mnpTotal <= 59) mnpBonus = 1163;
-  else if (mnpTotal >= 60 && mnpTotal <= 99) mnpBonus = 2423;
-  else if (mnpTotal >= 100 && mnpTotal <= 149) mnpBonus = 4846;
-  else if (mnpTotal >= 150) mnpBonus = 6785;
-
-  document.getElementById("mnpBonusCell").innerText = `₹${mnpBonus}`;
-  total += mnpBonus;
-
-  let fr349Total = mnp349 + sim349;
-  let fr349Bonus = 0;
-  if (fr349Total >= 10 && fr349Total <= 49) fr349Bonus = fr349Total * 10;
-  else if (fr349Total >= 50) fr349Bonus = 1000; 
-
-  document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
-  total += fr349Bonus;
-
- // MNP Booster Updated
-  let M = Math.floor(mnp349 / 3);
-  let R = mnp349 % 3;
-
-  let laps = [];
-  if (R === 0) {
-    laps = [M, M, M];
-  } else if (R === 1) {
-    laps = [M, M, M + 1];
-  } else if (R === 2) {
-    laps = [M, M + 1, M + 1];
-  }
-
-  function rateFor(m) {
-    if (m >= 1 && m <= 3) return 33;
-    if (m >= 4 && m <= 9) return 48;
-    if (m >= 10) return 63;
-    return 0;
-  }
-
-  let mnpBoosterInc = 0;
-  for (let i = 0; i < 3; i++) {
-    mnpBoosterInc += laps[i] * rateFor(laps[i]);
-  }
-
-  document.getElementById("mnpBoosterCell").innerHTML = `₹${mnpBoosterInc}<br><span style="font-weight:normal; font-size: 12px; font-style: italic;">MNP in Laps: ${laps.join(", ")}</span>`;
-  total += mnpBoosterInc;
-
-  document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
-  document.getElementById("resultModal").style.display = "block";
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("resultBox").innerText = `Total Incentive: ₹${bonus}`;
 }
 
-document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.setAttribute('placeholder', '0');
-    input.setAttribute('min', '0');
-    input.setAttribute('step', '1');
-
-    input.addEventListener('input', () => {
-      const val = input.value;
-      const errEl = document.getElementById('err-' + input.id);
-
-      if (val.includes('.')) {
-        input.value = Math.floor(val);
-        errEl.innerText = 'Decimal not allowed';
-      } else if (val < 0) {
-        input.value = 0;
-        errEl.innerText = 'Only positive numbers allowed';
-      } else {
-        errEl.innerText = '';
-      }
-    });
-  });
- 
+loadLanguageFile();
 </script>
 </body>
 </html>
