@@ -32,6 +32,40 @@
       font-size: 19px;
       margin-bottom: 6px;
     }
+      
+      .video-tutorial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #d93025;
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 6px auto 10px;
+  transition: background 0.3s;
+  max-width: fit-content;
+}
+.video-tutorial-link:hover {
+  background-color: #b32218;
+}
+.play-icon {
+  width: 18px;
+  height: 18px;
+}
+@media (max-width: 480px) {
+  .video-tutorial-link {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  .play-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+    
     .instruction {
       text-align: left;
       color: #555;
@@ -190,6 +224,22 @@
 
   
 <h2 id="title">Jio Retailer - Monthly Incentive Calculator</h2>
+
+<!-- Video Tutorial Button -->
+<a href="https://www.youtube.com/watch?v=gMT3fRhkDBI&ab_channel=CNN" 
+   target="_blank" 
+   class="video-tutorial-link" 
+   title="Watch Tutorial">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="play-icon" aria-hidden="true" focusable="false">
+    <path d="M10 8.64v6.72L15.27 12 10 8.64z" fill="white"/>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+             10-4.48 10-10S17.52 2 12 2zm0 18
+             c-4.41 0-8-3.59-8-8s3.59-8
+             8-8 8 3.59 8 8-3.59 8-8 8z"
+          fill="white"/>
+  </svg>
+  <span>Video Tutorial</span>
+</a>
 
 <p class="instruction" id="goldNote" style="font-weight: bold; color: #ff0000;">
   💰 WIN A GOLD COIN! 📞 Call Team Jio – Don’t Miss Out!<br>
@@ -491,4 +541,3 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 </script>
 </body>
 </html>
-
