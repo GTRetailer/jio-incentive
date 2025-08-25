@@ -337,13 +337,13 @@
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 <div class="modal" id="resultModal">
   <!-- Centered Total Monthly Earning -->
-  <div style="text-align: center; margin-bottom: 10px;">
-    <span style="font-size: 16px; font-weight: normal;">Your Total Monthly Earning: </span>
-    <span id="grandTotal" style="color: #28a745; font-size: 24px; font-weight: bold;">
+  <div style="display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 10px;">
+    <span style="font-size: 16px; font-weight: normal;">Your Total Monthly Earning:</span>
+    <span id="grandTotal" style="color: #ff0000; font-size: 24px; font-weight: bold;">
       ₹0
     </span>
   </div>
-  
+
   <p class="post-instruction">*This calculator provides tentative payouts</p>
   
   <table>
@@ -472,7 +472,7 @@ const entries = [
   let total = 0;
   for (const [label, count, amount] of entries) {
     total += amount;
-    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
+    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(0)}</td></tr>`;
   }
 
   // Bonuses
@@ -527,7 +527,7 @@ const entries = [
   document.getElementById("mnpBoosterCell").innerHTML = `₹${mnpBoosterInc}<br><span style="font-weight:normal; font-size: 12px; font-style: italic;">MNP in Laps: ${laps.join(", ")}</span>`;
   total += mnpBoosterInc;
 
-  document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
+  document.getElementById("grandTotal").innerText = `₹${total.toFixed(0)}`;
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
