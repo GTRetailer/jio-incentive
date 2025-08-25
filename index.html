@@ -274,14 +274,24 @@
     
     <label>₹349 Plan</label>
     <input type="number" id="sim349" min="0" max="999">
-    <span class="error-message" id="err-sim349"></span>    
+    <span class="error-message" id="err-sim349"></span>
+    
     
     <label>₹299 Plan</label>
     <input type="number" id="sim299" min="0" max="999">
     <span class="error-message" id="err-sim299"></span>
  
-    
+
   </div>
+    
+<div class="row">
+    <label>Jio Matching Number Booking</label>
+    <input type="number" id="jmnBooking" min="0" max="999">
+    <span class="error-message" id="err-jmnBooking"></span>
+  </div>
+  <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
+    <strong>Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</strong>
+  </p>
 </div>
 
 
@@ -474,7 +484,13 @@ const entries = [
     total += amount;
     resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(0)}</td></tr>`;
   }
-
+ 
+ // Bonuses
+  
+  let jmnBooking = get("jmnBooking");
+  let jmnIncentive = jmnBooking * 10;
+  resultBody.innerHTML += `<tr><td>JMN Booking Incentive</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
+  total += jmnIncentive;
   // Bonuses
   let mnpTotal = get("mnp299") + get("mnp349");
   let sim349 = get("sim349");
