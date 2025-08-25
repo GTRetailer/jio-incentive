@@ -507,10 +507,10 @@ const entries = [
   document.getElementById("mnpBonusCell").innerText = `₹${mnpBonus}`;
   total += mnpBonus;
 
-  let fr349Total = mnp349 + sim349;
+  let fr349Total = mnp349;
   let fr349Bonus = 0;
-  if (fr349Total >= 10 && fr349Total <= 49) fr349Bonus = fr349Total * 10;
-  else if (fr349Total >= 50) fr349Bonus = 1000; 
+  if (fr349Total >= 5 && fr349Total <= 499) fr349Bonus = fr349Total * 10;
+  else if (fr349Total >= 500) fr349Bonus = fr349Total * 10; 
 
   document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
