@@ -1,10 +1,10 @@
-<!-- VERSION C13 Optimized -->
+<!-- VERSION C13.1 (Removed 299 fields) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Incentive Calculator - C13</title>
+  <title>Jio Retailer - Monthly Commission Calculator - C13.1</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -14,11 +14,9 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-9GH8905Y6B');
  </script>
 
-  
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -26,53 +24,26 @@
       background: #fafafa;
       font-size: 14px;
     }
+
+    .row-single label {
+      flex: 0 0 auto;
+      margin-right: 8px;
+    }
+
+    .row-single input {
+      flex: 0 0 70px;
+    }
+
+    .row-single .error-message {
+      flex: 0 0 auto;
+    }
+    
     h2 {
       color: #0b57d0;
       text-align: center;
       font-size: 19px;
       margin-bottom: 6px;
     }
-      
-      .video-tutorial-container {
-  text-align: center;
-  margin: 8px 0;
-}
-
-.video-tutorial-container {
-  text-align: center;
-  margin: 8px 0;
-}
-
-.video-tutorial-link {
-  color: #FF6600;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.video-tutorial-link:hover,
-.video-tutorial-link:focus {
-  color: #e65c00; /* Slightly darker orange on hover */
-}
-
-.video-icon-square {
-  font-size: 12px;
-  line-height: 1;
-}
-
-.video-tutorial-desc {
-  font-size: 8px;
-  color: #555;
-  margin-top: 4px;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-    
     .instruction {
       text-align: left;
       color: #555;
@@ -223,31 +194,18 @@
 </head>
 <body>
 
-
 <select id="languageSelector" onchange="changeLanguage(this.value)" style="margin-bottom: 10px;">
   <option value="en">English</option>
   <option value="hi">हिन्दी</option>
 </select>
-
   
-<h2 id="title">Jio Retailer - Monthly Incentive Calculator</h2>
-
-<!-- 🎬 YouTube Video Tutorial Link - Styled with Orange and Squares -->
-<div class="video-tutorial-container">
-  <a href="https://www.youtube.com/watch?v=IqjO0Ox8ZL0" target="_blank" rel="noopener" class="video-tutorial-link" aria-label="Watch Tutorial Video on YouTube">
-    <span class="video-icon-square">▶️ </span>
-    <span>Learn how to use the calculator step-by-step</span>
-    <span class="video-icon-square">▶️</span>
-  </a>
-
-</div>
-
+<h2 id="title">Jio Retailer - Monthly Commission Calculator</h2>
 <p class="instruction" id="goldNote" style="font-weight: bold; color: #ff0000;">
-  Make Every Customer Smile – Pitch Jio Celebration Offer Today!<br>
+  Make Every Customer Smile. Get customer to experience Google Gemini Pro (worth ₹35100) FREE with ₹349 recharge <br>
 </p>
 
 <p class="instruction">
-  *This calculator provides tentative payouts. Final incentives will be as per company system, subject to eligibility and conditions.<br>
+  *This calculator provides tentative payouts for non-DSS retailer. Final commission will be as per company system, subject to eligibility and conditions.<br>
   *Enter your monthly committed numbers below.
 </p>
 <div class="emboss-line"></div>
@@ -255,55 +213,39 @@
 <div class="section">
   <h3>1. MNP Activation</h3>
   <div class="row">
-    
     <label>₹349 Plan</label>
     <input type="number" id="mnp349" min="0" max="999">
     <span class="error-message" id="err-mnp349"></span>
-    
-    <label>₹299 Plan</label>
-    <input type="number" id="mnp299" min="0" max="999">
-    <span class="error-message" id="err-mnp299"></span>
-  
-    
   </div>
 </div>
 
 <div class="section">
   <h3>2. New SIM Activation</h3>
   <div class="row">
-    
     <label>₹349 Plan</label>
     <input type="number" id="sim349" min="0" max="999">
     <span class="error-message" id="err-sim349"></span>
-    
-    
-    <label>₹299 Plan</label>
-    <input type="number" id="sim299" min="0" max="999">
-    <span class="error-message" id="err-sim299"></span>
- 
-
   </div>
     
-<div class="row">
-    <label>Jio Matching Number Booking</label>
+  <div class="row">
+    <label>JMN Booking</label>
     <input type="number" id="jmnBooking" min="0" max="999">
     <span class="error-message" id="err-jmnBooking"></span>
   </div>
+ 
   <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
     <strong>Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</strong>
   </p>
 </div>
 
-
-
 <div class="section">
-  <h3>3. JAF Bookings</h3>
+  <h3>3. Jio AirFiber Bookings</h3>
   <div class="row">
-    <label>₹1111 Booking</label>
-    <input type="number" id="jaf1111" min="0" max="999"><span class="error-message" id="jaf1111"></span>
+    <label>₹1200 Booking</label>
+    <input type="number" id="jaf1111" min="0" max="999"><span class="error-message" id="err-jaf1111"></span>
 
     <label>Unlimited Offer</label>
-    <input type="number" id="jafUnlimited" min="0" max="999"><span class="error-message" id="jafUnlimited"></span>
+    <input type="number" id="jafUnlimited" min="0" max="999"><span class="error-message" id="err-jafUnlimited"></span>
   </div>
 </div>
 
@@ -311,30 +253,38 @@
   <h3>4. JioBharat Sales</h3>
   <div class="row">
     <label>V4 (₹799)</label>
-    <input type="number" id="jbV4" min="0" max="999"><span class="error-message" id="jbV4"></span>
+    <input type="number" id="jbV4" min="0" max="999"><span class="error-message" id="err-jbV4"></span>
   
-    <label>B2 (₹1399)</label>
-    <input type="number" id="jbB2" min="0" max="999"><span class="error-message" id="jbB2"></span>
+    <label>A1 (₹1299)</label>
+    <input type="number" id="jbB2" min="0" max="999"><span class="error-message" id="err-jbB2"></span>
   </div>
   <div class="row">
-    <label>J1 (₹1799)</label>
-  <input type="number" id="jbJ1" min="0" max="999">
-  <span class="error-message" id="jbJ1"></span>
+    <label>Prima 2.0 (₹2799)</label>
+    <input type="number" id="jbJ1" min="0" max="999">
+    <span class="error-message" id="err-jbJ1"></span>
   </div>
 </div>
 
 <div class="section">
   <h3>5. JioBharat – SIM</h3>
   <div class="row">
-    <label>MNP FR 123/234</label>
-    <input type="number" id="jbMnp123" min="0" max="999"><span class="error-message" id="jbMnp123"></span>
+    <label>MNP FR </label>
+    <input type="number" id="jbMnp123" min="0" max="999"><span class="error-message" id="err-jbMnp123"></span>
   
-    <label>New SIM FR 123/234</label>
-    <input type="number" id="jbNewSIM123" min="0" max="999"><span class="error-message" id="jbNewSIM123"></span>
+    <label>New SIM FR </label>
+    <input type="number" id="jbNewSIM123" min="0" max="999"><span class="error-message" id="err-jbNewSIM123"></span>
   </div>
+  
+  <div class="row row-single">
+    <label>Booking (₹100 → ₹30 incentive)</label>
+    <input type="number" id="BKG" min="0" max="999">
+    <span class="error-message" id="err-BKG"></span>
+  </div>
+  
+  <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
+    <strong>FR includes 23/123/234/269/369 recharge plan</strong>
+  </p>
 </div>
-
-
 
 <div class="action-buttons">
   <button onclick="calculate()">Calculate</button>
@@ -346,50 +296,53 @@
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 <div class="modal" id="resultModal">
-  <!-- Centered Total Monthly Earning -->
-  <div style="display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 10px;">
-    <span style="font-size: 16px; font-weight: normal;">Your Total Monthly Earning:</span>
-    <span id="grandTotal" style="color: #ff0000; font-size: 24px; font-weight: bold;">
-      ₹0
-    </span>
-  </div>
-
-  <p class="post-instruction">*This calculator provides tentative payouts</p>
-  
+  <h3>Your Total Earning</h3><p class="post-instruction">*This calculator provides tentative payouts</p>
   <table>
     <thead>
-      <tr><th>Section</th><th>Count</th><th>Incentive</th></tr>
+      <tr><th>Section</th><th>Count</th><th>Incentive </th></tr>
     </thead>
     <tbody id="resultTableBody"></tbody>
-    <tr class="bonus-row"><td colspan="2">MNP Big Hitter Inc.</td><td id="mnpBonusCell">₹0</td></tr>
-    <tr class="bonus-row"><td colspan="2">FR 349 Slab Inc.</td><td id="fr349BonusCell">₹0</td></tr>
-    <tr class="bonus-row"><td colspan="2" id="mnpBoosterLabel">MNP Booster Inc.</td><td id="mnpBoosterCell">₹0</td></tr>
+    <tr class="bonus-row"><td colspan="2" id="mnpBoosterLabel">MNP "Sell & Win" Comm.</td><td id="mnpBoosterCell">₹0</td></tr>
+    <tr class="bonus-row"><td colspan="2">FR 349 Slab Comm.</td><td id="fr349BonusCell">₹0</td></tr>
+    <tfoot>
+      <tr><th colspan="2">Total</th><th id="grandTotal">₹0</th></tr>
+    </tfoot>
   </table>
-  
   <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
   <button class="download-btn" onclick="downloadImage()">Download as Image</button>
 </div>
-
   
-  <script>
-    let translations = {};
-    async function loadLanguageFile() {
-      const response = await fetch('translations.json');
-      translations = await response.json();
-      const currentLang = document.getElementById("languageSelector").value || 'en';
-      changeLanguage(currentLang);
-    }
-    function changeLanguage(lang) {
-      const langData = translations[lang];
-      if (!langData) return;
-      for (const key in langData) {
-        const el = document.getElementById(key);
-        if (el) el.innerText = langData[key];
-      }
-    }
-    loadLanguageFile();
-  
+<script>
+let translations = {};
 
+async function loadLanguageFile() {
+  try {
+    const response = await fetch('translations.json');
+    translations = await response.json();
+
+    const currentLang = document.getElementById("languageSelector").value || 'en';
+    changeLanguage(currentLang);
+  } catch (e) {
+    console.warn("translations.json not loaded. Falling back to English.", e);
+  }
+}
+
+function changeLanguage(lang) {
+  const langData = translations[lang];
+  if (!langData) return;
+
+  for (const key in langData) {
+    const el = document.getElementById(key);
+    if (el) {
+      el.innerText = langData[key];
+    }
+  }
+}
+
+loadLanguageFile();
+</script> 
+  
+<script>
 function resetFields() {
   const inputs = document.querySelectorAll("input[type='number']");
   inputs.forEach(input => input.value = "");
@@ -458,55 +411,43 @@ function get(id) {
 
 function calculate() {
 
-  gtag('event', 'calculate_clicked', {
-  'event_category': 'Calculator',
-  'event_label': 'Retailer Monthly Incentive'
-  });
+  // GA safety
+  if (typeof gtag === "function") {
+    gtag('event', 'calculate_clicked', {
+      'event_category': 'Calculator',
+      'event_label': 'Retailer Monthly Incentive'
+    });
+  }
   
-  // Placeholder for actual form IDs and calculations
   const resultBody = document.getElementById("resultTableBody");
   resultBody.innerHTML = "";
 
+  const mnp349 = get("mnp349");
+  const sim349 = get("sim349");
 
-
-const entries = [
-  ["MNP Activation", get("mnp299") + get("mnp349"), get("mnp299") * 127 + get("mnp349") * 234],
-  ["New SIM Activation", get("sim299") + get("sim349"), get("sim299") * 76 + get("sim349") * 132],
-  ["JAF Booking", get("jaf1111") + get("jafUnlimited"), get("jaf1111") * 96 + get("jafUnlimited") * 120],
-  ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"), get("jbV4") * 125 + get("jbB2") * 160 + get("jbJ1") * 200],
-  ["JB MNP", get("jbMnp123") + get("jbMnp1234"), get("jbMnp123") * 96 + get("jbMnp1234") * 193],
-  ["JB New SIM", get("jbNewSIM123") + get("jbNewSIM1234"), get("jbNewSIM123") * 18 + get("jbNewSIM1234") * 48]
-];
-
+  const entries = [
+    ["MNP Activation", mnp349, mnp349 * 234],
+    ["New SIM Activation", sim349, sim349 * 132],
+    ["JAF Booking", get("jaf1111") + get("jafUnlimited"), get("jaf1111") * 96 + get("jafUnlimited") * 120],
+    ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"), get("jbV4") * 125 + get("jbB2") * 125 + get("jbJ1") * 225],
+    ["JB MNP", get("jbMnp123"), get("jbMnp123") * 96],
+    ["JB New SIM", get("jbNewSIM123"), get("jbNewSIM123") * 18],
+    ["JB Booking (₹100)", get("BKG"), get("BKG") * 30]
+  ];
 
   let total = 0;
   for (const [label, count, amount] of entries) {
     total += amount;
-    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(0)}</td></tr>`;
+    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
   }
- 
- // Bonuses
-  
+
+  // JMN Booking Commission
   let jmnBooking = get("jmnBooking");
   let jmnIncentive = jmnBooking * 10;
-  resultBody.innerHTML += `<tr><td>JMN Booking Incentive</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
+  resultBody.innerHTML += `<tr><td>JMN Booking Commission</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
   total += jmnIncentive;
-  // Bonuses
-  let mnpTotal = get("mnp299") + get("mnp349");
-  let sim349 = get("sim349");
-  let mnp349 = get("mnp349");
 
-  let mnpBonus = 0;
-  if (mnpTotal >= 10 && mnpTotal <= 19) mnpBonus = 387;
-  else if (mnpTotal >= 20 && mnpTotal <= 29) mnpBonus = 775;
-  else if (mnpTotal >= 30 && mnpTotal <= 59) mnpBonus = 1163;
-  else if (mnpTotal >= 60 && mnpTotal <= 99) mnpBonus = 2423;
-  else if (mnpTotal >= 100 && mnpTotal <= 149) mnpBonus = 4846;
-  else if (mnpTotal >= 150) mnpBonus = 6785;
-
-  document.getElementById("mnpBonusCell").innerText = `₹${mnpBonus}`;
-  total += mnpBonus;
-
+  // FR 349 Slab Commission (currently based only on MNP 349 as per your existing logic)
   let fr349Total = mnp349;
   let fr349Bonus = 0;
   if (fr349Total >= 5 && fr349Total <= 499) fr349Bonus = fr349Total * 10;
@@ -515,7 +456,7 @@ const entries = [
   document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
 
- // MNP Booster Updated
+  // MNP Booster (Sell & Win)
   let M = Math.floor(mnp349 / 3);
   let R = mnp349 % 3;
 
@@ -529,9 +470,9 @@ const entries = [
   }
 
   function rateFor(m) {
-    if (m >= 1 && m <= 3) return 33;
-    if (m >= 4 && m <= 9) return 48;
-    if (m >= 10) return 63;
+    if (m >= 1 && m <= 2) return 50;
+    if (m >= 3 && m <= 9) return 90;
+    if (m >= 10) return 110;
     return 0;
   }
 
@@ -540,40 +481,35 @@ const entries = [
     mnpBoosterInc += laps[i] * rateFor(laps[i]);
   }
 
-  document.getElementById("mnpBoosterCell").innerHTML = `₹${mnpBoosterInc}<br><span style="font-weight:normal; font-size: 12px; font-style: italic;">MNP in Laps: ${laps.join(", ")}</span>`;
+  document.getElementById("mnpBoosterCell").innerHTML =
+    `₹${mnpBoosterInc}<br><span style="font-weight:normal; font-size: 12px; font-style: italic;">MNP in Laps: ${laps.join(", ")}</span>`;
   total += mnpBoosterInc;
 
-  document.getElementById("grandTotal").innerText = `₹${total.toFixed(0)}`;
+  document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
 
 document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.setAttribute('placeholder', '0');
-    input.setAttribute('min', '0');
-    input.setAttribute('step', '1');
+  input.setAttribute('placeholder', '0');
+  input.setAttribute('min', '0');
+  input.setAttribute('step', '1');
 
-    input.addEventListener('input', () => {
-      const val = input.value;
-      const errEl = document.getElementById('err-' + input.id);
+  input.addEventListener('input', () => {
+    const val = input.value;
+    const errEl = document.getElementById('err-' + input.id);
 
-      if (val.includes('.')) {
-        input.value = Math.floor(val);
-        errEl.innerText = 'Decimal not allowed';
-      } else if (val < 0) {
-        input.value = 0;
-        errEl.innerText = 'Only positive numbers allowed';
-      } else {
-        errEl.innerText = '';
-      }
-    });
+    if (val.includes('.')) {
+      input.value = Math.floor(val);
+      if (errEl) errEl.innerText = 'Decimal not allowed';
+    } else if (val < 0) {
+      input.value = 0;
+      if (errEl) errEl.innerText = 'Only positive numbers allowed';
+    } else {
+      if (errEl) errEl.innerText = '';
+    }
   });
- 
+});
 </script>
 </body>
 </html>
-
-
-
-
-
