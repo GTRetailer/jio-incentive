@@ -1,10 +1,10 @@
-<!-- VERSION C18 (Result Summary = Card UI + Hide Zero Entries + Premium Total Banner) -->
+<!-- VERSION C21 (Tier Glow + Limited Slide Loop + Single Line Partner Msg + Remove Lap Badge + Tighter Modal Padding) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C18</title>
+  <title>Jio Retailer - Lap Incentive Calculator - C21</title>
 
   <!-- Inter Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -84,22 +84,8 @@
       line-height: 1.1;
     }
 
-    /* Lap Badge: 11px | bold | uppercase */
-    .lap-badge{
-      margin-top: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--deepBlue);
-      white-space: nowrap;
-    }
+    /* ✅ Removed Lap Badge completely */
 
-    /* Sub-caption: 13px | 500 */
     .subtitle{
       margin: 8px 0 0;
       text-align: center;
@@ -118,7 +104,6 @@
       text-align: left;
     }
 
-    /* Section Titles: 16px | 800 */
     .section-title{
       margin: 18px 0 10px;
       font-size: 16px;
@@ -127,7 +112,7 @@
       letter-spacing: -0.2px;
     }
 
-    /* ✅ Row spacing rules */
+    /* ✅ Row spacing rule */
     .row{
       display: grid;
       grid-template-columns: 1fr 96px;
@@ -138,7 +123,6 @@
     }
     .row:last-child{ border-bottom: none; }
 
-    /* Item Labels: 15px | 600 */
     .label{
       font-size: 15px;
       font-weight: 600;
@@ -146,7 +130,6 @@
       line-height: 1.2;
     }
 
-    /* Blue Notes: 12px | 600 */
     .note{
       margin: 7px 0 0;
       font-size: 12px;
@@ -163,7 +146,6 @@
       min-height: 12px;
     }
 
-    /* Inputs: 15px | 700 */
     .input{
       width: 96px;
       height: 36px;
@@ -185,7 +167,6 @@
       background: #ffffff;
     }
 
-    /* ===== 2x2 grids ===== */
     .grid-2{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -194,7 +175,6 @@
       border-bottom: 1px solid #eef0f3;
     }
 
-    /* ✅ Field spacing rules */
     .field{
       display: grid;
       grid-template-columns: 1fr 96px;
@@ -205,7 +185,6 @@
 
     .span-2{ grid-column: 1 / -1; }
 
-    /* ===== Bottom Actions ===== */
     .actions{
       display: flex;
       gap: 10px;
@@ -213,7 +192,6 @@
       flex-wrap: wrap;
     }
 
-    /* Calculate button: 17px | 900 */
     .btn-primary{
       flex: 1;
       min-width: 170px;
@@ -228,7 +206,6 @@
       background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2));
     }
 
-    /* Reset button: 14px | bold */
     .btn-secondary{
       flex: 1;
       min-width: 170px;
@@ -260,6 +237,7 @@
       z-index:100;
     }
 
+    /* ✅ Reduce edge padding (half-ish) */
     .modal{
       display:none;
       position:fixed;
@@ -271,14 +249,13 @@
       background:#fff;
       border:1px solid var(--border);
       border-radius:18px;
-      padding:18px 16px 16px;
+      padding: 10px 10px 12px;  /* ✅ reduced from 18/16 */
       z-index:101;
       box-shadow: 0 16px 34px rgba(0,0,0,0.28);
       max-height: 82%;
       overflow:auto;
     }
 
-    /* Modal Header: 22px | 900 */
     .modal-title{
       margin: 0;
       font-size: 22px;
@@ -290,13 +267,141 @@
     }
 
     .modal-subtitle{
-      margin: 6px 0 14px;
+      margin: 6px 0 10px;
       font-size: 13px;
       font-weight: 600;
       color: var(--sub);
       text-align: center;
       letter-spacing: 0.6px;
       text-transform: uppercase;
+    }
+
+    /* ===== Partner Tier Card + Tier Glow ===== */
+    .partner-wrap{
+      display:none;
+      margin-bottom: 10px;
+    }
+
+    .partner-card{
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--cardBorder);
+      border-radius: 18px;
+      padding: 12px 12px;
+      animation: cardFadeIn 450ms ease-out;
+    }
+
+    .partner-badge{
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      animation: popIn 420ms cubic-bezier(.2,.9,.25,1.4);
+      position: relative;
+      z-index: 2;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    /* ✅ Smaller font, single line, no wrapping */
+    .partner-msg{
+      margin-top: 8px;
+      font-size: 13px;      /* ✅ reduced */
+      font-weight: 700;     /* still strong */
+      color: var(--deepBlue);
+      line-height: 1.2;
+      white-space: nowrap;  /* ✅ force one line */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      position: relative;
+      z-index: 2;
+
+      /* ✅ slide animation loop only 4 times */
+      animation: slideUp 520ms ease-out 0s 4;
+    }
+
+    /* Tier badge colors */
+    .tier-bronze{
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #9a3412;
+    }
+    .tier-silver{
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    .tier-gold{
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #92400e;
+    }
+    .tier-platinum{
+      background: #eef6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
+    }
+
+    /* ✅ Tier glow uses CSS variable set on partner card */
+    .partner-card::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle at 20% 20%, var(--tierGlow, rgba(0,94,255,0.10)), transparent 55%);
+      opacity: 0.75;
+      z-index: 1;
+      pointer-events:none;
+    }
+
+    /* Burst ring behind badge */
+    .partner-card::before{
+      content:"";
+      position:absolute;
+      left: 22px;
+      top: 18px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(0,94,255,0.18);
+      transform: scale(0.2);
+      opacity: 0;
+      animation: burstRing 650ms ease-out;
+      z-index: 1;
+      pointer-events:none;
+    }
+
+    @keyframes popIn{
+      0%   { transform: scale(0.7); opacity: 0; }
+      60%  { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1.0); }
+    }
+
+    @keyframes slideUp{
+      0%   { transform: translateY(8px); opacity: 0; }
+      100% { transform: translateY(0px); opacity: 1; }
+    }
+
+    @keyframes burstRing{
+      0%   { transform: scale(0.2); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: scale(18); opacity: 0; }
+    }
+
+    @keyframes cardFadeIn{
+      0%   { transform: translateY(6px); opacity: 0; }
+      100% { transform: translateY(0px); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .partner-card, .partner-badge, .partner-msg,
+      .partner-card::before, .partner-card::after{
+        animation: none !important;
+      }
     }
 
     /* ===== Summary List ===== */
@@ -312,7 +417,7 @@
       background: var(--cardBg);
       border: 1px solid var(--cardBorder);
       border-radius: 18px;
-      padding: 14px 16px;
+      padding: 12px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -324,7 +429,6 @@
       flex: 1;
     }
 
-    /* Row Labels: 14px | 700 */
     .card-title{
       font-size: 14px;
       font-weight: 700;
@@ -343,7 +447,6 @@
       line-height: 1.2;
     }
 
-    /* Row Amounts: 15px | 800 */
     .card-amount{
       font-size: 15px;
       font-weight: 800;
@@ -351,7 +454,6 @@
       white-space: nowrap;
     }
 
-    /* Bonus highlight */
     .summary-card.bonus{
       background: var(--bonusBg);
       border: 1px solid var(--bonusBorder);
@@ -367,24 +469,22 @@
       font-weight: 600;
     }
 
-    /* Empty state */
     .empty-state{
       background: #fff;
       border: 1px dashed var(--border);
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px 12px;
       text-align: center;
       color: var(--sub);
       font-size: 13px;
       font-weight: 600;
     }
 
-    /* Total Banner */
     .total-banner{
-      margin-top: 14px;
+      margin-top: 12px;
       background: var(--deepBlue);
       border-radius: 22px;
-      padding: 22px 16px;
+      padding: 18px 12px;
       text-align: center;
       color: #ffffff;
       position: relative;
@@ -410,7 +510,6 @@
       text-transform: uppercase;
     }
 
-    /* Final Total Number: 40px | 900 | tighter */
     .total-banner-amount{
       margin-top: 10px;
       font-size: 40px;
@@ -422,11 +521,10 @@
     .modal-actions{
       display:flex;
       gap:10px;
-      margin-top:12px;
+      margin-top:10px;
       flex-wrap: wrap;
     }
 
-    /* WhatsApp/Save Buttons: 15px | 900 */
     .share-btn, .download-btn{
       flex: 1;
       min-width: 160px;
@@ -447,7 +545,6 @@
       .input{ width: 90px; }
       .field{ grid-template-columns: 1fr 90px; }
       .grid-2{ grid-template-columns: 1fr 1fr; }
-
       .title{ font-size: 23px; }
       .total-banner-amount{ font-size: 36px; }
     }
@@ -459,8 +556,7 @@
 <div class="page">
   <div class="header">
     <div class="title-row">
-      <h1 class="title">Jio Retailer – 10-Day Lap Incentive Calculator</h1>
-      <div class="lap-badge">10-DAY LAP</div>
+      <h1 class="title">Jio Retailer – Lap Incentive Calculator</h1>
     </div>
 
     <div class="subtitle">Enter your lap target and see expected earning</div>
@@ -471,9 +567,7 @@
   </div>
 
   <div class="row">
-    <div>
-      <div class="label">MNP ₹349</div>
-    </div>
+    <div><div class="label">MNP ₹349</div></div>
     <div>
       <input class="input" type="number" id="mnp349" min="0" max="999">
       <div class="error" id="err-mnp349"></div>
@@ -481,9 +575,7 @@
   </div>
 
   <div class="row">
-    <div>
-      <div class="label">New SIM ₹349</div>
-    </div>
+    <div><div class="label">New SIM ₹349</div></div>
     <div>
       <input class="input" type="number" id="sim349" min="0" max="999">
       <div class="error" id="err-sim349"></div>
@@ -502,9 +594,7 @@
   </div>
 
   <div class="row" style="border-bottom:none;">
-    <div>
-      <div class="label">AirFiber Booking ₹1200</div>
-    </div>
+    <div><div class="label">AirFiber Booking ₹1200</div></div>
     <div>
       <input class="input" type="number" id="jaf1111" min="0" max="999">
       <div class="error" id="err-jaf1111"></div>
@@ -555,7 +645,7 @@
   </div>
 
   <div class="footer-note">
-    *This calculator provides tentative payouts for a 10-day lap.
+    *This calculator provides tentative payouts.
   </div>
 </div>
 
@@ -563,12 +653,12 @@
 
 <div class="modal" id="resultModal">
   <h2 class="modal-title">Earnings Summary</h2>
-  <div class="modal-subtitle">Current Lap Performance</div>
+  <div class="modal-subtitle">Current Performance</div>
 
-  <!-- ✅ Card list (zero entries hidden) -->
+  <div class="partner-wrap" id="partnerWrap"></div>
+
   <div class="summary-list" id="summaryList"></div>
 
-  <!-- ✅ Total banner -->
   <div class="total-banner">
     <div class="total-banner-label">ESTIMATED PAYOUT</div>
     <div class="total-banner-amount" id="grandTotalBig">₹0</div>
@@ -628,11 +718,20 @@ function renderEmptyState() {
   return `<div class="empty-state">No entries added for this lap. Please enter values and calculate.</div>`;
 }
 
+/* Partner Tier Logic + Tier Glow Color */
+function getPartnerTier(mnpCount) {
+  if (mnpCount >= 10 && mnpCount <= 20) return { tier: "Bronze Partner", msg: "Congratulations! Bronze Partner unlocked", className: "tier-bronze", glow: "rgba(154,52,18,0.14)" };
+  if (mnpCount >= 21 && mnpCount <= 30) return { tier: "Silver Partner", msg: "Great work! Silver Partner unlocked", className: "tier-silver", glow: "rgba(51,65,85,0.12)" };
+  if (mnpCount >= 31 && mnpCount <= 40) return { tier: "Gold Partner", msg: "Outstanding! Gold Partner unlocked", className: "tier-gold", glow: "rgba(146,64,14,0.14)" };
+  if (mnpCount >= 41) return { tier: "Platinum Partner", msg: "Elite performance! Platinum Partner unlocked", className: "tier-platinum", glow: "rgba(29,78,216,0.14)" };
+  return null;
+}
+
 /* Share & Download */
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
   const total = document.getElementById("grandTotalBig").innerText;
-  const message = `My total Jio Partner earning for this 10-day lap is ${total}. Summary below 👇`;
+  const message = `My total Jio Partner earning is ${total}. Summary below 👇`;
 
   const originalMaxHeight = modal.style.maxHeight;
   const originalOverflow = modal.style.overflow;
@@ -686,12 +785,16 @@ function calculate() {
   if (typeof gtag === "function") {
     gtag('event', 'calculate_clicked', {
       event_category: 'Calculator',
-      event_label: 'Retailer Lap Incentive (10 Days)'
+      event_label: 'Retailer Lap Incentive'
     });
   }
 
   const summaryList = document.getElementById("summaryList");
+  const partnerWrap = document.getElementById("partnerWrap");
+
   summaryList.innerHTML = "";
+  partnerWrap.innerHTML = "";
+  partnerWrap.style.display = "none";
 
   const mnp349 = get("mnp349");
   const sim349 = get("sim349");
@@ -703,6 +806,18 @@ function calculate() {
   const jbNewSIM123 = get("jbNewSIM123");
   const bkg = get("BKG");
   const jmnBooking = get("jmnBooking");
+
+  /* Partner Tier Card */
+  const partner = getPartnerTier(mnp349);
+  if (partner) {
+    partnerWrap.style.display = "block";
+    partnerWrap.innerHTML = `
+      <div class="partner-card" style="--tierGlow:${partner.glow}">
+        <div class="partner-badge ${partner.className}">${partner.tier}</div>
+        <div class="partner-msg">${partner.msg}</div>
+      </div>
+    `;
+  }
 
   const entries = [
     ["MNP Activation", mnp349, mnp349 * 234],
@@ -717,7 +832,6 @@ function calculate() {
   let total = 0;
   let shown = 0;
 
-  // ✅ Only show non-zero entries
   for (const [label, count, amount] of entries) {
     if (count <= 0 || amount <= 0) continue;
     summaryList.innerHTML += renderCard(label, count, amount);
@@ -725,7 +839,6 @@ function calculate() {
     shown++;
   }
 
-  // JMN Booking Commission (only if non-zero)
   const jmnIncentive = jmnBooking * 10;
   if (jmnBooking > 0 && jmnIncentive > 0) {
     summaryList.innerHTML += renderCard("JMN Booking Commission", jmnBooking, jmnIncentive);
@@ -733,7 +846,6 @@ function calculate() {
     shown++;
   }
 
-  // FR 349 Slab Bonus (only if applicable)
   const fr349Bonus = (mnp349 >= 5) ? mnp349 * 10 : 0;
   if (fr349Bonus > 0) {
     summaryList.innerHTML += renderBonusCard("FR 349 Slab Bonus", "Tier Target Reached", fr349Bonus);
@@ -751,7 +863,7 @@ function calculate() {
   document.getElementById("overlay").style.display = "block";
 }
 
-// Validation (only shows errors where err-id exists)
+// Validation
 document.querySelectorAll('input[type="number"]').forEach(input => {
   input.setAttribute('min', '0');
   input.setAttribute('step', '1');
