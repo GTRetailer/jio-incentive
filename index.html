@@ -1,10 +1,10 @@
-<!-- VERSION C24 (A+B+C: Compact Result Modal to Fit Estimated Payout in One Screen) -->
+<!-- VERSION C25 (Vertical Center Align: Input Text + Row Alignment) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Lap Incentive Calculator - C24</title>
+  <title>Jio Retailer - Lap Incentive Calculator - C25</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -97,12 +97,18 @@
       color: var(--text);
       letter-spacing: -0.2px;
     }
+    
+.top-divider{
+  border: none;
+  border-top: 1px solid #eef0f3;
+  margin: 0px 0 0px;
+}
 
-    /* ✅ Row spacing rule */
+    /* ✅ Row spacing rule + vertical centering */
     .row{
       display: grid;
       grid-template-columns: 1fr 96px;
-      align-items: center;
+      align-items: center;          /* ✅ center align vertically */
       gap: 10px;
       padding: 10px 0 0px 0;
       border-bottom: 1px solid #eef0f3;
@@ -132,6 +138,7 @@
       min-height: 12px;
     }
 
+    /* ✅ Input vertical center fix */
     .input{
       width: 96px;
       height: 36px;
@@ -140,11 +147,15 @@
       border: 1px solid var(--border);
       background: var(--inputBg);
       text-align: center;
+
       font-size: 15px;
       font-weight: 700;
+
       outline: none;
       justify-self: end;
       color: var(--text);
+
+      line-height: 36px;            /* ✅ vertically centers text */
     }
 
     .input:focus{
@@ -162,12 +173,12 @@
       border-bottom: 1px solid #eef0f3;
     }
 
-    /* ✅ Field spacing rule */
+    /* ✅ Field spacing rule + vertical centering */
     .field{
       display: grid;
       grid-template-columns: 1fr 96px;
       gap: 10px;
-      align-items: center;
+      align-items: center;          /* ✅ center label+input vertically */
       padding: 0px 0;
     }
 
@@ -254,10 +265,9 @@
       line-height: 1.15;
     }
 
-    /* ✅ B) tighter modal subtitle */
     .modal-subtitle{
-      margin: 4px 0 6px;   /* was 6px 0 10px */
-      font-size: 12px;     /* was 13px */
+      margin: 4px 0 6px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--sub);
       text-align: center;
@@ -365,21 +375,19 @@
     }
 
     /* ===== Summary List ===== */
-    /* ✅ A) reduce gap between cards */
     .summary-list{
       display: flex;
       flex-direction: column;
-      gap: 6px; /* was 10px */
+      gap: 6px;
       padding: 0;
       margin: 0;
     }
 
-    /* ✅ A) reduce card padding + radius */
     .summary-card{
       background: var(--cardBg);
       border: 1px solid var(--cardBorder);
-      border-radius: 14px;       /* was 18px */
-      padding: 10px 12px;        /* was 12px 12px */
+      border-radius: 14px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -401,10 +409,9 @@
       text-overflow: ellipsis;
     }
 
-    /* ✅ A) tighter subtext */
     .card-sub{
-      margin-top: 2px;    /* was 5px */
-      font-size: 11px;    /* was 12px */
+      margin-top: 2px;
+      font-size: 11px;
       font-weight: 500;
       color: #94a3b8;
       line-height: 1.15;
@@ -449,16 +456,15 @@
       margin-top: 10px;
     }
 
-    /* ✅ C) smaller payout tile */
     .payout-tile{
       background: var(--deepBlue);
       border-radius: 16px;
-      padding: 12px 10px;     /* was 14px */
+      padding: 12px 10px;
       text-align: center;
       color: #fff;
       position: relative;
       overflow: hidden;
-      min-height: 78px;       /* was 92px */
+      min-height: 78px;
     }
 
     .payout-tile.monthly{
@@ -491,10 +497,9 @@
       opacity: 0.85;
     }
 
-    /* ✅ C) slightly smaller amount */
     .payout-amount{
-      margin-top: 6px;   /* was 8px */
-      font-size: 28px;   /* was 30px */
+      margin-top: 6px;
+      font-size: 28px;
       font-weight: 900;
       letter-spacing: -0.8px;
       line-height: 1.05;
@@ -528,7 +533,7 @@
 
     @media (max-width: 420px){
       .row{ grid-template-columns: 1fr 90px; }
-      .input{ width: 90px; }
+      .input{ width: 90px; height: 36px; line-height: 36px; }
       .field{ grid-template-columns: 1fr 90px; }
       .grid-2{ grid-template-columns: 1fr 1fr; }
       .title{ font-size: 23px; }
@@ -541,15 +546,17 @@
 
 <div class="page">
   <div class="header">
-    <h1 class="title">Jio Retailer – Lap Incentive Calculator</h1>
-    <div class="subtitle">Enter your lap target and see expected earning</div>
+    <h1 class="title">Jio Retailer – Lap Commission Calculator</h1>
+    <div class="subtitle">Enter your committed numbers for current lap</div>
     <div class="disclaimer">
-      *Final commission will be as per company system, subject to eligibility and conditions.
-    </div>
+      *This calculator provides tentative payouts for non-DSS retailer.<br> *Final commission will be as per company system, subject to eligibility and conditions.<br>
+      </div>
   </div>
+  
+  <hr class="top-divider">
 
   <div class="row">
-    <div><div class="label">MNP ₹349</div></div>
+    <div><div class="label">MNP Activation (₹349)</div></div>
     <div>
       <input class="input" type="number" id="mnp349" min="0" max="999">
       <div class="error" id="err-mnp349"></div>
@@ -557,7 +564,7 @@
   </div>
 
   <div class="row">
-    <div><div class="label">New SIM ₹349</div></div>
+    <div><div class="label">New SIM Activation (₹349)</div></div>
     <div>
       <input class="input" type="number" id="sim349" min="0" max="999">
       <div class="error" id="err-sim349"></div>
@@ -575,8 +582,8 @@
     </div>
   </div>
 
-  <div class="row" style="border-bottom:none;">
-    <div><div class="label">AirFiber Booking ₹1200</div></div>
+  <div class="row">
+    <div><div class="label">Jio AirFiber Booking (₹1200)</div></div>
     <div>
       <input class="input" type="number" id="jaf1111" min="0" max="999">
       <div class="error" id="err-jaf1111"></div>
@@ -600,7 +607,7 @@
   </div>
 
   <div class="section-title">JioBharat SIM</div>
-  <div class="grid-2" style="border-bottom:none;">
+  <div class="grid-2">
     <div class="field">
       <div class="label">MNP FR</div>
       <input class="input" type="number" id="jbMnp123" min="0" max="999">
@@ -627,7 +634,8 @@
   </div>
 
   <div class="footer-note">
-    *This calculator provides tentative payouts.
+    * This calculator provides tentative payouts.<br> 
+    * Created by GT retailer.
   </div>
 </div>
 
@@ -635,7 +643,7 @@
 
 <div class="modal" id="resultModal">
   <h2 class="modal-title">Earnings Summary</h2>
-  <div class="modal-subtitle">Current Performance</div>
+ 
 
   <div class="partner-wrap" id="partnerWrap"></div>
 
@@ -649,8 +657,9 @@
 
     <div class="payout-tile monthly">
       <div class="payout-label">Projected Monthly</div>
-      <div class="payout-sub">(3 × Estimated Payout)</div>
+      
       <div class="payout-amount" id="projectedMonthly">₹0</div>
+      <div class="payout-sub">(3 × Estimated Payout)</div>
     </div>
   </div>
 
@@ -719,7 +728,7 @@ function getPartnerTier(mnpCount) {
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
   const total = document.getElementById("estimatedPayout").innerText;
-  const message = `My estimated payout is ${total}. Summary below 👇`;
+  const message = `My estimated payout indicates ${total}. Summary below 👇`;
 
   const originalMaxHeight = modal.style.maxHeight;
   const originalOverflow = modal.style.overflow;
