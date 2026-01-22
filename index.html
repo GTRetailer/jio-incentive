@@ -1,10 +1,10 @@
-<!-- VERSION C17 (Inter Typography System + Non-sticky CTA + Modal Total Emphasis) -->
+<!-- VERSION C18 (Result Summary = Card UI + Hide Zero Entries + Premium Total Banner) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C17</title>
+  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C18</title>
 
   <!-- Inter Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -31,13 +31,19 @@
       --bg:#ffffff;
       --inputBg:#f8f9fa;
       --danger:#d93025;
+
+      --cardBg:#f7fafc;
+      --cardBorder:#eef2f6;
+      --bonusBg:#eef6ff;
+      --bonusBorder:#d6e9ff;
+
       --shadow: 0 1px 2px rgba(0,0,0,0.10);
     }
 
     *{
       box-sizing: border-box;
-      font-family: Inter, sans-serif; /* ✅ Global Typography */
-      -webkit-font-smoothing: antialiased; /* ✅ Sharper text */
+      font-family: Inter, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
     body{
@@ -49,11 +55,9 @@
 
     .page{
       width: 100%;
-      padding: 14px 14px 18px;
-      margin: 0;
       max-width: 820px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+      padding: 14px 14px 18px;
     }
 
     /* ===== Header ===== */
@@ -69,18 +73,18 @@
       flex-wrap: wrap;
     }
 
-    /* ✅ Title: 26px | 900 | tighter tracking */
+    /* Title: 26px | 900 | tighter */
     .title{
       margin: 0;
       text-align: center;
       font-size: 26px;
       font-weight: 900;
       color: var(--deepBlue);
-      letter-spacing: -0.6px; /* tighter */
+      letter-spacing: -0.6px;
       line-height: 1.1;
     }
 
-    /* ✅ Lap Badge: 11px | bold | uppercase */
+    /* Lap Badge: 11px | bold | uppercase */
     .lap-badge{
       margin-top: 4px;
       font-size: 11px;
@@ -92,9 +96,10 @@
       border-radius: 999px;
       background: #ffffff;
       color: var(--deepBlue);
+      white-space: nowrap;
     }
 
-    /* ✅ Sub-caption: 13px | 500 */
+    /* Sub-caption: 13px | 500 */
     .subtitle{
       margin: 8px 0 0;
       text-align: center;
@@ -106,14 +111,14 @@
 
     .disclaimer{
       margin: 10px 0 0;
-      font-size: 12px; /* helper text spec */
+      font-size: 12px;
       font-weight: 400;
       color: var(--sub);
       line-height: 1.35;
       text-align: left;
     }
 
-    /* ✅ Section Titles: 16px | 800 */
+    /* Section Titles: 16px | 800 */
     .section-title{
       margin: 18px 0 10px;
       font-size: 16px;
@@ -122,18 +127,18 @@
       letter-spacing: -0.2px;
     }
 
-    /* ✅ Row padding rule remembered */
+    /* ✅ Row spacing rules */
     .row{
       display: grid;
       grid-template-columns: 1fr 96px;
       align-items: center;
       gap: 10px;
-      padding: 10px 0 0px 0; /* ✅ as remembered */
+      padding: 10px 0 0px 0;
       border-bottom: 1px solid #eef0f3;
     }
     .row:last-child{ border-bottom: none; }
 
-    /* ✅ Item Labels: 15px | 600 */
+    /* Item Labels: 15px | 600 */
     .label{
       font-size: 15px;
       font-weight: 600;
@@ -141,16 +146,7 @@
       line-height: 1.2;
     }
 
-    /* ✅ Helper small text: 12px | 400 */
-    .helper{
-      margin-top: 3px;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--sub);
-      line-height: 1.2;
-    }
-
-    /* ✅ Blue Notes: 12px | 600 */
+    /* Blue Notes: 12px | 600 */
     .note{
       margin: 7px 0 0;
       font-size: 12px;
@@ -167,7 +163,7 @@
       min-height: 12px;
     }
 
-    /* ✅ Input: numbers 15px | 700 */
+    /* Inputs: 15px | 700 */
     .input{
       width: 96px;
       height: 36px;
@@ -198,18 +194,18 @@
       border-bottom: 1px solid #eef0f3;
     }
 
-    /* ✅ Field padding remembered */
+    /* ✅ Field spacing rules */
     .field{
       display: grid;
       grid-template-columns: 1fr 96px;
       gap: 10px;
       align-items: center;
-      padding: 0px 0; /* ✅ as remembered */
+      padding: 0px 0;
     }
 
     .span-2{ grid-column: 1 / -1; }
 
-    /* ===== Bottom Actions (moved to end of page) ===== */
+    /* ===== Bottom Actions ===== */
     .actions{
       display: flex;
       gap: 10px;
@@ -217,7 +213,7 @@
       flex-wrap: wrap;
     }
 
-    /* ✅ Calculate button: 17px | 900 */
+    /* Calculate button: 17px | 900 */
     .btn-primary{
       flex: 1;
       min-width: 170px;
@@ -232,7 +228,7 @@
       background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2));
     }
 
-    /* ✅ Reset button: 14px | bold */
+    /* Reset button: 14px | bold */
     .btn-secondary{
       flex: 1;
       min-width: 170px;
@@ -271,90 +267,152 @@
       left:50%;
       transform:translate(-50%, -50%);
       width: 92%;
-      max-width: 560px;
+      max-width: 620px;
       background:#fff;
       border:1px solid var(--border);
       border-radius:18px;
-      padding:16px;
+      padding:18px 16px 16px;
       z-index:101;
       box-shadow: 0 16px 34px rgba(0,0,0,0.28);
-      max-height: 80%;
+      max-height: 82%;
       overflow:auto;
     }
 
-    /* ✅ Modal Header: 22px | 900 */
-    .modal h3{
-      margin:0 0 8px;
+    /* Modal Header: 22px | 900 */
+    .modal-title{
+      margin: 0;
       font-size: 22px;
       font-weight: 900;
       color: var(--deepBlue);
       text-align: center;
       letter-spacing: -0.5px;
+      line-height: 1.15;
     }
 
-    .modal p{
-      margin: 0 0 10px;
-      font-size: 12px;
-      font-weight: 400;
+    .modal-subtitle{
+      margin: 6px 0 14px;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--sub);
       text-align: center;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-size: 13px;
-    }
-    th, td{
-      border:1px solid #e5e7eb;
-      padding:8px;
-      text-align:left;
+    /* ===== Summary List ===== */
+    .summary-list{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
     }
 
-    /* ✅ Row labels/amounts inside table */
-    thead th{
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
+    .summary-card{
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    tbody td:first-child{
+    .summary-left{
+      min-width: 0;
+      flex: 1;
+    }
+
+    /* Row Labels: 14px | 700 */
+    .card-title{
       font-size: 14px;
-      font-weight: 700; /* ✅ Row Labels 14px | 700 */
-      color: var(--text);
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    tbody td:last-child{
+    .card-sub{
+      margin-top: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.2;
+    }
+
+    /* Row Amounts: 15px | 800 */
+    .card-amount{
       font-size: 15px;
-      font-weight: 800; /* ✅ Row Amounts 15px | 800 */
-      color: var(--text);
+      font-weight: 800;
+      color: var(--deepBlue);
+      white-space: nowrap;
     }
 
-    tr.bonus-row td{
-      background:#f1f3f4;
-      font-weight:800;
+    /* Bonus highlight */
+    .summary-card.bonus{
+      background: var(--bonusBg);
+      border: 1px solid var(--bonusBorder);
     }
 
-    /* ===== Final total highlight (BIG number) ===== */
-    .total-box{
+    .summary-card.bonus .card-title{
+      color: var(--btnBlue2);
+      font-weight: 800;
+    }
+
+    .summary-card.bonus .card-sub{
+      color: #4b83d8;
+      font-weight: 600;
+    }
+
+    /* Empty state */
+    .empty-state{
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      color: var(--sub);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Total Banner */
+    .total-banner{
       margin-top: 14px;
       background: var(--deepBlue);
-      border-radius: 16px;
-      padding: 14px 12px;
+      border-radius: 22px;
+      padding: 22px 16px;
       text-align: center;
-      color: #fff;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
     }
 
-    .total-label{
-      font-size: 13px;
+    .total-banner::after{
+      content:"";
+      position:absolute;
+      right:-60px;
+      top:-60px;
+      width:160px;
+      height:160px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .total-banner-label{
+      font-size: 12px;
       font-weight: 700;
-      opacity: 0.9;
-      letter-spacing: 0.4px;
+      opacity: 0.85;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
-    /* ✅ Final Total: 40px | 900 | tighter */
-    .total-number{
-      margin-top: 6px;
+    /* Final Total Number: 40px | 900 | tighter */
+    .total-banner-amount{
+      margin-top: 10px;
       font-size: 40px;
       font-weight: 900;
       letter-spacing: -1px;
@@ -364,11 +422,11 @@
     .modal-actions{
       display:flex;
       gap:10px;
-      margin-top:10px;
+      margin-top:12px;
       flex-wrap: wrap;
     }
 
-    /* ✅ WhatsApp/Save buttons: 15px | 900 */
+    /* WhatsApp/Save Buttons: 15px | 900 */
     .share-btn, .download-btn{
       flex: 1;
       min-width: 160px;
@@ -389,8 +447,9 @@
       .input{ width: 90px; }
       .field{ grid-template-columns: 1fr 90px; }
       .grid-2{ grid-template-columns: 1fr 1fr; }
+
       .title{ font-size: 23px; }
-      .total-number{ font-size: 36px; }
+      .total-banner-amount{ font-size: 36px; }
     }
   </style>
 </head>
@@ -490,7 +549,6 @@
     </div>
   </div>
 
-  <!-- ✅ Calculate/Reset moved to end of page -->
   <div class="actions">
     <button class="btn-primary" onclick="calculate()">Calculate</button>
     <button class="btn-secondary" onclick="resetFields()">Reset</button>
@@ -504,30 +562,16 @@
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 
 <div class="modal" id="resultModal">
-  <h3>Your Total Lap Earning</h3>
-  <p>*Tentative payout summary</p>
+  <h2 class="modal-title">Earnings Summary</h2>
+  <div class="modal-subtitle">Current Lap Performance</div>
 
-  <table>
-    <thead>
-      <tr><th>Section</th><th>Lap Count</th><th>Lap Incentive</th></tr>
-    </thead>
-    <tbody id="resultTableBody"></tbody>
+  <!-- ✅ Card list (zero entries hidden) -->
+  <div class="summary-list" id="summaryList"></div>
 
-    <tr class="bonus-row">
-      <td colspan="2">MNP "Sell & Win" Comm.</td>
-      <td id="mnpBoosterCell">₹0</td>
-    </tr>
-
-    <tr class="bonus-row">
-      <td colspan="2">FR 349 Slab Comm.</td>
-      <td id="fr349BonusCell">₹0</td>
-    </tr>
-  </table>
-
-  <!-- ✅ Big Total -->
-  <div class="total-box">
-    <div class="total-label">TOTAL LAP EARNING</div>
-    <div class="total-number" id="grandTotalBig">₹0</div>
+  <!-- ✅ Total banner -->
+  <div class="total-banner">
+    <div class="total-banner-label">ESTIMATED PAYOUT</div>
+    <div class="total-banner-amount" id="grandTotalBig">₹0</div>
   </div>
 
   <div class="modal-actions">
@@ -552,6 +596,39 @@ function get(id) {
   return parseInt(value) || 0;
 }
 
+function formatINR(n) {
+  return "₹" + Math.round(n).toLocaleString("en-IN");
+}
+
+function renderCard(title, qty, amount) {
+  return `
+    <div class="summary-card">
+      <div class="summary-left">
+        <div class="card-title">${title}</div>
+        <div class="card-sub">Quantity: ${qty}</div>
+      </div>
+      <div class="card-amount">${formatINR(amount)}</div>
+    </div>
+  `;
+}
+
+function renderBonusCard(title, subtitle, amount) {
+  return `
+    <div class="summary-card bonus">
+      <div class="summary-left">
+        <div class="card-title">${title}</div>
+        <div class="card-sub">${subtitle}</div>
+      </div>
+      <div class="card-amount">${formatINR(amount)}</div>
+    </div>
+  `;
+}
+
+function renderEmptyState() {
+  return `<div class="empty-state">No entries added for this lap. Please enter values and calculate.</div>`;
+}
+
+/* Share & Download */
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
   const total = document.getElementById("grandTotalBig").innerText;
@@ -568,6 +645,11 @@ function shareWhatsApp() {
       modal.style.overflow = originalOverflow;
 
       canvas.toBlob(function(blob) {
+        if (!blob) {
+          alert("Unable to generate image. Please try again.");
+          return;
+        }
+
         const file = new File([blob], "summary.png", { type: "image/png" });
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -608,45 +690,62 @@ function calculate() {
     });
   }
 
-  const resultBody = document.getElementById("resultTableBody");
-  resultBody.innerHTML = "";
+  const summaryList = document.getElementById("summaryList");
+  summaryList.innerHTML = "";
 
   const mnp349 = get("mnp349");
   const sim349 = get("sim349");
+  const jaf1111 = get("jaf1111");
+  const jbV4 = get("jbV4");
+  const jbB2 = get("jbB2");
+  const jbJ1 = get("jbJ1");
+  const jbMnp123 = get("jbMnp123");
+  const jbNewSIM123 = get("jbNewSIM123");
+  const bkg = get("BKG");
+  const jmnBooking = get("jmnBooking");
 
   const entries = [
     ["MNP Activation", mnp349, mnp349 * 234],
     ["New SIM Activation", sim349, sim349 * 132],
-    ["JAF Booking", get("jaf1111"), get("jaf1111") * 96],
-    ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"),
-      get("jbV4") * 125 + get("jbB2") * 125 + get("jbJ1") * 225
-    ],
-    ["JB MNP", get("jbMnp123"), get("jbMnp123") * 96],
-    ["JB New SIM", get("jbNewSIM123"), get("jbNewSIM123") * 18],
-    ["JB Booking (₹100)", get("BKG"), get("BKG") * 30]
+    ["JAF Booking", jaf1111, jaf1111 * 96],
+    ["JioBharat Sales", (jbV4 + jbB2 + jbJ1), (jbV4 * 125 + jbB2 * 125 + jbJ1 * 225)],
+    ["JB MNP", jbMnp123, jbMnp123 * 96],
+    ["JB New SIM", jbNewSIM123, jbNewSIM123 * 18],
+    ["JB Booking (₹100)", bkg, bkg * 30]
   ];
 
   let total = 0;
+  let shown = 0;
+
+  // ✅ Only show non-zero entries
   for (const [label, count, amount] of entries) {
+    if (count <= 0 || amount <= 0) continue;
+    summaryList.innerHTML += renderCard(label, count, amount);
     total += amount;
-    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
+    shown++;
   }
 
-  // JMN Booking Commission
-  let jmnBooking = get("jmnBooking");
-  let jmnIncentive = jmnBooking * 10;
-  resultBody.innerHTML += `<tr><td>JMN Booking Commission</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
-  total += jmnIncentive;
+  // JMN Booking Commission (only if non-zero)
+  const jmnIncentive = jmnBooking * 10;
+  if (jmnBooking > 0 && jmnIncentive > 0) {
+    summaryList.innerHTML += renderCard("JMN Booking Commission", jmnBooking, jmnIncentive);
+    total += jmnIncentive;
+    shown++;
+  }
 
-  // FR 349 Slab Commission (Lap-based)
-  let fr349Bonus = (mnp349 >= 5) ? mnp349 * 10 : 0;
-  document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
-  total += fr349Bonus;
+  // FR 349 Slab Bonus (only if applicable)
+  const fr349Bonus = (mnp349 >= 5) ? mnp349 * 10 : 0;
+  if (fr349Bonus > 0) {
+    summaryList.innerHTML += renderBonusCard("FR 349 Slab Bonus", "Tier Target Reached", fr349Bonus);
+    total += fr349Bonus;
+    shown++;
+  }
 
-  // Sell & Win (placeholder - safe)
-  document.getElementById("mnpBoosterCell").innerText = `₹0`;
+  if (shown === 0) {
+    summaryList.innerHTML = renderEmptyState();
+  }
 
-  document.getElementById("grandTotalBig").innerText = `₹${total.toFixed(2)}`;
+  document.getElementById("grandTotalBig").innerText = formatINR(total);
 
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
