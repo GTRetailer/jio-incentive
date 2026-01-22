@@ -1,4 +1,4 @@
-<!-- VERSION C13.3 (Removed Header 1 & 2, styled first rows like header) -->
+<!-- VERSION C13.3 (Removed Header 1 & 2, styled input rows like headers) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +96,7 @@
       text-align: right;
     }
 
-    /* ✅ header-like style for first row in a block */
+    /* ✅ Header-like styling for input rows (labels only) */
     .header-like-row label {
       font-size: 15px;
       font-weight: 600;
@@ -240,7 +240,7 @@
 
 <div class="emboss-line"></div>
 
-<!-- ✅ Header removed, row styled like header -->
+<!-- ✅ Header 1 removed, row styled -->
 <div class="section">
   <div class="row header-like-row">
     <label>₹349 Plan (MNP)</label>
@@ -249,20 +249,22 @@
   </div>
 </div>
 
-<!-- ✅ Header removed, SIM row styled like header -->
+<!-- ✅ Header 2 removed, BOTH rows styled -->
 <div class="section">
+
   <div class="row header-like-row">
     <label>₹349 Plan (New SIM)</label>
     <input type="number" id="sim349" min="0" max="999">
     <span class="error-message" id="err-sim349"></span>
   </div>
     
-  <div class="row">
+  <div class="row header-like-row">
     <label>JMN Booking</label>
     <input type="number" id="jmnBooking" min="0" max="999">
     <span class="error-message" id="err-jmnBooking"></span>
   </div>
  
+  <!-- ✅ Subtext remains unchanged -->
   <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
     <strong>Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</strong>
   </p>
