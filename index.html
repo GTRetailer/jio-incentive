@@ -30,13 +30,15 @@
       flex: 0 0 auto;
       margin-right: 8px;
     }
+
     .row-single input {
       flex: 0 0 70px;
     }
+
     .row-single .error-message {
       flex: 0 0 auto;
     }
-
+    
     h2 {
       color: #0b57d0;
       text-align: center;
@@ -94,22 +96,16 @@
       text-align: right;
     }
 
+    /* ✅ NEW: Make row look like a header */
+    .header-like-row label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+
     input[type="number"] {
       min: 0;
       step: 1;
-    }
-
-    /* ✅ NEW: Header-like styling for first input row */
-    .header-row label {
-      color: #333;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .header-row input {
-      border: 2px solid #0b57d0;
-      font-weight: 600;
-      background: #ffffff;
     }
 
     .action-buttons {
@@ -172,175 +168,3 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
-    }
-
-    .modal th,
-    .modal td {
-      padding: 6px;
-      text-align: left;
-      border: 1px solid #ddd;
-    }
-
-    .modal tr.bonus-row td {
-      font-weight: bold;
-      background-color: #f3f3f3;
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-    }
-
-    .share-btn, .download-btn {
-      padding: 8px;
-      font-size: 13px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      width: 48%;
-    }
-
-    .share-btn { background-color: #25d366; color: white; }
-    .download-btn { background-color: #007bff; color: white; }
-
-    @media screen and (max-width: 480px) {
-      .row label {
-        font-size: 12px;
-      }
-      .row input, .row select {
-        font-size: 12px;
-        flex: 0 0 60px;
-      }
-      .action-buttons {
-        flex-direction: column;
-      }
-      .share-btn, .download-btn {
-        width: 100%;
-      }
-      .header-row label {
-        font-size: 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<select id="languageSelector" onchange="changeLanguage(this.value)" style="margin-bottom: 10px;">
-  <option value="en">English</option>
-  <option value="hi">हिन्दी</option>
-</select>
-
-<h2 id="title">Jio Retailer - Monthly Commission Calculator</h2>
-
-<p class="instruction" id="goldNote" style="font-weight: bold; color: #ff0000;">
-  Make Every Customer Smile. Get customer to experience Google Gemini Pro (worth ₹35100) FREE with ₹349 recharge <br>
-</p>
-
-<p class="instruction">
-  *This calculator provides tentative payouts for non-DSS retailer. Final commission will be as per company system, subject to eligibility and conditions.<br>
-  *Enter your monthly committed numbers below.
-</p>
-<div class="emboss-line"></div>
-
-<!-- ✅ SECTION 1 header removed, only input retained and styled like header -->
-<div class="section">
-  <div class="row header-row">
-    <label>₹349 MNP Activation</label>
-    <input type="number" id="mnp349" min="0" max="999">
-    <span class="error-message" id="err-mnp349"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>2. New SIM Activation</h3>
-  <div class="row">
-    <label>₹349 Plan</label>
-    <input type="number" id="sim349" min="0" max="999">
-    <span class="error-message" id="err-sim349"></span>
-  </div>
-
-  <div class="row">
-    <label>JMN Booking</label>
-    <input type="number" id="jmnBooking" min="0" max="999">
-    <span class="error-message" id="err-jmnBooking"></span>
-  </div>
-
-  <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
-    <strong>Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</strong>
-  </p>
-</div>
-
-<div class="section">
-  <h3>3. Jio AirFiber Bookings</h3>
-  <div class="row">
-    <label>₹1200 Booking</label>
-    <input type="number" id="jaf1111" min="0" max="999">
-    <span class="error-message" id="err-jaf1111"></span>
-
-    <label>Unlimited Offer</label>
-    <input type="number" id="jafUnlimited" min="0" max="999">
-    <span class="error-message" id="err-jafUnlimited"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>4. JioBharat Sales</h3>
-  <div class="row">
-    <label>V4 (₹799)</label>
-    <input type="number" id="jbV4" min="0" max="999">
-    <span class="error-message" id="err-jbV4"></span>
-
-    <label>A1 (₹1299)</label>
-    <input type="number" id="jbB2" min="0" max="999">
-    <span class="error-message" id="err-jbB2"></span>
-  </div>
-
-  <div class="row">
-    <label>Prima 2.0 (₹2799)</label>
-    <input type="number" id="jbJ1" min="0" max="999">
-    <span class="error-message" id="err-jbJ1"></span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>5. JioBharat – SIM</h3>
-  <div class="row">
-    <label>MNP FR </label>
-    <input type="number" id="jbMnp123" min="0" max="999">
-    <span class="error-message" id="err-jbMnp123"></span>
-
-    <label>New SIM FR </label>
-    <input type="number" id="jbNewSIM123" min="0" max="999">
-    <span class="error-message" id="err-jbNewSIM123"></span>
-  </div>
-
-  <div class="row row-single">
-    <label>Booking (₹100 → ₹30 incentive)</label>
-    <input type="number" id="BKG" min="0" max="999">
-    <span class="error-message" id="err-BKG"></span>
-  </div>
-
-  <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
-    <strong>FR includes 23/123/234/269/369 recharge plan</strong>
-  </p>
-</div>
-
-<div class="action-buttons">
-  <button onclick="calculate()">Calculate</button>
-  <button class="reset-btn" onclick="resetFields()">Reset</button>
-</div>
-
-<p class="post-instruction">
-  *This calculator provides tentative payouts.<br>
-  * Created by GT retailer.
-</p>
-
-<div class="overlay" id="overlay" onclick="closePopup()"></div>
-
-<div class="modal" id="resultModal">
-  <h3>Your Total Earning</h3>
-  <p class="post-instruction">*This calculator provides tentative payouts</p>
