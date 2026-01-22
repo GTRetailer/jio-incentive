@@ -1,12 +1,12 @@
-<!-- VERSION C14 (10-Day Lap Earning Calculator) -->
+<!-- VERSION C14.1 (Premium UI: Hierarchy + List Rows + Banner + Consistent Sections) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Lap Earning Calculator - C14</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C14.1</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <!-- Google tag (gtag.js) -->
@@ -21,149 +21,212 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      margin: 15px;
-      background: #fafafa;
+      margin: 14px;
+      background: #f5f6f8;
       font-size: 14px;
     }
 
-    h2 {
+    /* ===== Header / Hierarchy ===== */
+    .app-header {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px 14px 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      margin-bottom: 10px;
+    }
+
+    .app-title {
       color: #0b57d0;
       text-align: center;
-      font-size: 19px;
-      margin-bottom: 6px;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      line-height: 1.2;
     }
 
-    .instruction {
-      text-align: left;
-      color: #555;
-      font-size: 11px;
-      margin-top: -6px;
-      margin-bottom: 4px;
+    .sub-title {
+      text-align: center;
+      color: #4b5563;
+      font-size: 12px;
+      margin: 0 0 10px;
+      line-height: 1.3;
     }
 
-    .emboss-line {
-      height: 2px;
-      background: linear-gradient(to right, #e6e6e6, #cfcfcf, #e6e6e6);
-      box-shadow: inset 0 1px #fff, inset 0 -1px #aaa;
-      margin: 4px 0 8px;
-      border-radius: 2px;
-    }
-
-    /* Premium section separators */
-    .section {
-      padding: 8px 0;
-      border-bottom: none;
-      position: relative;
-    }
-    .section::after {
-      content: "";
-      display: block;
-      height: 2px;
-      margin-top: 8px;
-      background: linear-gradient(to right, #f2f2f2, #cfcfcf, #f2f2f2);
-      box-shadow: inset 0 1px #ffffff, inset 0 -1px #b5b5b5;
-      border-radius: 2px;
-    }
-
-    .row {
+    .banner-chip {
       display: flex;
-      flex-wrap: nowrap;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .row label {
-      flex: 1;
-      font-weight: 500;
-      font-size: 13px;
-    }
-
-    .row input,
-    .row select {
-      flex: 0 0 70px;
-      padding: 4px;
-      font-size: 13px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      text-align: right;
-      background: #fff;
-    }
-
-    /* Header-like styling for input rows (labels only) */
-    .header-like-row label {
-      font-size: 15px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-size: 12px;
       font-weight: 600;
-      color: #333;
+      padding: 8px 10px;
+      border-radius: 12px;
     }
 
-    /* Premium divider inside a section */
+    .disclaimer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.35;
+    }
+
+    /* ===== Card Sections ===== */
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      margin: 4px 4px 10px;
+    }
+
+    /* ===== List Row Inputs (Premium) ===== */
+    .list-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 10px;
+      border: 1px solid #eef0f3;
+      border-radius: 12px;
+      background: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .list-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .row-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .row-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .row-helper {
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.2;
+    }
+
+    .row-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .row-right input {
+      width: 88px;
+      height: 36px;
+      padding: 6px 8px;
+      font-size: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      text-align: center;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .row-right input:focus {
+      border-color: #0b57d0;
+      box-shadow: 0 0 0 3px rgba(11, 87, 208, 0.15);
+    }
+
+    .error-message {
+      font-size: 10px;
+      color: #dc2626;
+      min-height: 12px;
+    }
+
+    /* Special premium divider inside same card */
     .premium-divider {
       border: none;
       height: 2px;
-      margin: 6px 0 8px;
-      background: linear-gradient(to right, #f2f2f2, #cfcfcf, #f2f2f2);
-      box-shadow: inset 0 1px #ffffff, inset 0 -1px #b5b5b5;
+      margin: 8px 0 10px;
+      background: linear-gradient(to right, #f3f4f6, #d1d5db, #f3f4f6);
       border-radius: 2px;
     }
 
-    input[type="number"] {
-      min: 0;
-      step: 1;
+    /* Note line under JMN */
+    .tip-note {
+      margin: 4px 6px 0;
+      font-size: 11px;
+      color: #0b57d0;
+      font-weight: 600;
+      line-height: 1.3;
     }
 
+    /* ===== Actions ===== */
     .action-buttons {
       display: flex;
       gap: 10px;
-      margin-top: 12px;
-    }
-
-    .action-buttons button {
-      flex: 1;
+      margin-top: 10px;
     }
 
     button {
       background-color: #28a745;
       color: white;
-      padding: 10px;
+      padding: 12px;
       border: none;
       font-size: 14px;
-      border-radius: 6px;
+      border-radius: 12px;
       cursor: pointer;
       width: 100%;
+      font-weight: 700;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
     }
 
     .reset-btn {
       background-color: #dc3545;
-      color: white;
-      padding: 10px;
-      border: none;
-      font-size: 14px;
-      border-radius: 6px;
-      cursor: pointer;
     }
 
     .post-instruction {
       text-align: left;
-      color: #777;
+      color: #6b7280;
       font-size: 11px;
-      margin-top: 4px;
+      margin-top: 8px;
+      line-height: 1.35;
     }
 
+    /* ===== Modal ===== */
     .modal {
       display: none;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90%;
+      width: 92%;
       background: white;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
       padding: 16px;
       z-index: 1000;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-      max-height: 80%;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+      max-height: 82%;
       overflow-y: auto;
       font-size: 13px;
     }
@@ -172,18 +235,19 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
+      margin-top: 8px;
     }
 
     .modal th,
     .modal td {
-      padding: 6px;
+      padding: 7px;
       text-align: left;
-      border: 1px solid #ddd;
+      border: 1px solid #e5e7eb;
     }
 
     .modal tr.bonus-row td {
-      font-weight: bold;
-      background-color: #f3f3f3;
+      font-weight: 700;
+      background-color: #f3f4f6;
     }
 
     .overlay {
@@ -196,137 +260,195 @@
     }
 
     .share-btn, .download-btn {
-      padding: 8px;
+      padding: 10px;
       font-size: 13px;
       margin-top: 10px;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       width: 48%;
+      font-weight: 700;
+      cursor: pointer;
     }
     .share-btn { background-color: #25d366; color: white; }
     .download-btn { background-color: #007bff; color: white; }
 
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    /* Language selector (keep simple) */
+    #languageSelector {
+      width: 100%;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
     @media screen and (max-width: 480px) {
-      .row label {
-        font-size: 12px;
-      }
-      .row input, .row select {
-        font-size: 12px;
-        flex: 0 0 60px;
-      }
-      .action-buttons {
-        flex-direction: column;
-      }
-      .share-btn, .download-btn {
-        width: 100%;
-      }
+      .row-right input { width: 80px; }
+      .btn-row { flex-direction: column; }
+      .share-btn, .download-btn { width: 100%; }
+      .action-buttons { flex-direction: column; }
     }
   </style>
 </head>
 
 <body>
 
-<select id="languageSelector" onchange="changeLanguage(this.value)" style="margin-bottom: 10px;">
+<select id="languageSelector" onchange="changeLanguage(this.value)">
   <option value="en">English</option>
   <option value="hi">हिन्दी</option>
 </select>
 
-<h2 id="title">Jio Retailer - Lap Earning Calculator (10 Days)</h2>
+<div class="app-header">
+  <h2 class="app-title" id="title">Jio Retailer – 10-Day Lap Incentive Calculator</h2>
+  <p class="sub-title">Enter your 10-day target and see expected lap earning</p>
 
-<p class="instruction" id="goldNote" style="font-weight: bold; color: #ff0000;">
-  Make Every Customer Smile. Get customer to experience Google Gemini Pro (worth ₹35100) FREE with ₹349 recharge <br>
-</p>
+  <div class="banner-chip" id="goldNote">
+    🔥 WIN A GOLD COIN! ₹349 Recharge Offer
+  </div>
 
-<p class="instruction">
-  *This calculator provides tentative payouts for non-DSS retailer. Final commission will be as per company system, subject to eligibility and conditions.<br>
-  *Enter your <strong>10-day lap target</strong> below.
-</p>
-
-<div class="emboss-line"></div>
-
-<div class="section">
-  <div class="row header-like-row">
-    <label>₹349 Plan (MNP)</label>
-    <input type="number" id="mnp349" min="0" max="999">
-    <span class="error-message" id="err-mnp349"></span>
+  <div class="disclaimer">
+    *This calculator provides tentative payouts for non-DSS retailer. Final commission will be as per company system, subject to eligibility and conditions.
   </div>
 </div>
 
-<div class="section">
+<!-- Core Lap Inputs -->
+<div class="card">
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">₹349 Plan (MNP)</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="mnp349" min="0" max="999">
+      <div class="error-message" id="err-mnp349"></div>
+    </div>
+  </div>
 
-  <div class="row header-like-row">
-    <label>₹349 Plan (New SIM)</label>
-    <input type="number" id="sim349" min="0" max="999">
-    <span class="error-message" id="err-sim349"></span>
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">₹349 Plan (New SIM)</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="sim349" min="0" max="999">
+      <div class="error-message" id="err-sim349"></div>
+    </div>
   </div>
 
   <hr class="premium-divider">
 
-  <div class="row header-like-row">
-    <label>JMN Booking</label>
-    <input type="number" id="jmnBooking" min="0" max="999">
-    <span class="error-message" id="err-jmnBooking"></span>
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">JMN Booking</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jmnBooking" min="0" max="999">
+      <div class="error-message" id="err-jmnBooking"></div>
+    </div>
   </div>
 
-  <!-- Subtext unchanged -->
-  <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
-    <strong>Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</strong>
-  </p>
-</div>
-
-<div class="section">
-  <div class="row header-like-row">
-    <label>₹1200 AirFiber Booking</label>
-    <input type="number" id="jaf1111" min="0" max="999">
-    <span class="error-message" id="err-jaf1111"></span>
+  <!-- Subtext unchanged as requested earlier -->
+  <div class="tip-note">
+    Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day
   </div>
 </div>
 
-<div class="section">
-  <h3>4. JioBharat Sales</h3>
-  <div class="row">
-    <label>V4 (₹799)</label>
-    <input type="number" id="jbV4" min="0" max="999"><span class="error-message" id="err-jbV4"></span>
-
-    <label>A1 (₹1299)</label>
-    <input type="number" id="jbB2" min="0" max="999"><span class="error-message" id="err-jbB2"></span>
-  </div>
-
-  <div class="row">
-    <label>Prima 2.0 (₹2799)</label>
-    <input type="number" id="jbJ1" min="0" max="999">
-    <span class="error-message" id="err-jbJ1"></span>
+<div class="card">
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">₹1200 AirFiber Booking</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jaf1111" min="0" max="999">
+      <div class="error-message" id="err-jaf1111"></div>
+    </div>
   </div>
 </div>
 
-<div class="section">
-  <h3>5. JioBharat – SIM</h3>
-  <div class="row">
-    <label>MNP FR </label>
-    <input type="number" id="jbMnp123" min="0" max="999"><span class="error-message" id="err-jbMnp123"></span>
+<!-- JioBharat Sales (consistent layout) -->
+<div class="card">
+  <div class="card-title">JioBharat Sales</div>
 
-    <label>New SIM FR </label>
-    <input type="number" id="jbNewSIM123" min="0" max="999"><span class="error-message" id="err-jbNewSIM123"></span>
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">V4 (₹799)</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jbV4" min="0" max="999">
+      <div class="error-message" id="err-jbV4"></div>
+    </div>
   </div>
 
-  <div class="row row-single">
-    <label>Booking (₹100 → ₹30 incentive)</label>
-    <input type="number" id="BKG" min="0" max="999">
-    <span class="error-message" id="err-BKG"></span>
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">A1 (₹1299)</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jbB2" min="0" max="999">
+      <div class="error-message" id="err-jbB2"></div>
+    </div>
   </div>
 
-  <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
-    <strong>FR includes 23/123/234/269/369 recharge plan</strong>
-  </p>
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">Prima 2.0 (₹2799)</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jbJ1" min="0" max="999">
+      <div class="error-message" id="err-jbJ1"></div>
+    </div>
+  </div>
+</div>
+
+<!-- JioBharat SIM (consistent layout) -->
+<div class="card">
+  <div class="card-title">JioBharat SIM</div>
+
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">MNP FR</div>
+      <div class="row-helper">FR includes 23/123/234/269/369 plan</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jbMnp123" min="0" max="999">
+      <div class="error-message" id="err-jbMnp123"></div>
+    </div>
+  </div>
+
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">New SIM FR</div>
+      <div class="row-helper">FR includes 23/123/234/269/369 plan</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="jbNewSIM123" min="0" max="999">
+      <div class="error-message" id="err-jbNewSIM123"></div>
+    </div>
+  </div>
+
+  <div class="list-row">
+    <div class="row-left">
+      <div class="row-label">Booking (₹100 → ₹30 incentive)</div>
+    </div>
+    <div class="row-right">
+      <input type="number" id="BKG" min="0" max="999">
+      <div class="error-message" id="err-BKG"></div>
+    </div>
+  </div>
 </div>
 
 <div class="action-buttons">
-  <button onclick="calculate()">Calculate</button>
+  <button onclick="calculate()">Calculate Lap Earning</button>
   <button class="reset-btn" onclick="resetFields()">Reset</button>
 </div>
 
 <p class="post-instruction">
-  *This calculator provides tentative payouts (10-day lap).<br>
+  *This calculator provides tentative payouts for a 10-day lap.<br>
   * Created by GT retailer.
 </p>
 
@@ -342,7 +464,7 @@
     <tbody id="resultTableBody"></tbody>
 
     <tr class="bonus-row">
-      <td colspan="2" id="mnpBoosterLabel">MNP "Sell & Win" Comm.</td>
+      <td colspan="2">MNP "Sell & Win" Comm.</td>
       <td id="mnpBoosterCell">₹0</td>
     </tr>
 
@@ -356,8 +478,10 @@
     </tfoot>
   </table>
 
-  <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
-  <button class="download-btn" onclick="downloadImage()">Download as Image</button>
+  <div class="btn-row">
+    <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
+    <button class="download-btn" onclick="downloadImage()">Download as Image</button>
+  </div>
 </div>
 
 <script>
@@ -381,9 +505,7 @@ function changeLanguage(lang) {
 
   for (const key in langData) {
     const el = document.getElementById(key);
-    if (el) {
-      el.innerText = langData[key];
-    }
+    if (el) el.innerText = langData[key];
   }
 }
 
@@ -415,10 +537,7 @@ function shareWhatsApp() {
         const file = new File([blob], "summary.png", { type: "image/png" });
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({
-            files: [file],
-            text: message
-          });
+          navigator.share({ files: [file], text: message });
         } else {
           alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
         }
@@ -495,23 +614,20 @@ function calculate() {
   resultBody.innerHTML += `<tr><td>JMN Booking Commission</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
   total += jmnIncentive;
 
-  // FR 349 Slab Commission (Lap based as per new model)
+  // FR 349 Slab Commission (Lap-based)
   let fr349Total = mnp349;
   let fr349Bonus = 0;
-  if (fr349Total >= 5 && fr349Total <= 499) fr349Bonus = fr349Total * 10;
-  else if (fr349Total >= 500) fr349Bonus = fr349Total * 10;
+  if (fr349Total >= 5) fr349Bonus = fr349Total * 10;
 
   document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
 
-  // ✅ MNP Sell & Win Commission condition:
-  // If MNP count is 0 or 1 => ₹0
+  // MNP Sell & Win condition: if MNP = 0 or 1 => 0
   let mnpBoosterInc = 0;
 
   if (mnp349 <= 1) {
     mnpBoosterInc = 0;
   } else {
-    // Option A: booster computed but no "laps split" shown in UI
     let M = Math.floor(mnp349 / 3);
     let R = mnp349 % 3;
 
@@ -532,7 +648,6 @@ function calculate() {
     }
   }
 
-  // ✅ Option A: show only amount, no "MNP in laps" text
   document.getElementById("mnpBoosterCell").innerText = `₹${mnpBoosterInc}`;
   total += mnpBoosterInc;
 
@@ -542,7 +657,6 @@ function calculate() {
 }
 
 document.querySelectorAll('input[type="number"]').forEach(input => {
-  input.setAttribute('placeholder', '0');
   input.setAttribute('min', '0');
   input.setAttribute('step', '1');
 
@@ -565,5 +679,3 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 
 </body>
 </html>
-
-
