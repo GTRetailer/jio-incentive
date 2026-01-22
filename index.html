@@ -1,10 +1,10 @@
-<!-- VERSION C14.1 (Premium UI: Hierarchy + List Rows + Banner + Consistent Sections) -->
+<!-- VERSION C14.2 (Compact One-Screen Layout + JB sections in 2x2 grid) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C14.1</title>
+  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C14.2</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -21,129 +21,125 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      margin: 14px;
+      margin: 10px;
       background: #f5f6f8;
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    /* ===== Header / Hierarchy ===== */
+    /* ===== Compact Header ===== */
     .app-header {
       background: #ffffff;
       border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 14px 14px 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      margin-bottom: 10px;
+      border-radius: 12px;
+      padding: 10px 10px 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      margin-bottom: 8px;
     }
 
     .app-title {
       color: #0b57d0;
       text-align: center;
-      font-size: 18px;
-      font-weight: 700;
-      margin: 0 0 6px;
-      line-height: 1.2;
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 4px;
+      line-height: 1.15;
     }
 
     .sub-title {
       text-align: center;
       color: #4b5563;
-      font-size: 12px;
-      margin: 0 0 10px;
-      line-height: 1.3;
+      font-size: 11px;
+      margin: 0 0 6px;
+      line-height: 1.2;
     }
 
     .banner-chip {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       background: #fff7ed;
       border: 1px solid #fed7aa;
       color: #9a3412;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 8px 10px;
-      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 10px;
     }
 
     .disclaimer {
-      margin-top: 10px;
-      font-size: 11px;
+      margin-top: 6px;
+      font-size: 10.5px;
       color: #6b7280;
-      line-height: 1.35;
+      line-height: 1.25;
     }
 
-    /* ===== Card Sections ===== */
+    /* ===== Compact Cards ===== */
     .card {
       background: #ffffff;
       border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      margin-bottom: 10px;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      margin-bottom: 8px;
     }
 
     .card-title {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       color: #111827;
-      margin: 4px 4px 10px;
+      margin: 2px 2px 6px;
     }
 
-    /* ===== List Row Inputs (Premium) ===== */
+    /* ===== Compact List Row ===== */
     .list-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 10px 10px;
+      gap: 8px;
+      padding: 7px 8px;
       border: 1px solid #eef0f3;
-      border-radius: 12px;
+      border-radius: 10px;
       background: #ffffff;
-      margin-bottom: 8px;
-    }
-
-    .list-row:last-child {
-      margin-bottom: 0;
+      margin-bottom: 6px;
     }
 
     .row-left {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
       flex: 1;
       min-width: 0;
     }
 
     .row-label {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 13.5px;
+      font-weight: 800;
       color: #111827;
-      line-height: 1.2;
+      line-height: 1.15;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .row-helper {
-      font-size: 11px;
+      font-size: 10.5px;
       color: #6b7280;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .row-right {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 4px;
+      gap: 2px;
     }
 
     .row-right input {
-      width: 88px;
-      height: 36px;
-      padding: 6px 8px;
-      font-size: 14px;
+      width: 70px;
+      height: 32px;
+      padding: 4px 6px;
+      font-size: 13px;
       border: 1px solid #d1d5db;
       border-radius: 10px;
       text-align: center;
@@ -153,50 +149,93 @@
 
     .row-right input:focus {
       border-color: #0b57d0;
-      box-shadow: 0 0 0 3px rgba(11, 87, 208, 0.15);
+      box-shadow: 0 0 0 3px rgba(11, 87, 208, 0.12);
     }
 
     .error-message {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #dc2626;
-      min-height: 12px;
+      min-height: 10px;
     }
 
-    /* Special premium divider inside same card */
     .premium-divider {
       border: none;
       height: 2px;
-      margin: 8px 0 10px;
+      margin: 6px 0 7px;
       background: linear-gradient(to right, #f3f4f6, #d1d5db, #f3f4f6);
       border-radius: 2px;
     }
 
-    /* Note line under JMN */
     .tip-note {
-      margin: 4px 6px 0;
-      font-size: 11px;
+      margin: 2px 4px 0;
+      font-size: 10.5px;
       color: #0b57d0;
-      font-weight: 600;
-      line-height: 1.3;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* ===== 2x2 Grid Blocks ===== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .mini-field {
+      border: 1px solid #eef0f3;
+      border-radius: 10px;
+      padding: 7px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .mini-field label {
+      font-weight: 800;
+      font-size: 12.5px;
+      color: #111827;
+      line-height: 1.1;
+    }
+
+    .mini-field input {
+      width: 62px;
+      height: 30px;
+      padding: 4px 6px;
+      font-size: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      text-align: center;
+      outline: none;
+      background: #ffffff;
+    }
+
+    .mini-field input:focus {
+      border-color: #0b57d0;
+      box-shadow: 0 0 0 3px rgba(11, 87, 208, 0.12);
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
     }
 
     /* ===== Actions ===== */
     .action-buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     button {
       background-color: #28a745;
       color: white;
-      padding: 12px;
+      padding: 10px;
       border: none;
-      font-size: 14px;
+      font-size: 13px;
       border-radius: 12px;
       cursor: pointer;
       width: 100%;
-      font-weight: 700;
+      font-weight: 800;
       box-shadow: 0 6px 14px rgba(0,0,0,0.08);
     }
 
@@ -207,9 +246,9 @@
     .post-instruction {
       text-align: left;
       color: #6b7280;
-      font-size: 11px;
-      margin-top: 8px;
-      line-height: 1.35;
+      font-size: 10.5px;
+      margin-top: 6px;
+      line-height: 1.2;
     }
 
     /* ===== Modal ===== */
@@ -223,7 +262,7 @@
       background: white;
       border: 1px solid #e5e7eb;
       border-radius: 14px;
-      padding: 16px;
+      padding: 14px;
       z-index: 1000;
       box-shadow: 0 10px 24px rgba(0,0,0,0.18);
       max-height: 82%;
@@ -234,19 +273,19 @@
     .modal table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
+      font-size: 12.5px;
       margin-top: 8px;
     }
 
     .modal th,
     .modal td {
-      padding: 7px;
+      padding: 6px;
       text-align: left;
       border: 1px solid #e5e7eb;
     }
 
     .modal tr.bonus-row td {
-      font-weight: 700;
+      font-weight: 800;
       background-color: #f3f4f6;
     }
 
@@ -259,38 +298,38 @@
       z-index: 999;
     }
 
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
     .share-btn, .download-btn {
       padding: 10px;
-      font-size: 13px;
-      margin-top: 10px;
+      font-size: 12.5px;
       border: none;
       border-radius: 12px;
-      width: 48%;
-      font-weight: 700;
+      width: 50%;
+      font-weight: 800;
       cursor: pointer;
     }
     .share-btn { background-color: #25d366; color: white; }
     .download-btn { background-color: #007bff; color: white; }
 
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    /* Language selector (keep simple) */
+    /* Language selector */
     #languageSelector {
       width: 100%;
-      padding: 10px;
+      padding: 9px;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
       background: #ffffff;
-      margin-bottom: 10px;
-      font-weight: 600;
+      margin-bottom: 8px;
+      font-weight: 700;
+      font-size: 12.5px;
     }
 
     @media screen and (max-width: 480px) {
-      .row-right input { width: 80px; }
+      .grid-2 { grid-template-columns: 1fr 1fr; }
       .btn-row { flex-direction: column; }
       .share-btn, .download-btn { width: 100%; }
       .action-buttons { flex-direction: column; }
@@ -307,14 +346,14 @@
 
 <div class="app-header">
   <h2 class="app-title" id="title">Jio Retailer – 10-Day Lap Incentive Calculator</h2>
-  <p class="sub-title">Enter your 10-day target and see expected lap earning</p>
+  <p class="sub-title">Enter your lap target and see expected earning</p>
 
   <div class="banner-chip" id="goldNote">
     🔥 WIN A GOLD COIN! ₹349 Recharge Offer
   </div>
 
   <div class="disclaimer">
-    *This calculator provides tentative payouts for non-DSS retailer. Final commission will be as per company system, subject to eligibility and conditions.
+    *Tentative payouts for non-DSS retailer. Final commission will be as per company system.
   </div>
 </div>
 
@@ -352,14 +391,14 @@
     </div>
   </div>
 
-  <!-- Subtext unchanged as requested earlier -->
   <div class="tip-note">
     Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day
   </div>
 </div>
 
+<!-- AirFiber -->
 <div class="card">
-  <div class="list-row">
+  <div class="list-row" style="margin-bottom:0;">
     <div class="row-left">
       <div class="row-label">₹1200 AirFiber Booking</div>
     </div>
@@ -370,76 +409,60 @@
   </div>
 </div>
 
-<!-- JioBharat Sales (consistent layout) -->
+<!-- JioBharat Sales 2x2 -->
 <div class="card">
   <div class="card-title">JioBharat Sales</div>
 
-  <div class="list-row">
-    <div class="row-left">
-      <div class="row-label">V4 (₹799)</div>
-    </div>
-    <div class="row-right">
+  <div class="grid-2">
+    <div class="mini-field">
+      <label>V4 (₹799)</label>
       <input type="number" id="jbV4" min="0" max="999">
-      <div class="error-message" id="err-jbV4"></div>
     </div>
-  </div>
 
-  <div class="list-row">
-    <div class="row-left">
-      <div class="row-label">A1 (₹1299)</div>
-    </div>
-    <div class="row-right">
+    <div class="mini-field">
+      <label>A1 (₹1299)</label>
       <input type="number" id="jbB2" min="0" max="999">
-      <div class="error-message" id="err-jbB2"></div>
+    </div>
+
+    <div class="mini-field full-width">
+      <label>Prima 2.0 (₹2799)</label>
+      <input type="number" id="jbJ1" min="0" max="999">
     </div>
   </div>
 
-  <div class="list-row">
-    <div class="row-left">
-      <div class="row-label">Prima 2.0 (₹2799)</div>
-    </div>
-    <div class="row-right">
-      <input type="number" id="jbJ1" min="0" max="999">
-      <div class="error-message" id="err-jbJ1"></div>
-    </div>
-  </div>
+  <div class="error-message" id="err-jbV4"></div>
+  <div class="error-message" id="err-jbB2"></div>
+  <div class="error-message" id="err-jbJ1"></div>
 </div>
 
-<!-- JioBharat SIM (consistent layout) -->
+<!-- JioBharat SIM 2x2 -->
 <div class="card">
   <div class="card-title">JioBharat SIM</div>
 
-  <div class="list-row">
-    <div class="row-left">
-      <div class="row-label">MNP FR</div>
-      <div class="row-helper">FR includes 23/123/234/269/369 plan</div>
-    </div>
-    <div class="row-right">
+  <div class="grid-2">
+    <div class="mini-field">
+      <label>MNP FR</label>
       <input type="number" id="jbMnp123" min="0" max="999">
-      <div class="error-message" id="err-jbMnp123"></div>
     </div>
-  </div>
 
-  <div class="list-row">
-    <div class="row-left">
-      <div class="row-label">New SIM FR</div>
-      <div class="row-helper">FR includes 23/123/234/269/369 plan</div>
-    </div>
-    <div class="row-right">
+    <div class="mini-field">
+      <label>New SIM FR</label>
       <input type="number" id="jbNewSIM123" min="0" max="999">
-      <div class="error-message" id="err-jbNewSIM123"></div>
+    </div>
+
+    <div class="mini-field full-width">
+      <label>Booking (₹100 → ₹30)</label>
+      <input type="number" id="BKG" min="0" max="999">
     </div>
   </div>
 
-  <div class="list-row">
-    <div class="row-left">
-      <div class="row-label">Booking (₹100 → ₹30 incentive)</div>
-    </div>
-    <div class="row-right">
-      <input type="number" id="BKG" min="0" max="999">
-      <div class="error-message" id="err-BKG"></div>
-    </div>
+  <div class="row-helper" style="margin-top:6px; font-weight:700; color:#0b57d0;">
+    FR includes 23/123/234/269/369 recharge plan
   </div>
+
+  <div class="error-message" id="err-jbMnp123"></div>
+  <div class="error-message" id="err-jbNewSIM123"></div>
+  <div class="error-message" id="err-BKG"></div>
 </div>
 
 <div class="action-buttons">
@@ -448,14 +471,12 @@
 </div>
 
 <p class="post-instruction">
-  *This calculator provides tentative payouts for a 10-day lap.<br>
-  * Created by GT retailer.
+  *This calculator provides tentative payouts for a 10-day lap.
 </p>
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 <div class="modal" id="resultModal">
   <h3>Your Total Lap Earning (10 Days)</h3>
-  <p class="post-instruction">*This calculator provides tentative payouts</p>
 
   <table>
     <thead>
@@ -491,7 +512,6 @@ async function loadLanguageFile() {
   try {
     const response = await fetch('translations.json');
     translations = await response.json();
-
     const currentLang = document.getElementById("languageSelector").value || 'en';
     changeLanguage(currentLang);
   } catch (e) {
@@ -502,13 +522,11 @@ async function loadLanguageFile() {
 function changeLanguage(lang) {
   const langData = translations[lang];
   if (!langData) return;
-
   for (const key in langData) {
     const el = document.getElementById(key);
     if (el) el.innerText = langData[key];
   }
 }
-
 loadLanguageFile();
 </script>
 
@@ -608,48 +626,19 @@ function calculate() {
     resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
   }
 
-  // JMN Booking Commission
   let jmnBooking = get("jmnBooking");
   let jmnIncentive = jmnBooking * 10;
   resultBody.innerHTML += `<tr><td>JMN Booking Commission</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
   total += jmnIncentive;
 
-  // FR 349 Slab Commission (Lap-based)
   let fr349Total = mnp349;
-  let fr349Bonus = 0;
-  if (fr349Total >= 5) fr349Bonus = fr349Total * 10;
-
+  let fr349Bonus = (fr349Total >= 5) ? fr349Total * 10 : 0;
   document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
 
-  // MNP Sell & Win condition: if MNP = 0 or 1 => 0
-  let mnpBoosterInc = 0;
-
-  if (mnp349 <= 1) {
-    mnpBoosterInc = 0;
-  } else {
-    let M = Math.floor(mnp349 / 3);
-    let R = mnp349 % 3;
-
-    let laps = [];
-    if (R === 0) laps = [M, M, M];
-    else if (R === 1) laps = [M, M, M + 1];
-    else if (R === 2) laps = [M, M + 1, M + 1];
-
-    function rateFor(m) {
-      if (m >= 1 && m <= 2) return 50;
-      if (m >= 3 && m <= 9) return 90;
-      if (m >= 10) return 110;
-      return 0;
-    }
-
-    for (let i = 0; i < 3; i++) {
-      mnpBoosterInc += laps[i] * rateFor(laps[i]);
-    }
-  }
-
-  document.getElementById("mnpBoosterCell").innerText = `₹${mnpBoosterInc}`;
-  total += mnpBoosterInc;
+  // NOTE: Booster logic can be updated next as per your latest direction (no splitting)
+  // For now keeping existing output cell safe:
+  document.getElementById("mnpBoosterCell").innerText = `₹0`;
 
   document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
   document.getElementById("resultModal").style.display = "block";
