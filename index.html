@@ -1,12 +1,13 @@
-<!-- VERSION C16.1 (FR note moved to bottom + uniform padding + remove bookings subtext) -->
+<!-- VERSION C17 (Inter Typography System + Non-sticky CTA + Modal Total Emphasis) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C16.1</title>
+  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C17</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <!-- Google tag (gtag.js) -->
@@ -20,21 +21,27 @@
 
   <style>
     :root{
-      --blue:#1a73e8;
+      --deepBlue:#002d62;
+      --btnBlue1:#005eff;
+      --btnBlue2:#003bba;
+
       --text:#202124;
       --sub:#5f6368;
       --border:#dadce0;
       --bg:#ffffff;
-      --soft:#f8f9fa;
+      --inputBg:#f8f9fa;
       --danger:#d93025;
       --shadow: 0 1px 2px rgba(0,0,0,0.10);
     }
 
-    * { box-sizing: border-box; }
+    *{
+      box-sizing: border-box;
+      font-family: Inter, sans-serif; /* ✅ Global Typography */
+      -webkit-font-smoothing: antialiased; /* ✅ Sharper text */
+    }
 
     body{
       margin: 0;
-      font-family: Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       overflow-y: auto;
@@ -42,59 +49,91 @@
 
     .page{
       width: 100%;
-      padding: 14px 14px 92px;
+      padding: 14px 14px 18px;
       margin: 0;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
+    /* ===== Header ===== */
     .header{
-      padding: 6px 0 10px;
+      padding: 10px 0 8px;
     }
 
+    .title-row{
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ✅ Title: 26px | 900 | tighter tracking */
     .title{
       margin: 0;
       text-align: center;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--blue);
-      letter-spacing: -0.3px;
-      line-height: 1.2;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--deepBlue);
+      letter-spacing: -0.6px; /* tighter */
+      line-height: 1.1;
     }
 
+    /* ✅ Lap Badge: 11px | bold | uppercase */
+    .lap-badge{
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--deepBlue);
+    }
+
+    /* ✅ Sub-caption: 13px | 500 */
     .subtitle{
-      margin: 6px 0 0;
+      margin: 8px 0 0;
       text-align: center;
       font-size: 13px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--sub);
       line-height: 1.3;
     }
 
     .disclaimer{
       margin: 10px 0 0;
-      font-size: 12px;
+      font-size: 12px; /* helper text spec */
+      font-weight: 400;
       color: var(--sub);
       line-height: 1.35;
       text-align: left;
     }
 
+    /* ✅ Section Titles: 16px | 800 */
     .section-title{
-      margin: 16px 0 8px;
+      margin: 18px 0 10px;
       font-size: 16px;
       font-weight: 800;
       color: var(--text);
+      letter-spacing: -0.2px;
     }
 
-    /* ✅ uniform padding for rows */
+    /* ✅ Row padding rule remembered */
     .row{
       display: grid;
       grid-template-columns: 1fr 96px;
       align-items: center;
       gap: 10px;
-      padding: 10px 0; /* uniform */
+      padding: 10px 0 0px 0; /* ✅ as remembered */
       border-bottom: 1px solid #eef0f3;
     }
     .row:last-child{ border-bottom: none; }
 
+    /* ✅ Item Labels: 15px | 600 */
     .label{
       font-size: 15px;
       font-weight: 600;
@@ -102,46 +141,55 @@
       line-height: 1.2;
     }
 
+    /* ✅ Helper small text: 12px | 400 */
     .helper{
       margin-top: 3px;
       font-size: 12px;
+      font-weight: 400;
       color: var(--sub);
       line-height: 1.2;
     }
 
+    /* ✅ Blue Notes: 12px | 600 */
+    .note{
+      margin: 7px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--btnBlue2);
+      line-height: 1.25;
+    }
+
+    .error{
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--danger);
+      margin-top: 4px;
+      min-height: 12px;
+    }
+
+    /* ✅ Input: numbers 15px | 700 */
     .input{
       width: 96px;
       height: 36px;
       padding: 0 8px;
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: #fff;
+      background: var(--inputBg);
       text-align: center;
       font-size: 15px;
+      font-weight: 700;
       outline: none;
       justify-self: end;
+      color: var(--text);
     }
 
     .input:focus{
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+      border-color: var(--btnBlue1);
+      box-shadow: 0 0 0 3px rgba(0, 94, 255, 0.15);
+      background: #ffffff;
     }
 
-    .error{
-      font-size: 10.5px;
-      color: var(--danger);
-      margin-top: 4px;
-      min-height: 12px;
-    }
-
-    .note{
-      margin: 7px 0 0;
-      font-size: 12px;
-      color: var(--blue);
-      font-weight: 600;
-      line-height: 1.25;
-    }
-
+    /* ===== 2x2 grids ===== */
     .grid-2{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -150,76 +198,69 @@
       border-bottom: 1px solid #eef0f3;
     }
 
-    /* ✅ uniform padding for tiles */
+    /* ✅ Field padding remembered */
     .field{
       display: grid;
       grid-template-columns: 1fr 96px;
       gap: 10px;
       align-items: center;
-      padding: 10px 0; /* uniform */
-    }
-
-    .field .label{
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .field .input{
-      width: 96px;
-      height: 36px;
-      border-radius: 12px;
-      font-size: 15px;
-      justify-self: end;
+      padding: 0px 0; /* ✅ as remembered */
     }
 
     .span-2{ grid-column: 1 / -1; }
 
-    .sticky-cta{
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(255,255,255,0.96);
-      border-top: 1px solid var(--border);
-      padding: 12px 14px;
-      z-index: 50;
-      backdrop-filter: blur(6px);
-    }
-
-    .cta-inner{
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
+    /* ===== Bottom Actions (moved to end of page) ===== */
+    .actions{
+      display: flex;
       gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
     }
 
-    .btn{
+    /* ✅ Calculate button: 17px | 900 */
+    .btn-primary{
+      flex: 1;
+      min-width: 170px;
+      height: 52px;
       border: none;
       border-radius: 14px;
-      height: 48px;
-      font-size: 16px;
-      font-weight: 800;
       cursor: pointer;
       box-shadow: var(--shadow);
-      width: 100%;
-    }
-
-    .btn-primary{
-      background: var(--blue);
+      font-size: 17px;
+      font-weight: 900;
       color: #fff;
+      background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2));
     }
 
+    /* ✅ Reset button: 14px | bold */
     .btn-secondary{
+      flex: 1;
+      min-width: 170px;
+      height: 52px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 14px;
+      font-weight: 700;
       background: #ffffff;
-      color: var(--text);
       border: 1px solid var(--border);
+      color: var(--text);
     }
 
+    .footer-note{
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--sub);
+      line-height: 1.3;
+    }
+
+    /* ===== Modal ===== */
     .overlay{
       display:none;
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,0.5);
+      background:rgba(0,0,0,0.55);
       z-index:100;
     }
 
@@ -230,28 +271,31 @@
       left:50%;
       transform:translate(-50%, -50%);
       width: 92%;
-      max-width: 540px;
+      max-width: 560px;
       background:#fff;
       border:1px solid var(--border);
-      border-radius:16px;
-      padding:14px;
+      border-radius:18px;
+      padding:16px;
       z-index:101;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.28);
       max-height: 80%;
       overflow:auto;
     }
 
+    /* ✅ Modal Header: 22px | 900 */
     .modal h3{
-      margin:0 0 6px;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
+      margin:0 0 8px;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--deepBlue);
       text-align: center;
+      letter-spacing: -0.5px;
     }
 
     .modal p{
-      margin: 0 0 8px;
+      margin: 0 0 10px;
       font-size: 12px;
+      font-weight: 400;
       color: var(--sub);
       text-align: center;
     }
@@ -259,16 +303,62 @@
     table{
       width:100%;
       border-collapse:collapse;
-      font-size:13px;
+      font-size: 13px;
     }
     th, td{
       border:1px solid #e5e7eb;
-      padding:7px;
+      padding:8px;
       text-align:left;
     }
+
+    /* ✅ Row labels/amounts inside table */
+    thead th{
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    tbody td:first-child{
+      font-size: 14px;
+      font-weight: 700; /* ✅ Row Labels 14px | 700 */
+      color: var(--text);
+    }
+
+    tbody td:last-child{
+      font-size: 15px;
+      font-weight: 800; /* ✅ Row Amounts 15px | 800 */
+      color: var(--text);
+    }
+
     tr.bonus-row td{
       background:#f1f3f4;
       font-weight:800;
+    }
+
+    /* ===== Final total highlight (BIG number) ===== */
+    .total-box{
+      margin-top: 14px;
+      background: var(--deepBlue);
+      border-radius: 16px;
+      padding: 14px 12px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .total-label{
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0.9;
+      letter-spacing: 0.4px;
+    }
+
+    /* ✅ Final Total: 40px | 900 | tighter */
+    .total-number{
+      margin-top: 6px;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.05;
     }
 
     .modal-actions{
@@ -278,25 +368,29 @@
       flex-wrap: wrap;
     }
 
+    /* ✅ WhatsApp/Save buttons: 15px | 900 */
     .share-btn, .download-btn{
       flex: 1;
       min-width: 160px;
-      height: 42px;
+      height: 46px;
       border: none;
       border-radius: 14px;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
       box-shadow: var(--shadow);
-      font-size: 14px;
+      font-size: 15px;
+      color:#fff;
     }
-    .share-btn{ background:#25d366; color:#fff; }
-    .download-btn{ background:#1a73e8; color:#fff; }
+    .share-btn{ background:#25d366; }
+    .download-btn{ background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2)); }
 
     @media (max-width: 420px){
       .row{ grid-template-columns: 1fr 90px; }
       .input{ width: 90px; }
       .field{ grid-template-columns: 1fr 90px; }
-      .field .input{ width: 90px; }
+      .grid-2{ grid-template-columns: 1fr 1fr; }
+      .title{ font-size: 23px; }
+      .total-number{ font-size: 36px; }
     }
   </style>
 </head>
@@ -305,7 +399,11 @@
 
 <div class="page">
   <div class="header">
-    <h1 class="title">Jio Retailer – 10-Day Lap Incentive Calculator</h1>
+    <div class="title-row">
+      <h1 class="title">Jio Retailer – 10-Day Lap Incentive Calculator</h1>
+      <div class="lap-badge">10-DAY LAP</div>
+    </div>
+
     <div class="subtitle">Enter your lap target and see expected earning</div>
 
     <div class="disclaimer">
@@ -333,7 +431,6 @@
     </div>
   </div>
 
-  <!-- JMN row is same padding; only has extra note -->
   <div class="row">
     <div>
       <div class="label">JMN Booking</div>
@@ -388,28 +485,26 @@
       <input class="input" type="number" id="BKG" min="0" max="999">
     </div>
 
-    <!-- ✅ Blue note moved to end of 2x2 tile -->
     <div class="span-2">
       <div class="note">FR includes 23/123/234/269/369 recharge plan</div>
     </div>
   </div>
 
-  <div style="margin-top:10px; font-size:12px; color:var(--sub); line-height:1.3;">
-    *This calculator provides tentative payouts for a 10-day lap.
+  <!-- ✅ Calculate/Reset moved to end of page -->
+  <div class="actions">
+    <button class="btn-primary" onclick="calculate()">Calculate</button>
+    <button class="btn-secondary" onclick="resetFields()">Reset</button>
   </div>
-</div>
 
-<div class="sticky-cta">
-  <div class="cta-inner">
-    <button class="btn btn-primary" onclick="calculate()">Calculate</button>
-    <button class="btn btn-secondary" onclick="resetFields()">Reset</button>
+  <div class="footer-note">
+    *This calculator provides tentative payouts for a 10-day lap.
   </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 
 <div class="modal" id="resultModal">
-  <h3>Your Total Lap Earning (10 Days)</h3>
+  <h3>Your Total Lap Earning</h3>
   <p>*Tentative payout summary</p>
 
   <table>
@@ -427,11 +522,13 @@
       <td colspan="2">FR 349 Slab Comm.</td>
       <td id="fr349BonusCell">₹0</td>
     </tr>
-
-    <tfoot>
-      <tr><th colspan="2">Total Lap Earning</th><th id="grandTotal">₹0</th></tr>
-    </tfoot>
   </table>
+
+  <!-- ✅ Big Total -->
+  <div class="total-box">
+    <div class="total-label">TOTAL LAP EARNING</div>
+    <div class="total-number" id="grandTotalBig">₹0</div>
+  </div>
 
   <div class="modal-actions">
     <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
@@ -457,7 +554,7 @@ function get(id) {
 
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
-  const total = document.getElementById("grandTotal").innerText;
+  const total = document.getElementById("grandTotalBig").innerText;
   const message = `My total Jio Partner earning for this 10-day lap is ${total}. Summary below 👇`;
 
   const originalMaxHeight = modal.style.maxHeight;
@@ -535,22 +632,27 @@ function calculate() {
     resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
   }
 
+  // JMN Booking Commission
   let jmnBooking = get("jmnBooking");
   let jmnIncentive = jmnBooking * 10;
   resultBody.innerHTML += `<tr><td>JMN Booking Commission</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
   total += jmnIncentive;
 
+  // FR 349 Slab Commission (Lap-based)
   let fr349Bonus = (mnp349 >= 5) ? mnp349 * 10 : 0;
   document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
 
+  // Sell & Win (placeholder - safe)
   document.getElementById("mnpBoosterCell").innerText = `₹0`;
 
-  document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
+  document.getElementById("grandTotalBig").innerText = `₹${total.toFixed(2)}`;
+
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
 
+// Validation (only shows errors where err-id exists)
 document.querySelectorAll('input[type="number"]').forEach(input => {
   input.setAttribute('min', '0');
   input.setAttribute('step', '1');
