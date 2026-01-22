@@ -1,10 +1,10 @@
-<!-- VERSION C13.2 (Removed Header 1, styled MNP row like header) -->
+<!-- VERSION C13.3 (Removed Header 1 & 2, styled first rows like header) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Commission Calculator - C13.2</title>
+  <title>Jio Retailer - Monthly Commission Calculator - C13.3</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -96,7 +96,7 @@
       text-align: right;
     }
 
-    /* ✅ NEW: Make row look like a header */
+    /* ✅ header-like style for first row in a block */
     .header-like-row label {
       font-size: 15px;
       font-weight: 600;
@@ -240,7 +240,7 @@
 
 <div class="emboss-line"></div>
 
-<!-- ✅ Section kept, header removed, row styled like header -->
+<!-- ✅ Header removed, row styled like header -->
 <div class="section">
   <div class="row header-like-row">
     <label>₹349 Plan (MNP)</label>
@@ -249,10 +249,10 @@
   </div>
 </div>
 
+<!-- ✅ Header removed, SIM row styled like header -->
 <div class="section">
-  <h3>2. New SIM Activation</h3>
-  <div class="row">
-    <label>₹349 Plan</label>
+  <div class="row header-like-row">
+    <label>₹349 Plan (New SIM)</label>
     <input type="number" id="sim349" min="0" max="999">
     <span class="error-message" id="err-sim349"></span>
   </div>
