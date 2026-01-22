@@ -1,10 +1,10 @@
-<!-- VERSION C14.2 (Compact One-Screen Layout + JB sections in 2x2 grid) -->
+<!-- VERSION C14.3 (Removed language toggle + Removed win banner + Removed boxes around inputs) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C14.2</title>
+  <title>Jio Retailer - 10-Day Lap Incentive Calculator - C14.3</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -22,18 +22,14 @@
     body {
       font-family: 'Roboto', sans-serif;
       margin: 10px;
-      background: #f5f6f8;
+      background: #ffffff;
       font-size: 13px;
     }
 
     /* ===== Compact Header ===== */
     .app-header {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 10px 10px 8px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-      margin-bottom: 8px;
+      padding: 4px 0 6px;
+      margin-bottom: 6px;
     }
 
     .app-title {
@@ -53,55 +49,35 @@
       line-height: 1.2;
     }
 
-    .banner-chip {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #9a3412;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 6px 8px;
-      border-radius: 10px;
-    }
-
     .disclaimer {
-      margin-top: 6px;
+      margin-top: 4px;
       font-size: 10.5px;
       color: #6b7280;
       line-height: 1.25;
+      text-align: left;
     }
 
-    /* ===== Compact Cards ===== */
-    .card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 8px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-      margin-bottom: 8px;
+    /* ===== Layout Containers (no card box) ===== */
+    .section {
+      margin-bottom: 10px;
     }
 
-    .card-title {
+    .section-title {
       font-size: 13px;
       font-weight: 800;
       color: #111827;
-      margin: 2px 2px 6px;
+      margin: 6px 0 6px;
     }
 
-    /* ===== Compact List Row ===== */
+    /* ===== Row layout (no box, only divider) ===== */
     .list-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 7px 8px;
-      border: 1px solid #eef0f3;
-      border-radius: 10px;
-      background: #ffffff;
-      margin-bottom: 6px;
+      padding: 6px 0;
+      margin: 0;
+      border: none;
     }
 
     .row-left {
@@ -137,10 +113,10 @@
 
     .row-right input {
       width: 70px;
-      height: 32px;
+      height: 30px;
       padding: 4px 6px;
       font-size: 13px;
-      border: 1px solid #d1d5db;
+      border: 1px solid #cfd3da;
       border-radius: 10px;
       text-align: center;
       outline: none;
@@ -158,6 +134,14 @@
       min-height: 10px;
     }
 
+    /* Divider lines */
+    .line-divider {
+      border: none;
+      height: 1px;
+      background: #d1d5db;
+      margin: 2px 0;
+    }
+
     .premium-divider {
       border: none;
       height: 2px;
@@ -167,28 +151,26 @@
     }
 
     .tip-note {
-      margin: 2px 4px 0;
+      margin: 2px 0 0;
       font-size: 10.5px;
       color: #0b57d0;
       font-weight: 700;
       line-height: 1.2;
     }
 
-    /* ===== 2x2 Grid Blocks ===== */
+    /* ===== 2x2 Grid Blocks (no boxes) ===== */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
+      gap: 6px 14px;
     }
 
     .mini-field {
-      border: 1px solid #eef0f3;
-      border-radius: 10px;
-      padding: 7px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      padding: 4px 0;
     }
 
     .mini-field label {
@@ -200,10 +182,10 @@
 
     .mini-field input {
       width: 62px;
-      height: 30px;
+      height: 28px;
       padding: 4px 6px;
       font-size: 13px;
-      border: 1px solid #d1d5db;
+      border: 1px solid #cfd3da;
       border-radius: 10px;
       text-align: center;
       outline: none;
@@ -316,20 +298,7 @@
     .share-btn { background-color: #25d366; color: white; }
     .download-btn { background-color: #007bff; color: white; }
 
-    /* Language selector */
-    #languageSelector {
-      width: 100%;
-      padding: 9px;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-      margin-bottom: 8px;
-      font-weight: 700;
-      font-size: 12.5px;
-    }
-
     @media screen and (max-width: 480px) {
-      .grid-2 { grid-template-columns: 1fr 1fr; }
       .btn-row { flex-direction: column; }
       .share-btn, .download-btn { width: 100%; }
       .action-buttons { flex-direction: column; }
@@ -339,26 +308,17 @@
 
 <body>
 
-<select id="languageSelector" onchange="changeLanguage(this.value)">
-  <option value="en">English</option>
-  <option value="hi">हिन्दी</option>
-</select>
-
 <div class="app-header">
   <h2 class="app-title" id="title">Jio Retailer – 10-Day Lap Incentive Calculator</h2>
   <p class="sub-title">Enter your lap target and see expected earning</p>
 
-  <div class="banner-chip" id="goldNote">
-    🔥 WIN A GOLD COIN! ₹349 Recharge Offer
-  </div>
-
   <div class="disclaimer">
-    *Tentative payouts for non-DSS retailer. Final commission will be as per company system.
+    *This calculator provides tentative payouts for non-DSS retailer. Final commission will be as per company system, subject to eligibility and conditions.
   </div>
 </div>
 
 <!-- Core Lap Inputs -->
-<div class="card">
+<div class="section">
   <div class="list-row">
     <div class="row-left">
       <div class="row-label">₹349 Plan (MNP)</div>
@@ -368,6 +328,7 @@
       <div class="error-message" id="err-mnp349"></div>
     </div>
   </div>
+  <hr class="line-divider">
 
   <div class="list-row">
     <div class="row-left">
@@ -397,8 +358,8 @@
 </div>
 
 <!-- AirFiber -->
-<div class="card">
-  <div class="list-row" style="margin-bottom:0;">
+<div class="section">
+  <div class="list-row">
     <div class="row-left">
       <div class="row-label">₹1200 AirFiber Booking</div>
     </div>
@@ -409,9 +370,11 @@
   </div>
 </div>
 
+<hr class="premium-divider">
+
 <!-- JioBharat Sales 2x2 -->
-<div class="card">
-  <div class="card-title">JioBharat Sales</div>
+<div class="section">
+  <div class="section-title">JioBharat Sales</div>
 
   <div class="grid-2">
     <div class="mini-field">
@@ -429,15 +392,13 @@
       <input type="number" id="jbJ1" min="0" max="999">
     </div>
   </div>
-
-  <div class="error-message" id="err-jbV4"></div>
-  <div class="error-message" id="err-jbB2"></div>
-  <div class="error-message" id="err-jbJ1"></div>
 </div>
 
+<hr class="premium-divider">
+
 <!-- JioBharat SIM 2x2 -->
-<div class="card">
-  <div class="card-title">JioBharat SIM</div>
+<div class="section">
+  <div class="section-title">JioBharat SIM</div>
 
   <div class="grid-2">
     <div class="mini-field">
@@ -459,10 +420,6 @@
   <div class="row-helper" style="margin-top:6px; font-weight:700; color:#0b57d0;">
     FR includes 23/123/234/269/369 recharge plan
   </div>
-
-  <div class="error-message" id="err-jbMnp123"></div>
-  <div class="error-message" id="err-jbNewSIM123"></div>
-  <div class="error-message" id="err-BKG"></div>
 </div>
 
 <div class="action-buttons">
@@ -506,31 +463,6 @@
 </div>
 
 <script>
-let translations = {};
-
-async function loadLanguageFile() {
-  try {
-    const response = await fetch('translations.json');
-    translations = await response.json();
-    const currentLang = document.getElementById("languageSelector").value || 'en';
-    changeLanguage(currentLang);
-  } catch (e) {
-    console.warn("translations.json not loaded. Falling back to English.", e);
-  }
-}
-
-function changeLanguage(lang) {
-  const langData = translations[lang];
-  if (!langData) return;
-  for (const key in langData) {
-    const el = document.getElementById(key);
-    if (el) el.innerText = langData[key];
-  }
-}
-loadLanguageFile();
-</script>
-
-<script>
 function resetFields() {
   const inputs = document.querySelectorAll("input[type='number']");
   inputs.forEach(input => input.value = "");
@@ -554,7 +486,7 @@ function shareWhatsApp() {
       canvas.toBlob(function(blob) {
         const file = new File([blob], "summary.png", { type: "image/png" });
 
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        ifif (navigator.canShare && navigator.canShare({ files: [file] })) {
           navigator.share({ files: [file], text: message });
         } else {
           alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
@@ -636,8 +568,6 @@ function calculate() {
   document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
   total += fr349Bonus;
 
-  // NOTE: Booster logic can be updated next as per your latest direction (no splitting)
-  // For now keeping existing output cell safe:
   document.getElementById("mnpBoosterCell").innerText = `₹0`;
 
   document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
