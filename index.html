@@ -1,21 +1,22 @@
-<!-- VERSION C13.1 (Removed 299 fields) -->
+<!-- VERSION C13.2 (Removed Header 1, styled MNP row like header) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Monthly Commission Calculator - C13.1</title>
+  <title>Jio Retailer - Monthly Commission Calculator - C13.2</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
   <!-- Google tag (gtag.js) -->
- <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GH8905Y6B"></script>
- <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9GH8905Y6B');
- </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GH8905Y6B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9GH8905Y6B');
+  </script>
 
   <style>
     body {
@@ -29,21 +30,20 @@
       flex: 0 0 auto;
       margin-right: 8px;
     }
-
     .row-single input {
       flex: 0 0 70px;
     }
-
     .row-single .error-message {
       flex: 0 0 auto;
     }
-    
+
     h2 {
       color: #0b57d0;
       text-align: center;
       font-size: 19px;
       margin-bottom: 6px;
     }
+
     .instruction {
       text-align: left;
       color: #555;
@@ -51,21 +51,25 @@
       margin-top: -6px;
       margin-bottom: 4px;
     }
+
     .emboss-line {
       height: 2px;
       background: linear-gradient(to right, #e0e0e0, #cfcfcf, #e0e0e0);
       box-shadow: inset 0 1px #fff, inset 0 -1px #aaa;
       margin: 4px 0 8px;
     }
+
     .section {
       padding: 6px 0;
       border-bottom: 1px solid #dcdcdc;
     }
+
     .section h3 {
       margin: 4px 0;
       color: #333;
       font-size: 15px;
     }
+
     .row {
       display: flex;
       flex-wrap: nowrap;
@@ -73,11 +77,13 @@
       gap: 8px;
       margin-bottom: 6px;
     }
+
     .row label {
       flex: 1;
       font-weight: 500;
       font-size: 13px;
     }
+
     .row input,
     .row select {
       flex: 0 0 70px;
@@ -87,18 +93,35 @@
       border-radius: 4px;
       text-align: right;
     }
+
     input[type="number"] {
       min: 0;
       step: 1;
     }
+
+    /* ✅ NEW: Header-like styling for first input row */
+    .header-row label {
+      color: #333;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .header-row input {
+      border: 2px solid #0b57d0;
+      font-weight: 600;
+      background: #ffffff;
+    }
+
     .action-buttons {
       display: flex;
       gap: 10px;
       margin-top: 12px;
     }
+
     .action-buttons button {
       flex: 1;
     }
+
     .reset-btn {
       background-color: #dc3545;
       color: white;
@@ -108,6 +131,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
     button {
       background-color: #28a745;
       color: white;
@@ -118,12 +142,14 @@
       cursor: pointer;
       width: 100%;
     }
+
     .post-instruction {
       text-align: left;
       color: #777;
       font-size: 11px;
       margin-top: 4px;
     }
+
     .modal {
       display: none;
       position: fixed;
@@ -141,21 +167,25 @@
       overflow-y: auto;
       font-size: 13px;
     }
+
     .modal table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
     }
+
     .modal th,
     .modal td {
       padding: 6px;
       text-align: left;
       border: 1px solid #ddd;
     }
+
     .modal tr.bonus-row td {
       font-weight: bold;
       background-color: #f3f3f3;
     }
+
     .overlay {
       display: none;
       position: fixed;
@@ -164,6 +194,7 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+
     .share-btn, .download-btn {
       padding: 8px;
       font-size: 13px;
@@ -172,6 +203,7 @@
       border-radius: 6px;
       width: 48%;
     }
+
     .share-btn { background-color: #25d366; color: white; }
     .download-btn { background-color: #007bff; color: white; }
 
@@ -189,6 +221,9 @@
       .share-btn, .download-btn {
         width: 100%;
       }
+      .header-row label {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -198,8 +233,9 @@
   <option value="en">English</option>
   <option value="hi">हिन्दी</option>
 </select>
-  
+
 <h2 id="title">Jio Retailer - Monthly Commission Calculator</h2>
+
 <p class="instruction" id="goldNote" style="font-weight: bold; color: #ff0000;">
   Make Every Customer Smile. Get customer to experience Google Gemini Pro (worth ₹35100) FREE with ₹349 recharge <br>
 </p>
@@ -210,10 +246,10 @@
 </p>
 <div class="emboss-line"></div>
 
+<!-- ✅ SECTION 1 header removed, only input retained and styled like header -->
 <div class="section">
-  <h3>1. MNP Activation</h3>
-  <div class="row">
-    <label>₹349 Plan</label>
+  <div class="row header-row">
+    <label>₹349 MNP Activation</label>
     <input type="number" id="mnp349" min="0" max="999">
     <span class="error-message" id="err-mnp349"></span>
   </div>
@@ -226,13 +262,13 @@
     <input type="number" id="sim349" min="0" max="999">
     <span class="error-message" id="err-sim349"></span>
   </div>
-    
+
   <div class="row">
     <label>JMN Booking</label>
     <input type="number" id="jmnBooking" min="0" max="999">
     <span class="error-message" id="err-jmnBooking"></span>
   </div>
- 
+
   <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
     <strong>Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</strong>
   </p>
@@ -242,10 +278,12 @@
   <h3>3. Jio AirFiber Bookings</h3>
   <div class="row">
     <label>₹1200 Booking</label>
-    <input type="number" id="jaf1111" min="0" max="999"><span class="error-message" id="err-jaf1111"></span>
+    <input type="number" id="jaf1111" min="0" max="999">
+    <span class="error-message" id="err-jaf1111"></span>
 
     <label>Unlimited Offer</label>
-    <input type="number" id="jafUnlimited" min="0" max="999"><span class="error-message" id="err-jafUnlimited"></span>
+    <input type="number" id="jafUnlimited" min="0" max="999">
+    <span class="error-message" id="err-jafUnlimited"></span>
   </div>
 </div>
 
@@ -253,11 +291,14 @@
   <h3>4. JioBharat Sales</h3>
   <div class="row">
     <label>V4 (₹799)</label>
-    <input type="number" id="jbV4" min="0" max="999"><span class="error-message" id="err-jbV4"></span>
-  
+    <input type="number" id="jbV4" min="0" max="999">
+    <span class="error-message" id="err-jbV4"></span>
+
     <label>A1 (₹1299)</label>
-    <input type="number" id="jbB2" min="0" max="999"><span class="error-message" id="err-jbB2"></span>
+    <input type="number" id="jbB2" min="0" max="999">
+    <span class="error-message" id="err-jbB2"></span>
   </div>
+
   <div class="row">
     <label>Prima 2.0 (₹2799)</label>
     <input type="number" id="jbJ1" min="0" max="999">
@@ -269,18 +310,20 @@
   <h3>5. JioBharat – SIM</h3>
   <div class="row">
     <label>MNP FR </label>
-    <input type="number" id="jbMnp123" min="0" max="999"><span class="error-message" id="err-jbMnp123"></span>
-  
+    <input type="number" id="jbMnp123" min="0" max="999">
+    <span class="error-message" id="err-jbMnp123"></span>
+
     <label>New SIM FR </label>
-    <input type="number" id="jbNewSIM123" min="0" max="999"><span class="error-message" id="err-jbNewSIM123"></span>
+    <input type="number" id="jbNewSIM123" min="0" max="999">
+    <span class="error-message" id="err-jbNewSIM123"></span>
   </div>
-  
+
   <div class="row row-single">
     <label>Booking (₹100 → ₹30 incentive)</label>
     <input type="number" id="BKG" min="0" max="999">
     <span class="error-message" id="err-BKG"></span>
   </div>
-  
+
   <p class="instruction" style="margin-top: -4px; color: #0b57d0; font-size: 10px;">
     <strong>FR includes 23/123/234/269/369 recharge plan</strong>
   </p>
@@ -290,226 +333,14 @@
   <button onclick="calculate()">Calculate</button>
   <button class="reset-btn" onclick="resetFields()">Reset</button>
 </div>
-<p class="post-instruction">*This calculator provides tentative payouts.<br>
-* Created by GT retailer.
+
+<p class="post-instruction">
+  *This calculator provides tentative payouts.<br>
+  * Created by GT retailer.
 </p>
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
 <div class="modal" id="resultModal">
-  <h3>Your Total Earning</h3><p class="post-instruction">*This calculator provides tentative payouts</p>
-  <table>
-    <thead>
-      <tr><th>Section</th><th>Count</th><th>Incentive </th></tr>
-    </thead>
-    <tbody id="resultTableBody"></tbody>
-    <tr class="bonus-row"><td colspan="2" id="mnpBoosterLabel">MNP "Sell & Win" Comm.</td><td id="mnpBoosterCell">₹0</td></tr>
-    <tr class="bonus-row"><td colspan="2">FR 349 Slab Comm.</td><td id="fr349BonusCell">₹0</td></tr>
-    <tfoot>
-      <tr><th colspan="2">Total</th><th id="grandTotal">₹0</th></tr>
-    </tfoot>
-  </table>
-  <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
-  <button class="download-btn" onclick="downloadImage()">Download as Image</button>
-</div>
-  
-<script>
-let translations = {};
-
-async function loadLanguageFile() {
-  try {
-    const response = await fetch('translations.json');
-    translations = await response.json();
-
-    const currentLang = document.getElementById("languageSelector").value || 'en';
-    changeLanguage(currentLang);
-  } catch (e) {
-    console.warn("translations.json not loaded. Falling back to English.", e);
-  }
-}
-
-function changeLanguage(lang) {
-  const langData = translations[lang];
-  if (!langData) return;
-
-  for (const key in langData) {
-    const el = document.getElementById(key);
-    if (el) {
-      el.innerText = langData[key];
-    }
-  }
-}
-
-loadLanguageFile();
-</script> 
-  
-<script>
-function resetFields() {
-  const inputs = document.querySelectorAll("input[type='number']");
-  inputs.forEach(input => input.value = "");
-}
-
-function shareWhatsApp() {
-  const modal = document.getElementById("resultModal");
-  const total = document.getElementById("grandTotal").innerText;
-  const message = `My total Jio Partner earning this month is ${total}. Summary below 👇`;
-
-  const originalMaxHeight = modal.style.maxHeight;
-  const originalOverflow = modal.style.overflow;
-  modal.style.maxHeight = 'none';
-  modal.style.overflow = 'visible';
-
-  setTimeout(() => {
-    html2canvas(modal).then(canvas => {
-      modal.style.maxHeight = originalMaxHeight;
-      modal.style.overflow = originalOverflow;
-
-      canvas.toBlob(function(blob) {
-        const file = new File([blob], "summary.png", { type: "image/png" });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          navigator.share({
-            files: [file],
-            text: message
-          });
-        } else {
-          alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
-        }
-      });
-    });
-  }, 100);
-}
-
-function downloadImage() {
-  const modal = document.getElementById("resultModal");
-  const originalMaxHeight = modal.style.maxHeight;
-  const originalOverflow = modal.style.overflow;
-  modal.style.maxHeight = 'none';
-  modal.style.overflow = 'visible';
-
-  setTimeout(() => {
-    html2canvas(modal).then(canvas => {
-      modal.style.maxHeight = originalMaxHeight;
-      modal.style.overflow = originalOverflow;
-
-      const link = document.createElement("a");
-      link.download = "incentive-summary.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    });
-  }, 100);
-}
-
-function closePopup() {
-  document.getElementById("resultModal").style.display = "none";
-  document.getElementById("overlay").style.display = "none";
-}
-
-function get(id) {
-  const value = document.getElementById(id)?.value;
-  return parseInt(value) || 0;
-}
-
-function calculate() {
-
-  // GA safety
-  if (typeof gtag === "function") {
-    gtag('event', 'calculate_clicked', {
-      'event_category': 'Calculator',
-      'event_label': 'Retailer Monthly Incentive'
-    });
-  }
-  
-  const resultBody = document.getElementById("resultTableBody");
-  resultBody.innerHTML = "";
-
-  const mnp349 = get("mnp349");
-  const sim349 = get("sim349");
-
-  const entries = [
-    ["MNP Activation", mnp349, mnp349 * 234],
-    ["New SIM Activation", sim349, sim349 * 132],
-    ["JAF Booking", get("jaf1111") + get("jafUnlimited"), get("jaf1111") * 96 + get("jafUnlimited") * 120],
-    ["JioBharat Sales", get("jbV4") + get("jbB2") + get("jbJ1"), get("jbV4") * 125 + get("jbB2") * 125 + get("jbJ1") * 225],
-    ["JB MNP", get("jbMnp123"), get("jbMnp123") * 96],
-    ["JB New SIM", get("jbNewSIM123"), get("jbNewSIM123") * 18],
-    ["JB Booking (₹100)", get("BKG"), get("BKG") * 30]
-  ];
-
-  let total = 0;
-  for (const [label, count, amount] of entries) {
-    total += amount;
-    resultBody.innerHTML += `<tr><td>${label}</td><td>${count}</td><td>₹${amount.toFixed(2)}</td></tr>`;
-  }
-
-  // JMN Booking Commission
-  let jmnBooking = get("jmnBooking");
-  let jmnIncentive = jmnBooking * 10;
-  resultBody.innerHTML += `<tr><td>JMN Booking Commission</td><td>${jmnBooking}</td><td>₹${jmnIncentive}</td></tr>`;
-  total += jmnIncentive;
-
-  // FR 349 Slab Commission (currently based only on MNP 349 as per your existing logic)
-  let fr349Total = mnp349;
-  let fr349Bonus = 0;
-  if (fr349Total >= 5 && fr349Total <= 499) fr349Bonus = fr349Total * 10;
-  else if (fr349Total >= 500) fr349Bonus = fr349Total * 10; 
-
-  document.getElementById("fr349BonusCell").innerText = `₹${fr349Bonus}`;
-  total += fr349Bonus;
-
-  // MNP Booster (Sell & Win)
-  let M = Math.floor(mnp349 / 3);
-  let R = mnp349 % 3;
-
-  let laps = [];
-  if (R === 0) {
-    laps = [M, M, M];
-  } else if (R === 1) {
-    laps = [M, M, M + 1];
-  } else if (R === 2) {
-    laps = [M, M + 1, M + 1];
-  }
-
-  function rateFor(m) {
-    if (m >= 1 && m <= 2) return 50;
-    if (m >= 3 && m <= 9) return 90;
-    if (m >= 10) return 110;
-    return 0;
-  }
-
-  let mnpBoosterInc = 0;
-  for (let i = 0; i < 3; i++) {
-    mnpBoosterInc += laps[i] * rateFor(laps[i]);
-  }
-
-  document.getElementById("mnpBoosterCell").innerHTML =
-    `₹${mnpBoosterInc}<br><span style="font-weight:normal; font-size: 12px; font-style: italic;">MNP in Laps: ${laps.join(", ")}</span>`;
-  total += mnpBoosterInc;
-
-  document.getElementById("grandTotal").innerText = `₹${total.toFixed(2)}`;
-  document.getElementById("resultModal").style.display = "block";
-  document.getElementById("overlay").style.display = "block";
-}
-
-document.querySelectorAll('input[type="number"]').forEach(input => {
-  input.setAttribute('placeholder', '0');
-  input.setAttribute('min', '0');
-  input.setAttribute('step', '1');
-
-  input.addEventListener('input', () => {
-    const val = input.value;
-    const errEl = document.getElementById('err-' + input.id);
-
-    if (val.includes('.')) {
-      input.value = Math.floor(val);
-      if (errEl) errEl.innerText = 'Decimal not allowed';
-    } else if (val < 0) {
-      input.value = 0;
-      if (errEl) errEl.innerText = 'Only positive numbers allowed';
-    } else {
-      if (errEl) errEl.innerText = '';
-    }
-  });
-});
-</script>
-</body>
-</html>
+  <h3>Your Total Earning</h3>
+  <p class="post-instruction">*This calculator provides tentative payouts</p>
