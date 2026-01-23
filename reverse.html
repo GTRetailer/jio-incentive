@@ -770,16 +770,31 @@
 <div id="switcherMount"></div>
 
 <!-- ✅ Load switcher.html -->
+<div id="switcherMount"></div>
+
 <script>
-  fetch("./switcher.html")
+  fetch("switcher.html")
     .then(res => res.text())
     .then(html => {
       document.getElementById("switcherMount").innerHTML = html;
+
+      // ✅ RUN active tab logic after injection
+      const path = window.location.pathname.toLowerCase();
+      let active = "calculator";
+
+      if (path.includes("training.html")) active = "training";
+      else if (path.includes("reverse.html")) active = "reverse";
+      else active = "calculator";
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === active);
+      });
     })
     .catch(() => {
       console.log("Switcher not loaded. Check switcher.html path.");
     });
 </script>
+
 
 </body>
 </html>
