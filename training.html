@@ -1,4 +1,4 @@
-<!-- TRAINING HUB - VERSION T1 (Works with C32 Quick Switcher) -->
+<!-- TRAINING HUB - VERSION T2 (Loads from training.json) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +27,6 @@
       --sub:#5f6368;
       --border:#dadce0;
       --bg:#ffffff;
-      --danger:#d93025;
 
       --cardBg:#f7fafc;
       --cardBorder:#eef2f6;
@@ -37,8 +36,6 @@
 
       --tagBlueBg:#e8f0fe;
       --tagBlueText:#0b57d0;
-
-      --shadow: 0 1px 2px rgba(0,0,0,0.10);
     }
 
     *{
@@ -61,7 +58,6 @@
       padding: 14px 14px 18px;
     }
 
-    /* ===== Header ===== */
     .header{ padding: 10px 0 8px; }
 
     .title{
@@ -71,6 +67,7 @@
       color: var(--deepBlue);
       letter-spacing: -0.8px;
       line-height: 1.1;
+      text-align: left;
     }
 
     .subtitle{
@@ -112,7 +109,6 @@
       margin: 8px 0 0;
     }
 
-    /* ===== Cards ===== */
     .list{
       margin-top: 14px;
       display: flex;
@@ -130,12 +126,10 @@
       padding: 12px;
       box-shadow: 0 10px 24px rgba(0,0,0,0.05);
       cursor: pointer;
-      transition: transform 120ms ease, box-shadow 120ms ease;
+      transition: transform 120ms ease;
     }
 
-    .card:active{
-      transform: scale(0.99);
-    }
+    .card:active{ transform: scale(0.99); }
 
     .thumb{
       width: 92px;
@@ -150,7 +144,6 @@
       justify-content: center;
     }
 
-    /* Video play button overlay */
     .play{
       width: 40px;
       height: 40px;
@@ -198,15 +191,8 @@
       white-space: nowrap;
     }
 
-    .tag.video{
-      background: var(--tagRedBg);
-      color: var(--tagRedText);
-    }
-
-    .tag.doc{
-      background: var(--tagBlueBg);
-      color: var(--tagBlueText);
-    }
+    .tag.video{ background: var(--tagRedBg); color: var(--tagRedText); }
+    .tag.pdf{ background: var(--tagBlueBg); color: var(--tagBlueText); }
 
     .card-title{
       font-size: 16px;
@@ -225,6 +211,17 @@
       color: #94a3b8;
       letter-spacing: 0.2px;
       text-transform: uppercase;
+    }
+
+    .empty-state{
+      margin-top: 14px;
+      padding: 14px 12px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sub);
+      text-align: center;
     }
 
     .footer-note{
@@ -259,67 +256,22 @@
 
     <div class="block-divider"></div>
 
-    <div class="list">
-
-      <!-- ===== Video Card ===== -->
-      <div class="card" onclick="openVideo()">
-        <div class="thumb">
-          <div class="play"></div>
-        </div>
-
-        <div class="info">
-          <div class="tag video">Video Guide</div>
-          <div class="card-title">Mastering MNP Process</div>
-          <div class="meta">Duration: 4:30 Mins</div>
-        </div>
-      </div>
-
-      <!-- ===== PDF Card ===== -->
-      <div class="card" onclick="openPdf()">
-        <div class="thumb" style="background:#eaf2ff;">
-          <div class="pdfIcon">PDF</div>
-        </div>
-
-        <div class="info">
-          <div class="tag doc">Document (PDF)</div>
-          <div class="card-title">Latest Scheme PDF (Jan 24)</div>
-          <div class="meta">Size: 1.2 MB</div>
-        </div>
-      </div>
-
-    </div>
+    <div class="list" id="trainingList"></div>
 
     <div class="footer-note">
-      *Use this hub to quickly access MNP training videos and latest process documents.
+      *Final commission will be as per company system, subject to eligibility and conditions.
     </div>
 
   </div>
 
 <script>
-  function openVideo(){
-    if (typeof gtag === "function") {
-      gtag('event', 'training_video_opened', {
-        event_category: 'TrainingHub',
-        event_label: 'Mastering MNP Process'
-      });
-    }
+  async function loadTraining() {
+    const listEl = document.getElementById("trainingList");
+    listEl.innerHTML = "";
 
-    // ✅ Replace with your actual YouTube/Drive link
-    alert("https://www.youtube.com/watch?v=g0CjWbgsdTQ");
-  }
+    try {
+      const res = await fetch("training.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("training.json not found");
+      const data = await res.json();
 
-  function openPdf(){
-    if (typeof gtag === "function") {
-      gtag('event', 'training_pdf_opened', {
-        event_category: 'TrainingHub',
-        event_label: 'Latest Scheme PDF (Jan 24)'
-      });
-    }
-
-    // ✅ Replace with your actual PDF link
-    alert("Add your PDF link here (Drive / hosted file).");
-  }
-</script>
-
-</body>
-</html>
+      const items = da
