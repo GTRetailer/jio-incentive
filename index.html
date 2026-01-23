@@ -1,4 +1,4 @@
-<!-- VERSION C32 (No divider after V4 row + tighter JioBharat spacing + Booking label match + remove ₹10/MNP×3 subtext) -->
+<!-- VERSION C32 + Quick Switcher (Reverse + Training) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,7 +82,7 @@
     }
 
     .disclaimer{
-      margin: 6px 0 0;
+      margin: 10px 0 0;
       font-size: 12px;
       font-weight: 400;
       color: var(--sub);
@@ -92,8 +92,8 @@
 
     /* ✅ Reduced spacing before JioBharat → V4 row */
     .section-title{
-      margin: 2px 0 0px;
-      font-size: 18px;
+      margin: 6px 0 2px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--text);
       letter-spacing: -0.2px;
@@ -102,37 +102,59 @@
     /* Divider line blocks */
     .block-divider{
       border-bottom: 1px solid #eef0f3;
-      margin: 0px 0 0;
+      margin: 8px 0 0;
+    }
+
+    /* ✅ Quick Switcher */
+    .quick-switcher{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin: 12px 0 14px;
+    }
+
+    .switch-btn{
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #4b5563;
+      cursor: pointer;
+    }
+
+    .switch-btn:active{
+      transform: scale(0.99);
     }
 
     /* ===== Rows ===== */
-   .row{
+    .row{
       display: grid;
       grid-template-columns: 1fr 96px;
       align-items: stretch;
       gap: 10px;
-      padding: 8px 0 8px 0;
+      padding: 6px 0 6px 0;
       border-bottom: 1px solid #eef0f3;
     }
-
-
     .row:last-child{ border-bottom: none; }
 
+    /* ✅ Center label + input vertically inside each row */
     .row > div:first-child{
       display: flex;
-      align-items: center;   /* ✅ vertical centering of label */
+      align-items: center;
       height: 100%;
     }
 
-    
     .row > div:last-child{
-       display: flex;
-       align-items: center;        /* ✅ centers input vertically */
-       justify-content: flex-end;
-       height: 100%;               /* ✅ take full row height */
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
     }
-
-
 
     .label{
       font-size: 15px;
@@ -160,7 +182,6 @@
       font-size: 15px;
       font-weight: 700;
       outline: none;
-      justify-self: end;
       color: var(--text);
       line-height: 36px;
     }
@@ -173,11 +194,11 @@
 
     /* Booking subtext */
     .field-subtext{
-      margin-top: 2px;
+      margin-top: 0px;
       font-size: 12px;
       font-weight: 600;
       color: var(--btnBlue2);
-      line-height: 1.1;
+      line-height: 1.0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -267,7 +288,7 @@
     /* Partner Tier */
     .partner-wrap{
       display:none;
-      margin: 6px 0 8px;
+      margin: 8px 0 10px;
       text-align: center;
     }
 
@@ -275,10 +296,9 @@
       position: relative;
       overflow: hidden;
       background: #ffffff;
-      border: 1px solid #eef2f6;
+      border: 1px solid var(--cardBorder);
       border-radius: 16px;
-      padding: 4px 4px;
-      display: inline-block;
+      padding: 10px 10px;
       width: 100%;
       animation: cardFadeIn 450ms ease-out;
     }
@@ -291,15 +311,13 @@
       letter-spacing: 1px;
       padding: 6px 10px;
       border-radius: 999px;
-      position: relative;
-      z-index: 2;
       border: 1px solid transparent;
       white-space: nowrap;
       animation: popIn 420ms cubic-bezier(.2,.9,.25,1.4);
     }
 
     .partner-msg{
-      margin-top: 4px;
+      margin-top: 6px;
       font-size: 12.5px;
       font-weight: 700;
       color: var(--deepBlue);
@@ -308,8 +326,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
-      position: relative;
-      z-index: 2;
       animation: slideUp 520ms ease-out 0s 1;
     }
 
@@ -323,7 +339,6 @@
       inset:-40%;
       background: radial-gradient(circle at 50% 30%, var(--tierGlow, rgba(0,94,255,0.10)), transparent 55%);
       opacity: 0.75;
-      z-index: 1;
       pointer-events:none;
     }
 
@@ -339,26 +354,25 @@
       background: rgba(0,94,255,0.18);
       opacity: 0;
       animation: burstRing 650ms ease-out;
-      z-index: 1;
       pointer-events:none;
     }
 
     @keyframes popIn{
-      0%   { transform: scale(0.7); opacity: 0; }
-      60%  { transform: scale(1.08); opacity: 1; }
+      0% { transform: scale(0.7); opacity: 0; }
+      60% { transform: scale(1.08); opacity: 1; }
       100% { transform: scale(1.0); }
     }
     @keyframes slideUp{
-      0%   { transform: translateY(8px); opacity: 0; }
+      0% { transform: translateY(8px); opacity: 0; }
       100% { transform: translateY(0px); opacity: 1; }
     }
     @keyframes burstRing{
-      0%   { transform: translateX(-50%) scale(0.2); opacity: 0; }
-      30%  { opacity: 1; }
+      0% { transform: translateX(-50%) scale(0.2); opacity: 0; }
+      30% { opacity: 1; }
       100% { transform: translateX(-50%) scale(18); opacity: 0; }
     }
     @keyframes cardFadeIn{
-      0%   { transform: translateY(6px); opacity: 0; }
+      0% { transform: translateY(6px); opacity: 0; }
       100% { transform: translateY(0px); opacity: 1; }
     }
 
@@ -366,26 +380,23 @@
     .summary-list{
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
       padding: 0;
       margin: 0;
     }
 
     .summary-card{
-      background: #f7fafc;
-      border: 1px solid #eef2f6;
+      background: var(--cardBg);
+      border: 1px solid var(--cardBorder);
       border-radius: 14px;
-      padding: 6px 8px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
     }
 
-    .summary-left{
-      min-width: 0;
-      flex: 1;
-    }
+    .summary-left{ flex: 1; min-width: 0; }
 
     .card-title{
       font-size: 13.5px;
@@ -413,8 +424,8 @@
     }
 
     .summary-card.bonus{
-      background: #eef6ff;
-      border: 1px solid #d6e9ff;
+      background: var(--bonusBg);
+      border: 1px solid var(--bonusBorder);
     }
     .summary-card.bonus .card-title{
       color: var(--btnBlue2);
@@ -441,14 +452,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 7px;
-      margin-bottom: 7px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .payout-tile{
       background: var(--deepBlue);
       border-radius: 16px;
-      padding: 8px 6px;
+      padding: 12px 10px;
       text-align: center;
       color: #fff;
       position: relative;
@@ -476,7 +487,6 @@
       font-weight: 900;
       opacity: 0.92;
       letter-spacing: 1px;
-      text-transform: none;
     }
 
     .payout-sub{
@@ -543,10 +553,17 @@
 <div class="page">
   <div class="header">
     <h1 class="title">Jio Retailer – Lap Commission Calculator</h1>
-    <div class="subtitle">✅Enter your committed numbers for current lap✅</div>
+    <div class="subtitle">Enter your committed numbers for current lap</div>
     <div class="disclaimer">
-      *Calculator provides tentative payout for non-DSS retailer. *Final commission will be as per company system, subject to eligibility and conditions.<br>
+      *This calculator provides tentative payouts for non-DSS retailer.<br>
+      *Final commission will be as per company system, subject to eligibility and conditions.<br>
     </div>
+  </div>
+
+  <!-- ✅ Quick Switcher added here (as requested) -->
+  <div class="quick-switcher">
+    <button class="switch-btn" onclick="location.href='reverse.html'">Open Reverse Calc</button>
+    <button class="switch-btn" onclick="location.href='training.html'">Open Training Hub</button>
   </div>
 
   <div class="block-divider"></div>
@@ -625,7 +642,7 @@
     </div>
 
     <div class="payout-tile monthly">
-      <div class="payout-label">Monthly (Est.)</div>
+      <div class="payout-label">Monthly Payout (Est.)</div>
       <div class="payout-amount" id="monthlyPayout">₹0</div>
       <div class="payout-sub">(3 × Lap Payout)</div>
     </div>
@@ -708,7 +725,7 @@ function getSellWinRate(mnpCount) {
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
   const total = document.getElementById("lapPayout").innerText;
-  const message = `My lap payout (est.) is ${total}. Summary below 👇`;
+  const message = `Great job! My lap payout (est.) is ${total}. Summary above 👆`;
 
   const originalMaxHeight = modal.style.maxHeight;
   const originalOverflow = modal.style.overflow;
@@ -858,10 +875,3 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 
 </body>
 </html>
-
-
-
-
-
-
-
