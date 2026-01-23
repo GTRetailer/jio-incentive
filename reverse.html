@@ -766,9 +766,12 @@
   startLiveFeed();
 </script>
 
+<!-- ✅ Switcher Mount -->
+<div id="switcherMount"></div>
+
 <!-- ✅ Load switcher.html -->
 <script>
-  fetch("switcher.html")
+  fetch("./switcher.html")
     .then(res => res.text())
     .then(html => {
       document.getElementById("switcherMount").innerHTML = html;
@@ -780,3 +783,4 @@
 
 </body>
 </html>
+
