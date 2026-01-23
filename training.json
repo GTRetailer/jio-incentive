@@ -3,24 +3,21 @@
     {
       "id": "vid_001",
       "type": "video",
-      "title": "Mastering MNP Process",
-      "meta": "Duration: 4:30 mins",
-      "url": "https://www.youtube.com/shorts/FOSHFJ5v5Vo",
+      "title": "Republic Day Poster",
+      "url": "https://admaker.jio/",
+      "tag": "Video Guide"
+    },
+    {
+      "id": "vid_002",
+      "type": "video",
+      "title": "Jio X Gemini Offer",
+      "url": "https://www.youtube.com/shorts/SeargGVpM7A",
       "tag": "Video Guide"
     },
     {
       "id": "pdf_001",
       "type": "pdf",
-      "title": "Jio X Gemini Offer",
-      "meta": "PDF • Drive Link",
-      "url": "https://www.youtube.com/shorts/SeargGVpM7A",
-      "tag": "Document (PDF)"
-    },
-    {
-      "id": "pdf_001",
-      "type": "pdf",
       "title": "Latest Scheme PDF (Jan 24)",
-      "meta": "PDF • Drive Link",
       "url": "https://ebooks.lpude.in/management/bba/term_4/DMGT205_SALES_MANAGEMENT.pdf",
       "tag": "Document (PDF)"
     }
