@@ -1,4 +1,4 @@
-<!-- VERSION C32.2 – Training Hub (Learn & Earn + Search + Badge + Open CTA) -->
+<!-- VERSION C32.3 – Training Hub (Learn & Earn + Search + Badge, No Open Button) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +70,7 @@
     /* ===== Header ===== */
     .header{
       padding: 10px 0 8px;
-      text-align: center; /* ✅ center align headline & subtext */
+      text-align: center;
     }
 
     .title{
@@ -252,26 +252,6 @@
       text-overflow: ellipsis;
     }
 
-    /* Right CTA */
-    .open-btn{
-      flex: 0 0 auto;
-      height: 38px;
-      padding: 0 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--deepBlue);
-      font-weight: 900;
-      font-size: 12px;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-    }
-
-    .open-btn:active{
-      transform: scale(0.98);
-    }
-
     .empty-state{
       margin-top: 10px;
       padding: 14px 12px;
@@ -351,7 +331,6 @@
     @media (max-width: 420px){
       .thumb{ width: 86px; height: 56px; }
       .card-title{ font-size: 15px; }
-      .open-btn{ padding: 0 12px; }
     }
   </style>
 </head>
@@ -437,14 +416,14 @@
     return u.includes("youtube.com") || u.includes("youtu.be");
   }
 
-  let allItems = [];
-
   function normalizeBadge(b){
     const v = safeText(b).trim().toUpperCase();
     if (v === "NEW") return "new";
     if (v === "UPDATED") return "updated";
     return "";
   }
+
+  let allItems = [];
 
   function openItem(item){
     const title = safeText(item.title) || "Training Item";
@@ -529,20 +508,10 @@
           </div>
           <div class="card-title">${title}</div>
         </div>
-        <button class="open-btn" type="button">OPEN</button>
       `;
 
-      // card click -> open
       card.addEventListener("click", () => openItem(item));
-
-      // open button click -> open (but prevent card click double)
-      const openBtn = card.querySelector(".open-btn");
-      openBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openItem(item);
-      });
-
-      document.getElementById("trainingList").appendChild(card);
+      listEl.appendChild(card);
     });
   }
 
@@ -574,7 +543,7 @@
     }
   }
 
-  // Search logic
+  // Search
   document.getElementById("searchInput").addEventListener("input", (e) => {
     const q = safeText(e.target.value).toLowerCase().trim();
 
