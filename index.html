@@ -1,10 +1,10 @@
-<!-- VERSION C25 (Vertical Center Align: Input Text + Row Alignment) -->
+<!-- VERSION C30 (Add FR subtext + Make Sell&Win styled as Bonus card) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Lap Incentive Calculator - C25</title>
+  <title>Jio Retailer - Lap Incentive Calculator - C30</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -97,37 +97,29 @@
       color: var(--text);
       letter-spacing: -0.2px;
     }
-    
-.top-divider{
-  border: none;
-  border-top: 1px solid #eef0f3;
-  margin: 0px 0 0px;
-}
 
-    /* ✅ Row spacing rule + vertical centering */
+    /* ===== Rows ===== */
     .row{
       display: grid;
       grid-template-columns: 1fr 96px;
-      align-items: center;          /* ✅ center align vertically */
+      align-items: center;
       gap: 10px;
       padding: 10px 0 0px 0;
       border-bottom: 1px solid #eef0f3;
     }
     .row:last-child{ border-bottom: none; }
 
+    .row > div:first-child{
+      display: flex;
+      align-items: center;
+      min-height: 36px;
+    }
+
     .label{
       font-size: 15px;
       font-weight: 600;
       color: var(--text);
       line-height: 1.2;
-    }
-
-    .note{
-      margin: 7px 0 0;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--btnBlue2);
-      line-height: 1.25;
     }
 
     .error{
@@ -138,7 +130,6 @@
       min-height: 12px;
     }
 
-    /* ✅ Input vertical center fix */
     .input{
       width: 96px;
       height: 36px;
@@ -147,15 +138,12 @@
       border: 1px solid var(--border);
       background: var(--inputBg);
       text-align: center;
-
       font-size: 15px;
       font-weight: 700;
-
       outline: none;
       justify-self: end;
       color: var(--text);
-
-      line-height: 36px;            /* ✅ vertically centers text */
+      line-height: 36px;
     }
 
     .input:focus{
@@ -164,7 +152,7 @@
       background: #ffffff;
     }
 
-    /* ===== 2x2 grids ===== */
+    /* ===== Grid blocks ===== */
     .grid-2{
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -173,16 +161,26 @@
       border-bottom: 1px solid #eef0f3;
     }
 
-    /* ✅ Field spacing rule + vertical centering */
     .field{
       display: grid;
       grid-template-columns: 1fr 96px;
       gap: 10px;
-      align-items: center;          /* ✅ center label+input vertically */
+      align-items: center;
       padding: 0px 0;
     }
 
     .span-2{ grid-column: 1 / -1; }
+
+    .field-subtext{
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--btnBlue2);
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     /* ===== Bottom Actions ===== */
     .actions{
@@ -265,20 +263,10 @@
       line-height: 1.15;
     }
 
-    .modal-subtitle{
-      margin: 4px 0 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--sub);
-      text-align: center;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-    }
-
     /* ===== Partner Tier Card ===== */
     .partner-wrap{
       display:none;
-      margin-bottom: 8px;
+      margin: 8px 0 10px;
       text-align: center;
     }
 
@@ -327,7 +315,6 @@
     .tier-bronze{ background:#fff7ed; border-color:#fed7aa; color:#9a3412; }
     .tier-silver{ background:#f1f5f9; border-color:#cbd5e1; color:#334155; }
     .tier-gold{ background:#fffbeb; border-color:#fde68a; color:#92400e; }
-    .tier-platinum{ background:#eef6ff; border-color:#bfdbfe; color:#1d4ed8; }
 
     .partner-card::after{
       content:"";
@@ -412,7 +399,7 @@
     .card-sub{
       margin-top: 2px;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       color: #94a3b8;
       line-height: 1.15;
     }
@@ -454,6 +441,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .payout-tile{
@@ -484,17 +472,17 @@
 
     .payout-label{
       font-size: 11px;
-      font-weight: 700;
-      opacity: 0.85;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-weight: 900;
+      opacity: 0.92;
+      letter-spacing: 1px;
+      text-transform: none;
     }
 
     .payout-sub{
       margin-top: 3px;
       font-size: 10.5px;
       font-weight: 600;
-      opacity: 0.85;
+      opacity: 0.90;
     }
 
     .payout-amount{
@@ -531,6 +519,15 @@
     .share-btn{ background:#25d366; }
     .download-btn{ background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2)); }
 
+    .modal-footer-note{
+      margin-top: 8px;
+      font-size: 11px;
+      color: #8a94a6;
+      line-height: 1.25;
+      text-align: center;
+      font-weight: 500;
+    }
+
     @media (max-width: 420px){
       .row{ grid-template-columns: 1fr 90px; }
       .input{ width: 90px; height: 36px; line-height: 36px; }
@@ -549,11 +546,10 @@
     <h1 class="title">Jio Retailer – Lap Commission Calculator</h1>
     <div class="subtitle">Enter your committed numbers for current lap</div>
     <div class="disclaimer">
-      *This calculator provides tentative payouts for non-DSS retailer.<br> *Final commission will be as per company system, subject to eligibility and conditions.<br>
-      </div>
+      *This calculator provides tentative payouts for non-DSS retailer.<br>
+      *Final commission will be as per company system, subject to eligibility and conditions.<br>
+    </div>
   </div>
-  
-  <hr class="top-divider">
 
   <div class="row">
     <div><div class="label">MNP Activation (₹349)</div></div>
@@ -572,59 +568,26 @@
   </div>
 
   <div class="row">
-    <div>
-      <div class="label">JMN Booking</div>
-      <div class="note">Do 2+ JMN/day → ₹10 extra per MNP ₹349 that day</div>
-    </div>
-    <div>
-      <input class="input" type="number" id="jmnBooking" min="0" max="999">
-      <div class="error" id="err-jmnBooking"></div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div><div class="label">Jio AirFiber Booking (₹1200)</div></div>
+    <div><div class="label">JioHome Booking (₹1200)</div></div>
     <div>
       <input class="input" type="number" id="jaf1111" min="0" max="999">
       <div class="error" id="err-jaf1111"></div>
     </div>
   </div>
 
-  <div class="section-title">JioBharat Sales</div>
-  <div class="grid-2">
+  <div class="section-title">JioBharat</div>
+  <div class="grid-2" style="border-bottom:none;">
     <div class="field">
-      <div class="label">V4 (₹799)</div>
+      <div class="label">V4 Device (₹799)</div>
       <input class="input" type="number" id="jbV4" min="0" max="999">
     </div>
-    <div class="field">
-      <div class="label">A1 (₹1299)</div>
-      <input class="input" type="number" id="jbB2" min="0" max="999">
-    </div>
-    <div class="field span-2">
-      <div class="label">Prima 2.0 (₹2799)</div>
-      <input class="input" type="number" id="jbJ1" min="0" max="999">
-    </div>
-  </div>
-
-  <div class="section-title">JioBharat SIM</div>
-  <div class="grid-2">
-    <div class="field">
-      <div class="label">MNP FR</div>
-      <input class="input" type="number" id="jbMnp123" min="0" max="999">
-    </div>
 
     <div class="field">
-      <div class="label">New SIM FR</div>
-      <input class="input" type="number" id="jbNewSIM123" min="0" max="999">
-    </div>
-
-    <div class="field span-2">
-      <div class="label">Booking (₹100 → ₹30)</div>
+      <div>
+        <div class="label">Booking</div>
+        <div class="field-subtext">(₹100 → ₹30)</div>
+      </div>
       <input class="input" type="number" id="BKG" min="0" max="999">
-    </div>
-
-    <div class="span-2">
-      <div class="note">FR includes 23/123/234/269/369 recharge plan</div>
     </div>
   </div>
 
@@ -634,7 +597,7 @@
   </div>
 
   <div class="footer-note">
-    * This calculator provides tentative payouts.<br> 
+    * This calculator provides tentative payouts.<br>
     * Created by GT retailer.
   </div>
 </div>
@@ -643,29 +606,31 @@
 
 <div class="modal" id="resultModal">
   <h2 class="modal-title">Earnings Summary</h2>
- 
 
   <div class="partner-wrap" id="partnerWrap"></div>
 
-  <div class="summary-list" id="summaryList"></div>
-
   <div class="payout-grid">
     <div class="payout-tile">
-      <div class="payout-label">Estimated Payout</div>
-      <div class="payout-amount" id="estimatedPayout">₹0</div>
+      <div class="payout-label">Lap Payout (Est.)</div>
+      <div class="payout-amount" id="lapPayout">₹0</div>
     </div>
 
     <div class="payout-tile monthly">
-      <div class="payout-label">Projected Monthly</div>
-      
-      <div class="payout-amount" id="projectedMonthly">₹0</div>
-      <div class="payout-sub">(3 × Estimated Payout)</div>
+      <div class="payout-label">Monthly Payout (Est.)</div>
+      <div class="payout-amount" id="monthlyPayout">₹0</div>
+      <div class="payout-sub">(3 × Lap Payout)</div>
     </div>
   </div>
+
+  <div class="summary-list" id="summaryList"></div>
 
   <div class="modal-actions">
     <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
     <button class="download-btn" onclick="downloadImage()">Download as Image</button>
+  </div>
+
+  <div class="modal-footer-note">
+    Final commission will be as per company system, subject to eligibility and conditions.
   </div>
 </div>
 
@@ -689,24 +654,25 @@ function formatINR(n) {
   return "₹" + Math.round(n).toLocaleString("en-IN");
 }
 
-function renderCard(title, qty, amount) {
+function renderCard(title, qty, rate, amount) {
   return `
     <div class="summary-card">
       <div class="summary-left">
         <div class="card-title">${title}</div>
-        <div class="card-sub">Quantity: ${qty}</div>
+        <div class="card-sub">${qty} × ₹${rate}</div>
       </div>
       <div class="card-amount">${formatINR(amount)}</div>
     </div>
   `;
 }
 
-function renderBonusCard(title, subtitle, amount) {
+/* ✅ Bonus style card (FR + Sell&Win) */
+function renderBonusCard(title, subtitleHtml, amount) {
   return `
     <div class="summary-card bonus">
       <div class="summary-left">
         <div class="card-title">${title}</div>
-        <div class="card-sub">${subtitle}</div>
+        <div class="card-sub">${subtitleHtml}</div>
       </div>
       <div class="card-amount">${formatINR(amount)}</div>
     </div>
@@ -717,18 +683,41 @@ function renderEmptyState() {
   return `<div class="empty-state">No entries added for this lap. Please enter values and calculate.</div>`;
 }
 
+/* ✅ Partner tag (Bronze/Silver/Gold) */
 function getPartnerTier(mnpCount) {
-  if (mnpCount >= 10 && mnpCount <= 20) return { tier: "Bronze Partner", msg: "Congratulations! Bronze Partner unlocked", className: "tier-bronze", glow: "rgba(154,52,18,0.14)" };
-  if (mnpCount >= 21 && mnpCount <= 30) return { tier: "Silver Partner", msg: "Great work! Silver Partner unlocked", className: "tier-silver", glow: "rgba(51,65,85,0.12)" };
-  if (mnpCount >= 31 && mnpCount <= 40) return { tier: "Gold Partner", msg: "Outstanding! Gold Partner unlocked", className: "tier-gold", glow: "rgba(146,64,14,0.14)" };
-  if (mnpCount >= 41) return { tier: "Platinum Partner", msg: "Elite performance! Platinum Partner unlocked", className: "tier-platinum", glow: "rgba(29,78,216,0.14)" };
+  if (mnpCount >= 1 && mnpCount <= 2) return {
+    tier: "Bronze Partner",
+    msg: "Congratulations! Bronze Partner unlocked",
+    className: "tier-bronze",
+    glow: "rgba(154,52,18,0.14)"
+  };
+  if (mnpCount >= 3 && mnpCount <= 9) return {
+    tier: "Silver Partner",
+    msg: "Great work! Silver Partner unlocked",
+    className: "tier-silver",
+    glow: "rgba(51,65,85,0.12)"
+  };
+  if (mnpCount >= 10) return {
+    tier: "Gold Partner",
+    msg: "Outstanding! Gold Partner unlocked",
+    className: "tier-gold",
+    glow: "rgba(146,64,14,0.14)"
+  };
   return null;
+}
+
+/* ✅ Sell & Win slabs (₹/MNP) */
+function getSellWinRate(mnpCount) {
+  if (mnpCount >= 1 && mnpCount <= 2) return 50;
+  if (mnpCount >= 3 && mnpCount <= 9) return 90;
+  if (mnpCount >= 10) return 110;
+  return 0;
 }
 
 function shareWhatsApp() {
   const modal = document.getElementById("resultModal");
-  const total = document.getElementById("estimatedPayout").innerText;
-  const message = `My estimated payout indicates ${total}. Summary below 👇`;
+  const total = document.getElementById("lapPayout").innerText;
+  const message = `My lap payout (est.) is ${total}. Summary below 👇`;
 
   const originalMaxHeight = modal.style.maxHeight;
   const originalOverflow = modal.style.overflow;
@@ -779,6 +768,7 @@ function downloadImage() {
 }
 
 function calculate() {
+  /* ✅ GA4 safe */
   if (typeof gtag === "function") {
     gtag('event', 'calculate_clicked', {
       event_category: 'Calculator',
@@ -797,13 +787,9 @@ function calculate() {
   const sim349 = get("sim349");
   const jaf1111 = get("jaf1111");
   const jbV4 = get("jbV4");
-  const jbB2 = get("jbB2");
-  const jbJ1 = get("jbJ1");
-  const jbMnp123 = get("jbMnp123");
-  const jbNewSIM123 = get("jbNewSIM123");
   const bkg = get("BKG");
-  const jmnBooking = get("jmnBooking");
 
+  /* ✅ Partner display */
   const partner = getPartnerTier(mnp349);
   if (partner) {
     partnerWrap.style.display = "block";
@@ -815,37 +801,55 @@ function calculate() {
     `;
   }
 
+  /* Base Rates (₹/unit) */
+  const rate_mnp = 234;
+  const rate_sim = 132;
+  const rate_home = 96;
+  const rate_v4 = 125;
+  const rate_bkg = 30;
+
+  /* ✅ Base earnings */
   const entries = [
-    ["MNP Activation", mnp349, mnp349 * 234],
-    ["New SIM Activation", sim349, sim349 * 132],
-    ["JAF Booking", jaf1111, jaf1111 * 96],
-    ["JioBharat Sales", (jbV4 + jbB2 + jbJ1), (jbV4 * 125 + jbB2 * 125 + jbJ1 * 225)],
-    ["JB MNP", jbMnp123, jbMnp123 * 96],
-    ["JB New SIM", jbNewSIM123, jbNewSIM123 * 18],
-    ["JB Booking (₹100)", bkg, bkg * 30]
+    ["MNP Activation", mnp349, rate_mnp, mnp349 * rate_mnp],
+    ["New SIM Activation", sim349, rate_sim, sim349 * rate_sim],
+    ["JioHome Booking", jaf1111, rate_home, jaf1111 * rate_home],
+    ["V4 Device (₹799)", jbV4, rate_v4, jbV4 * rate_v4],
+    ["Booking", bkg, rate_bkg, bkg * rate_bkg]
   ];
 
-  let total = 0;
+  let lapTotal = 0;
   let shown = 0;
 
-  for (const [label, count, amount] of entries) {
+  for (const [label, count, rate, amount] of entries) {
     if (count <= 0 || amount <= 0) continue;
-    summaryList.innerHTML += renderCard(label, count, amount);
-    total += amount;
+    summaryList.innerHTML += renderCard(label, count, rate, amount);
+    lapTotal += amount;
     shown++;
   }
 
-  const jmnIncentive = jmnBooking * 10;
-  if (jmnBooking > 0 && jmnIncentive > 0) {
-    summaryList.innerHTML += renderCard("JMN Booking Commission", jmnBooking, jmnIncentive);
-    total += jmnIncentive;
+  /* ✅ MNP "Sell & Win" Comm. (Lap based) - styled like bonus */
+  const sellWinRate = getSellWinRate(mnp349);
+  const sellWinAmount = mnp349 * sellWinRate;
+
+  if (mnp349 > 0 && sellWinAmount > 0) {
+    summaryList.innerHTML += renderBonusCard(
+      `MNP "Sell & Win" Comm.`,
+      `${mnp349} × ₹${sellWinRate}`,
+      sellWinAmount
+    );
+    lapTotal += sellWinAmount;
     shown++;
   }
 
-  const fr349Bonus = (mnp349 >= 5) ? mnp349 * 10 : 0;
-  if (fr349Bonus > 0) {
-    summaryList.innerHTML += renderBonusCard("FR 349 Slab Bonus", "Tier Target Reached", fr349Bonus);
-    total += fr349Bonus;
+  /* ✅ FR MNP Bonus (Monthly only) */
+  const frMonthlyBonus = (mnp349 >= 2) ? (3 * 10 * mnp349) : 0;
+
+  if (mnp349 >= 2) {
+    summaryList.innerHTML += renderBonusCard(
+      "FR MNP Bonus (Monthly)",
+      `₹10/MNP × 3 (Monthly)<br>₹10 per MNP (if monthly MNP ≥ 5)`,
+      frMonthlyBonus
+    );
     shown++;
   }
 
@@ -853,13 +857,16 @@ function calculate() {
     summaryList.innerHTML = renderEmptyState();
   }
 
-  document.getElementById("estimatedPayout").innerText = formatINR(total);
-  document.getElementById("projectedMonthly").innerText = formatINR(total * 3);
+  document.getElementById("lapPayout").innerText = formatINR(lapTotal);
+
+  const monthlyTotal = (lapTotal * 3) + frMonthlyBonus;
+  document.getElementById("monthlyPayout").innerText = formatINR(monthlyTotal);
 
   document.getElementById("resultModal").style.display = "block";
   document.getElementById("overlay").style.display = "block";
 }
 
+/* Input validation (baseline safe) */
 document.querySelectorAll('input[type="number"]').forEach(input => {
   input.setAttribute('min', '0');
   input.setAttribute('step', '1');
