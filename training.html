@@ -1,4 +1,4 @@
-<!-- TRAINING HUB - VERSION T3 (Bulletproof JSON Rendering) -->
+<!-- TRAINING HUB - VERSION T5 (No Meta Required + YouTube/Doc Thumbnails) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,6 +75,7 @@
       line-height: 1.3;
     }
 
+    /* ✅ Quick Switcher */
     .quick-switcher{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -96,11 +97,16 @@
       cursor: pointer;
     }
 
+    .switch-btn:active{
+      transform: scale(0.99);
+    }
+
     .block-divider{
       border-bottom: 1px solid #eef0f3;
       margin: 8px 0 0;
     }
 
+    /* ✅ List Cards */
     .list{
       margin-top: 14px;
       display: flex;
@@ -122,19 +128,22 @@
     }
     .card:active{ transform: scale(0.99); }
 
+    /* ✅ Thumbnail box supports images */
     .thumb{
       width: 92px;
       height: 58px;
       border-radius: 14px;
       background: #dbeafe;
       flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow: hidden;
       position: relative;
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
+    /* ✅ Video play overlay */
     .play{
       width: 40px;
       height: 40px;
@@ -143,6 +152,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
     .play:before{
       content:"";
@@ -152,6 +165,7 @@
       margin-left: 2px;
     }
 
+    /* ✅ PDF fallback icon */
     .pdfIcon{
       width: 46px;
       height: 46px;
@@ -163,6 +177,10 @@
       font-weight: 900;
       color: #0b57d0;
       font-size: 14px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .info{ flex: 1; min-width: 0; }
@@ -192,6 +210,7 @@
       text-overflow: ellipsis;
     }
 
+    /* ✅ Meta is optional now */
     .meta{
       margin-top: 3px;
       font-size: 12px;
@@ -217,6 +236,12 @@
       font-weight: 500;
       color: var(--sub);
       line-height: 1.35;
+    }
+
+    @media (max-width: 420px){
+      .title{ font-size: 28px; }
+      .thumb{ width: 86px; height: 56px; }
+      .card-title{ font-size: 15px; }
     }
   </style>
 </head>
@@ -249,6 +274,31 @@
 <script>
   function safeText(v){ return (v === null || v === undefined) ? "" : String(v); }
 
+  function extractYouTubeId(url) {
+    if (!url) return null;
+
+    url = String(url).trim().replace(/,+$/, "");
+
+    // Shorts format
+    const shortsMatch = url.match(/\/shorts\/([a-zA-Z0-9_-]{6,})/);
+    if (shortsMatch && shortsMatch[1]) return shortsMatch[1];
+
+    // Standard watch?v=
+    const vMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
+    if (vMatch && vMatch[1]) return vMatch[1];
+
+    // youtu.be/
+    const shortUrlMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
+    if (shortUrlMatch && shortUrlMatch[1]) return shortUrlMatch[1];
+
+    return null;
+  }
+
+  function isLikelyYouTube(url){
+    const u = safeText(url).toLowerCase();
+    return u.includes("youtube.com") || u.includes("youtu.be");
+  }
+
   async function loadTraining() {
     const listEl = document.getElementById("trainingList");
     listEl.innerHTML = `<div class="empty-state">Loading training content...</div>`;
@@ -270,28 +320,57 @@
       items.forEach(item => {
         const typeRaw = safeText(item.type).toLowerCase().trim();
         const title = safeText(item.title) || "Untitled";
-        const meta = safeText(item.meta);
-        let url = safeText(item.url).trim();
+        let url = safeText(item.url).trim().replace(/,+$/, "");
+        const tagText = safeText(item.tag);
+        const meta = safeText(item.meta).trim(); // ✅ optional (can be blank)
 
-        // ✅ Cleanup accidental trailing commas in URL
-        url = url.replace(/,+$/, "");
+        // ✅ treat as video if either:
+        // 1) type === "video"
+        // 2) url is YouTube
+        const treatAsVideo = (typeRaw === "video") || isLikelyYouTube(url);
 
-        const isVideo = typeRaw === "video";
-        const tagText = safeText(item.tag) || (isVideo ? "Video Guide" : "Document (PDF)");
-        const tagClass = isVideo ? "video" : "pdf";
+        const tagClass = treatAsVideo ? "video" : "pdf";
+        const tagLabel = tagText || (treatAsVideo ? "Video Guide" : "Document (PDF)");
 
-        const thumbHtml = isVideo
-          ? `<div class="thumb"><div class="play"></div></div>`
-          : `<div class="thumb" style="background:#eaf2ff;"><div class="pdfIcon">PDF</div></div>`;
+        // ✅ Thumbnail logic
+        let thumbHtml = "";
+
+        if (treatAsVideo) {
+          const ytId = extractYouTubeId(url);
+          const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : "";
+
+          thumbHtml = `
+            <div class="thumb" style="${thumbUrl ? `background-image:url('${thumbUrl}')` : ""}">
+              <div class="play"></div>
+            </div>
+          `;
+        } else {
+          const docThumb = safeText(item.thumbnail).trim();
+
+          // ✅ Document thumbnail from JSON
+          if (docThumb) {
+            thumbHtml = `
+              <div class="thumb" style="background-image:url('${docThumb}'); background-color:#eaf2ff;"></div>
+            `;
+          } else {
+            // ✅ fallback
+            thumbHtml = `
+              <div class="thumb" style="background:#eaf2ff;">
+                <div class="pdfIcon">PDF</div>
+              </div>
+            `;
+          }
+        }
 
         const card = document.createElement("div");
         card.className = "card";
+
         card.innerHTML = `
           ${thumbHtml}
           <div class="info">
-            <div class="tag ${tagClass}">${tagText}</div>
+            <div class="tag ${tagClass}">${tagLabel}</div>
             <div class="card-title">${title}</div>
-            <div class="meta">${meta}</div>
+            ${meta ? `<div class="meta">${meta}</div>` : ``}
           </div>
         `;
 
