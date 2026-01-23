@@ -1,4 +1,4 @@
-<!-- TRAINING HUB - VERSION T2 (Loads from training.json) -->
+<!-- TRAINING HUB - VERSION T3 (Bulletproof JSON Rendering) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +20,6 @@
   <style>
     :root{
       --deepBlue:#002d62;
-      --btnBlue1:#005eff;
-      --btnBlue2:#003bba;
-
       --text:#202124;
       --sub:#5f6368;
       --border:#dadce0;
@@ -78,7 +75,6 @@
       line-height: 1.3;
     }
 
-    /* ✅ Quick Switcher */
     .quick-switcher{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -98,10 +94,6 @@
       text-transform: uppercase;
       color: #4b5563;
       cursor: pointer;
-    }
-
-    .switch-btn:active{
-      transform: scale(0.99);
     }
 
     .block-divider{
@@ -128,7 +120,6 @@
       cursor: pointer;
       transition: transform 120ms ease;
     }
-
     .card:active{ transform: scale(0.99); }
 
     .thumb{
@@ -136,12 +127,12 @@
       height: 58px;
       border-radius: 14px;
       background: #dbeafe;
-      position: relative;
       flex: 0 0 auto;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      position: relative;
     }
 
     .play{
@@ -174,10 +165,7 @@
       font-size: 14px;
     }
 
-    .info{
-      flex: 1;
-      min-width: 0;
-    }
+    .info{ flex: 1; min-width: 0; }
 
     .tag{
       display: inline-block;
@@ -209,7 +197,6 @@
       font-size: 12px;
       font-weight: 700;
       color: #94a3b8;
-      letter-spacing: 0.2px;
       text-transform: uppercase;
     }
 
@@ -231,12 +218,6 @@
       color: var(--sub);
       line-height: 1.35;
     }
-
-    @media (max-width: 420px){
-      .title{ font-size: 28px; }
-      .thumb{ width: 86px; height: 56px; }
-      .card-title{ font-size: 15px; }
-    }
   </style>
 </head>
 
@@ -248,7 +229,6 @@
       <div class="subtitle">Video guides & process documents</div>
     </div>
 
-    <!-- ✅ Quick Switcher for Training page -->
     <div class="quick-switcher">
       <button class="switch-btn" onclick="location.href='index.html'">Open Calculator</button>
       <button class="switch-btn" onclick="location.href='reverse.html'">Open Reverse Calc</button>
@@ -256,7 +236,9 @@
 
     <div class="block-divider"></div>
 
-    <div class="list" id="trainingList"></div>
+    <div class="list" id="trainingList">
+      <div class="empty-state">Loading training content...</div>
+    </div>
 
     <div class="footer-note">
       *Final commission will be as per company system, subject to eligibility and conditions.
@@ -265,13 +247,85 @@
   </div>
 
 <script>
+  function safeText(v){ return (v === null || v === undefined) ? "" : String(v); }
+
   async function loadTraining() {
     const listEl = document.getElementById("trainingList");
-    listEl.innerHTML = "";
+    listEl.innerHTML = `<div class="empty-state">Loading training content...</div>`;
 
     try {
       const res = await fetch("training.json", { cache: "no-store" });
-      if (!res.ok) throw new Error("training.json not found");
-      const data = await res.json();
+      if (!res.ok) throw new Error("training.json not found or not accessible");
 
-      const items = da
+      const data = await res.json();
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      if (items.length === 0) {
+        listEl.innerHTML = `<div class="empty-state">No training content added yet.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = "";
+
+      items.forEach(item => {
+        const typeRaw = safeText(item.type).toLowerCase().trim();
+        const title = safeText(item.title) || "Untitled";
+        const meta = safeText(item.meta);
+        let url = safeText(item.url).trim();
+
+        // ✅ Cleanup accidental trailing commas in URL
+        url = url.replace(/,+$/, "");
+
+        const isVideo = typeRaw === "video";
+        const tagText = safeText(item.tag) || (isVideo ? "Video Guide" : "Document (PDF)");
+        const tagClass = isVideo ? "video" : "pdf";
+
+        const thumbHtml = isVideo
+          ? `<div class="thumb"><div class="play"></div></div>`
+          : `<div class="thumb" style="background:#eaf2ff;"><div class="pdfIcon">PDF</div></div>`;
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          ${thumbHtml}
+          <div class="info">
+            <div class="tag ${tagClass}">${tagText}</div>
+            <div class="card-title">${title}</div>
+            <div class="meta">${meta}</div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+          try{
+            if (typeof gtag === "function") {
+              gtag("event", "training_item_opened", {
+                event_category: "TrainingHub",
+                event_label: title
+              });
+            }
+          } catch(e){}
+
+          if (url && url !== "#") {
+            // ✅ Mobile-safe navigation
+            location.href = url;
+          }
+        });
+
+        listEl.appendChild(card);
+      });
+
+    } catch (err) {
+      listEl.innerHTML = `
+        <div class="empty-state">
+          Unable to load training content.<br><br>
+          Reason: <b>${safeText(err.message)}</b>
+        </div>
+      `;
+    }
+  }
+
+  loadTraining();
+</script>
+
+</body>
+</html>
