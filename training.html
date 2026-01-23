@@ -1,4 +1,4 @@
-<!-- VERSION C32.3 – Training Hub (Learn & Earn + Search + Badge, No Open Button) -->
+<!-- VERSION C33.1 – Training Hub (Learn & Earn + Search + JSON Feed + Bottom Switcher via switcher.html) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +7,6 @@
   <title>Jio Retailer – Training Hub</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GH8905Y6B"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9GH8905Y6B');
-  </script>
 
   <style>
     :root{
@@ -31,20 +22,10 @@
       --cardBg:#f7fafc;
       --cardBorder:#eef2f6;
 
-      --tagRedBg:#ffe9e9;
-      --tagRedText:#d93025;
-
-      --tagBlueBg:#e8f0fe;
-      --tagBlueText:#0b57d0;
-
-      --badgeNewBg:#ecfdf5;
-      --badgeNewText:#047857;
-
-      --badgeUpdBg:#fff7ed;
-      --badgeUpdText:#9a3412;
-
       --shadow: 0 1px 2px rgba(0,0,0,0.10);
-      --tabH: 68px;
+
+      /* ✅ Switcher fixed tabs */
+      --tabH: 72px;
     }
 
     *{
@@ -57,6 +38,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
+      overflow-y: auto;
     }
 
     .page{
@@ -64,7 +46,7 @@
       max-width: 820px;
       margin: 0 auto;
       padding: 14px 14px 18px;
-      padding-bottom: calc(var(--tabH) + 18px);
+      padding-bottom: calc(var(--tabH) + 18px); /* ✅ prevents content hiding behind tabs */
     }
 
     /* ===== Header ===== */
@@ -75,262 +57,165 @@
 
     .title{
       margin: 0;
-      font-size: 30px;
+      font-size: 26px;
       font-weight: 900;
       color: var(--deepBlue);
-      letter-spacing: -0.8px;
+      letter-spacing: -0.6px;
       line-height: 1.1;
     }
 
     .subtitle{
-      margin: 6px 0 0;
-      font-size: 14px;
+      margin: 8px auto 0;
+      font-size: 13px;
       font-weight: 500;
       color: var(--sub);
       line-height: 1.35;
-    }
-
-    .divider{
-      border: none;
-      border-top: 1px solid #eef0f3;
-      margin: 14px 0 12px;
+      max-width: 520px;
     }
 
     /* ===== Search ===== */
     .search-wrap{
-      margin: 0 auto 10px;
-      width: 100%;
-      max-width: 520px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
     }
 
     .search{
       width: 100%;
+      max-width: 520px;
       height: 44px;
       border-radius: 14px;
       border: 1px solid var(--border);
-      background: #ffffff;
+      background: #f8f9fa;
       padding: 0 14px;
       font-size: 14px;
       font-weight: 600;
       outline: none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      color: var(--text);
     }
 
     .search:focus{
       border-color: var(--btnBlue1);
-      box-shadow: 0 0 0 4px rgba(0,94,255,0.10);
+      box-shadow: 0 0 0 3px rgba(0,94,255,0.14);
+      background: #ffffff;
     }
 
-    /* ===== List ===== */
-    .list{
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
+    /* ===== Grid ===== */
+    .grid{
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 12px;
     }
 
-    .card{
-      display: flex;
-      gap: 12px;
-      align-items: center;
+    .tile{
       background: var(--cardBg);
       border: 1px solid var(--cardBorder);
       border-radius: 16px;
-      padding: 12px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.05);
+      padding: 12px 12px;
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 12px;
+      align-items: center;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.04);
       cursor: pointer;
-      transition: transform 120ms ease;
-      user-select: none;
+      transition: transform 120ms ease, box-shadow 120ms ease;
     }
 
-    .card:active{
+    .tile:active{
       transform: scale(0.99);
     }
 
     .thumb{
-      width: 92px;
-      height: 58px;
-      border-radius: 14px;
-      background: #eaf2ff;
-      flex: 0 0 auto;
-      overflow: hidden;
-      position: relative;
-
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .play{
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .play:before{
-      content:"";
-      border-style: solid;
-      border-width: 7px 0 7px 12px;
-      border-color: transparent transparent transparent #ffffff;
-      margin-left: 2px;
-    }
-
-    .pdfIcon{
-      width: 46px;
-      height: 46px;
+      width: 84px;
+      height: 64px;
       border-radius: 12px;
-      background: rgba(11,87,208,0.12);
+      background: #ffffff;
+      border: 1px solid #e9eef3;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 900;
-      color: #0b57d0;
-      font-size: 14px;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      letter-spacing: 0.6px;
     }
 
-    .info{
-      flex: 1;
+    .thumb img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-fallback{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: #ffffff;
+    }
+
+    .tile-right{
       min-width: 0;
     }
 
-    .topline{
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-    }
-
-    .tag{
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
+    .tile-title{
+      font-size: 15px;
       font-weight: 900;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .tag.video{ background: var(--tagRedBg); color: var(--tagRedText); }
-    .tag.pdf{ background: var(--tagBlueBg); color: var(--tagBlueText); }
-
-    .badge{
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
-      white-space: nowrap;
-      border: 1px solid transparent;
-    }
-
-    .badge.new{ background: var(--badgeNewBg); color: var(--badgeNewText); border-color: rgba(4,120,87,0.25); }
-    .badge.updated{ background: var(--badgeUpdBg); color: var(--badgeUpdText); border-color: rgba(154,52,18,0.25); }
-
-    .card-title{
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--deepBlue);
+      color: #0f172a;
       line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
+    .tile-tagrow{
+      margin-top: 6px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pill{
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--btnBlue2);
+      background: rgba(0, 94, 255, 0.10);
+      border: 1px solid rgba(0, 94, 255, 0.18);
+      padding: 5px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .pill.new{
+      color: #0f5132;
+      background: rgba(34,197,94,0.12);
+      border-color: rgba(34,197,94,0.18);
+    }
+
     .empty-state{
-      margin-top: 10px;
-      padding: 14px 12px;
+      background: #ffffff;
       border: 1px dashed var(--border);
-      border-radius: 16px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--sub);
+      border-radius: 14px;
+      padding: 14px 12px;
       text-align: center;
+      color: var(--sub);
+      font-size: 12.5px;
+      font-weight: 700;
     }
 
     .footer-note{
-      margin-top: 14px;
+      margin-top: 12px;
       font-size: 12px;
       font-weight: 500;
       color: var(--sub);
       line-height: 1.35;
       text-align: center;
-    }
-
-    /* ===== Bottom Tabs (Fixed) ===== */
-    .bottom-tabs{
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0;
-      width: 100%;
-      max-width: 820px;
-
-      height: var(--tabH);
-      background: rgba(255,255,255,0.96);
-      border-top: 1px solid #eef0f3;
-      z-index: 9999;
-
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      align-items: center;
-
-      padding: 6px 12px 8px;
-      backdrop-filter: blur(8px);
-    }
-
-    .tab-btn{
-      border: none;
-      background: transparent;
-      cursor: pointer;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-
-      color: #6b7280;
-      font-weight: 800;
-
-      width: 100%;
-      height: 100%;
-    }
-
-    .tab-btn:active{ transform: scale(0.98); }
-
-    .tab-ic{
-      width: 22px;
-      height: 22px;
-      display: block;
-    }
-
-    .tab-label{
-      font-size: 11px;
-      font-weight: 900;
-    }
-
-    .tab-btn.active{ color: var(--deepBlue); }
-    .tab-btn.active .tab-label{ color: var(--deepBlue); }
-
-    @media (max-width: 420px){
-      .thumb{ width: 86px; height: 56px; }
-      .card-title{ font-size: 15px; }
     }
   </style>
 </head>
@@ -340,230 +225,174 @@
 <div class="page">
   <div class="header">
     <h1 class="title">Learn & Earn</h1>
-    <div class="subtitle">Watch videos, & step-by-step guides to help you sell more and earn more</div>
+    <div class="subtitle">
+      Watch videos, & step-by-step guides to help you sell more and earn more
+    </div>
+
+    <div class="search-wrap">
+      <input id="searchInput" class="search" type="text" placeholder="Search training (video / PDF / scheme)...">
+    </div>
   </div>
 
-  <div class="search-wrap">
-    <input id="searchInput" class="search" type="text" placeholder="Search videos & guides...">
-  </div>
-
-  <hr class="divider">
-
-  <div class="list" id="trainingList">
-    <div class="empty-state">Loading training content...</div>
-  </div>
+  <div id="itemsGrid" class="grid"></div>
 
   <div class="footer-note">
-    *Final commission will be as per company system, subject to eligibility and conditions.
+    *Training links are for reference. Open links in your browser for best experience.
   </div>
 </div>
 
-<!-- ===== Bottom Tabs ===== -->
-<div class="bottom-tabs">
-  <button class="tab-btn" onclick="location.href='index.html'" aria-label="Calculator">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="4" y="3" width="16" height="18" rx="3"></rect>
-      <line x1="8" y1="8" x2="16" y2="8"></line>
-      <line x1="8" y1="12" x2="16" y2="12"></line>
-      <line x1="8" y1="16" x2="16" y2="16"></line>
-    </svg>
-    <div class="tab-label">Calculator</div>
-  </button>
-
-  <button class="tab-btn active" aria-label="Training">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 19V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v13"></path>
-      <path d="M6 4v16"></path>
-      <path d="M8 8h8"></path>
-      <path d="M8 12h8"></path>
-      <path d="M8 16h6"></path>
-    </svg>
-    <div class="tab-label">Training</div>
-  </button>
-
-  <button class="tab-btn" onclick="location.href='reverse.html'" aria-label="Reverse">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 12a9 9 0 0 1 15-6"></path>
-      <polyline points="18 3 18 7 14 7"></polyline>
-      <path d="M21 12a9 9 0 0 1-15 6"></path>
-      <polyline points="6 21 6 17 10 17"></polyline>
-    </svg>
-    <div class="tab-label">Reverse</div>
-  </button>
-</div>
+<!-- ✅ Switcher Mount -->
+<div id="switcherMount"></div>
 
 <script>
-  function safeText(v){ return (v === null || v === undefined) ? "" : String(v); }
-
-  function extractYouTubeId(url) {
-    if (!url) return null;
-    url = String(url).trim().replace(/,+$/, "");
-
-    const shortsMatch = url.match(/\/shorts\/([a-zA-Z0-9_-]{6,})/);
-    if (shortsMatch && shortsMatch[1]) return shortsMatch[1];
-
-    const vMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
-    if (vMatch && vMatch[1]) return vMatch[1];
-
-    const shortUrlMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
-    if (shortUrlMatch && shortUrlMatch[1]) return shortUrlMatch[1];
-
-    return null;
+  // ===== Helpers =====
+  function normalizeText(t){
+    return (t || "").toLowerCase().trim();
   }
 
-  function isLikelyYouTube(url){
-    const u = safeText(url).toLowerCase();
-    return u.includes("youtube.com") || u.includes("youtu.be");
+  function isYouTube(url){
+    return /youtube\.com|youtu\.be/i.test(url || "");
   }
 
-  function normalizeBadge(b){
-    const v = safeText(b).trim().toUpperCase();
-    if (v === "NEW") return "new";
-    if (v === "UPDATED") return "updated";
+  function isPDF(url){
+    return /\.pdf(\?|#|$)/i.test(url || "");
+  }
+
+  function getYouTubeId(url){
+    try{
+      // shorts
+      let m = url.match(/youtube\.com\/shorts\/([^?&#/]+)/i);
+      if (m && m[1]) return m[1];
+
+      // watch?v=
+      m = url.match(/[?&]v=([^?&#]+)/i);
+      if (m && m[1]) return m[1];
+
+      // youtu.be/
+      m = url.match(/youtu\.be\/([^?&#/]+)/i);
+      if (m && m[1]) return m[1];
+
+      return "";
+    }catch(e){
+      return "";
+    }
+  }
+
+  function getThumbnail(item){
+    const url = item.url || "";
+    // YouTube thumbnail
+    if (isYouTube(url)) {
+      const id = getYouTubeId(url);
+      if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    }
+    // PDF thumbnail (generic)
+    if (item.type === "pdf" || isPDF(url)) {
+      return ""; // fallback handled
+    }
+    // Otherwise no thumbnail
     return "";
   }
 
+  function openItem(url){
+    if (!url) return;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  function renderTile(item){
+    const thumb = getThumbnail(item);
+    const tag = item.tag || (item.type === "video" ? "Video" : "Document");
+
+    const isNew = (item.isNew === true);
+
+    return `
+      <div class="tile" onclick="openItem('${(item.url || "").replace(/'/g, "\\'")}')">
+        <div class="thumb">
+          ${
+            thumb
+              ? `<img src="${thumb}" alt="thumb" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'thumb-fallback\\'>OPEN</div>';">`
+              : `<div class="thumb-fallback">${item.type === "video" ? "VIDEO" : "DOC"}</div>`
+          }
+        </div>
+
+        <div class="tile-right">
+          <div class="tile-title">${item.title || "Untitled"}</div>
+
+          <div class="tile-tagrow">
+            <span class="pill">${tag}</span>
+            ${isNew ? `<span class="pill new">New / Updated</span>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ===== Load JSON =====
   let allItems = [];
 
-  function openItem(item){
-    const title = safeText(item.title) || "Training Item";
-    const url = safeText(item.url).trim().replace(/,+$/, "");
+  async function loadTrainingData(){
+    const grid = document.getElementById("itemsGrid");
+    grid.innerHTML = `<div class="empty-state">Loading training items...</div>`;
 
     try{
-      if (typeof gtag === "function") {
-        gtag("event", "training_item_opened", {
-          event_category: "TrainingHub",
-          event_label: title
-        });
-      }
-    } catch(e){}
-
-    if (url && url !== "#") {
-      location.href = url;
-    }
-  }
-
-  function renderList(items){
-    const listEl = document.getElementById("trainingList");
-
-    if (!items || items.length === 0) {
-      listEl.innerHTML = `<div class="empty-state">No matching results found.</div>`;
-      return;
-    }
-
-    listEl.innerHTML = "";
-
-    items.forEach(item => {
-      const typeRaw = safeText(item.type).toLowerCase().trim();
-      const title = safeText(item.title) || "Untitled";
-      let url = safeText(item.url).trim().replace(/,+$/, "");
-      const tagText = safeText(item.tag);
-
-      const treatAsVideo = (typeRaw === "video") || isLikelyYouTube(url);
-
-      const tagClass = treatAsVideo ? "video" : "pdf";
-      const tagLabel = tagText || (treatAsVideo ? "Video Guide" : "Document (PDF)");
-
-      const badgeClass = normalizeBadge(item.badge);
-      const badgeHtml = badgeClass
-        ? `<span class="badge ${badgeClass}">${badgeClass === "new" ? "NEW" : "UPDATED"}</span>`
-        : "";
-
-      let thumbHtml = "";
-
-      if (treatAsVideo) {
-        const ytId = extractYouTubeId(url);
-        const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : "";
-
-        thumbHtml = `
-          <div class="thumb" style="${thumbUrl ? `background-image:url('${thumbUrl}')` : ""}">
-            <div class="play"></div>
-          </div>
-        `;
-      } else {
-        const docThumb = safeText(item.thumbnail).trim();
-
-        if (docThumb) {
-          thumbHtml = `
-            <div class="thumb" style="background-image:url('${docThumb}'); background-color:#eaf2ff;"></div>
-          `;
-        } else {
-          thumbHtml = `
-            <div class="thumb" style="background:#eaf2ff;">
-              <div class="pdfIcon">PDF</div>
-            </div>
-          `;
-        }
-      }
-
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        ${thumbHtml}
-        <div class="info">
-          <div class="topline">
-            <span class="tag ${tagClass}">${tagLabel}</span>
-            ${badgeHtml}
-          </div>
-          <div class="card-title">${title}</div>
-        </div>
-      `;
-
-      card.addEventListener("click", () => openItem(item));
-      listEl.appendChild(card);
-    });
-  }
-
-  async function loadTraining() {
-    const listEl = document.getElementById("trainingList");
-    listEl.innerHTML = `<div class="empty-state">Loading training content...</div>`;
-
-    try {
       const res = await fetch("training.json", { cache: "no-store" });
-      if (!res.ok) throw new Error("training.json not found or not accessible");
-
       const data = await res.json();
+
       allItems = Array.isArray(data.items) ? data.items : [];
 
-      if (allItems.length === 0) {
-        listEl.innerHTML = `<div class="empty-state">No training content added yet.</div>`;
+      if (allItems.length === 0){
+        grid.innerHTML = `<div class="empty-state">No training items found.</div>`;
         return;
       }
 
       renderList(allItems);
-
-    } catch (err) {
-      listEl.innerHTML = `
-        <div class="empty-state">
-          Unable to load training content.<br><br>
-          Reason: <b>${safeText(err.message)}</b>
-        </div>
-      `;
+    } catch(e){
+      grid.innerHTML = `<div class="empty-state">Unable to load training.json. Please check file name/path.</div>`;
     }
   }
 
-  // Search
-  document.getElementById("searchInput").addEventListener("input", (e) => {
-    const q = safeText(e.target.value).toLowerCase().trim();
+  function renderList(items){
+    const grid = document.getElementById("itemsGrid");
 
-    if (!q) {
+    if (!items || items.length === 0){
+      grid.innerHTML = `<div class="empty-state">No matching results.</div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map(renderTile).join("");
+  }
+
+  // ===== Search =====
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    const q = normalizeText(e.target.value);
+
+    if (!q){
       renderList(allItems);
       return;
     }
 
-    const filtered = allItems.filter(item => {
-      const title = safeText(item.title).toLowerCase();
-      const tag = safeText(item.tag).toLowerCase();
-      const type = safeText(item.type).toLowerCase();
-      const badge = safeText(item.badge).toLowerCase();
-      return title.includes(q) || tag.includes(q) || type.includes(q) || badge.includes(q);
+    const filtered = allItems.filter(it => {
+      const t = normalizeText(it.title);
+      const tag = normalizeText(it.tag);
+      const url = normalizeText(it.url);
+      return t.includes(q) || tag.includes(q) || url.includes(q);
     });
 
     renderList(filtered);
   });
 
-  loadTraining();
+  loadTrainingData();
+</script>
+
+<!-- ✅ Load switcher.html -->
+<script>
+  fetch("switcher.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("switcherMount").innerHTML = html;
+    })
+    .catch(() => {
+      console.log("Switcher not loaded. Check switcher.html path.");
+    });
 </script>
 
 </body>
