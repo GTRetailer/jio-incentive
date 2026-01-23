@@ -1,20 +1,20 @@
-<!-- switcher.html | Bottom Tab Switch (Earning / Learn / Goal) | Matches Index.html typography + colors -->
+<!-- switcher.html | Bottom Tab Switch (Calculate / Goal / Learn) | WhatsApp-style box + ripple -->
 <style>
   :root{
     --deepBlue:#002d62;
     --btnBlue1:#005eff;
     --btnBlue2:#003bba;
 
-    --text:#202124;
-    --sub:#5f6368;
-    --border:#dadce0;
-    --bg:#ffffff;
-
-    --shadow: 0 1px 2px rgba(0,0,0,0.10);
+    --muted:#6b7280;
     --tabH: 72px;
 
-    --pillBg: rgba(0, 45, 98, 0.10);
-    --pillBorder: rgba(0, 45, 98, 0.16);
+    --iconBoxBg: rgba(0, 45, 98, 0.06);
+    --iconBoxBorder: rgba(0, 45, 98, 0.12);
+
+    --iconBoxActiveBg: rgba(0, 45, 98, 0.13);
+    --iconBoxActiveBorder: rgba(0, 45, 98, 0.22);
+
+    --ripple: rgba(0, 45, 98, 0.20);
   }
 
   /* ✅ Prevent page content hidden behind fixed bottom tabs */
@@ -54,12 +54,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* ✅ WhatsApp-like rounded rectangle background for active */
+  .tab-btn:active{
+    transform: scale(0.99);
+  }
+
   .tab-inner{
     width: 100%;
-    max-width: 150px;
+    max-width: 170px;
 
     display: flex;
     flex-direction: column;
@@ -67,22 +72,29 @@
     justify-content: center;
     gap: 6px;
 
-    padding: 9px 8px;
-    border-radius: 18px;
-
-    color: #6b7280;
-    font-weight: 900;
-
+    padding: 4px 6px;
+    color: var(--muted);
     transition: all 160ms ease;
-    box-shadow: none;
   }
 
-  /* ✅ Active = Premium pill highlight */
-  .tab-btn.active .tab-inner{
-    background: var(--pillBg);
-    border: 1px solid var(--pillBorder);
-    color: var(--deepBlue);
-    box-shadow: 0 10px 22px rgba(0,45,98,0.08);
+  /* ✅ WhatsApp-like rounded rectangle only around icon */
+  .icon-box{
+    width: 52px;
+    height: 42px;
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+
+    transition: all 160ms ease;
   }
 
   .tab-ic{
@@ -92,70 +104,120 @@
     stroke: currentColor;
   }
 
+  /* ✅ Bigger label (as requested) */
   .tab-label{
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 900;
     letter-spacing: 0.2px;
-    color: inherit; /* ✅ follows active/inactive state */
+    color: inherit;
+    line-height: 1.1;
   }
 
-  /* ✅ Tap feedback */
-  .tab-btn:active .tab-inner{
-    transform: scale(0.98);
+  /* ✅ Default (inactive) */
+  .tab-btn .tab-inner{
+    color: var(--muted);
   }
 
-  /* ✅ Optional hover (desktop) */
+  /* ✅ Active page highlight always visible */
+  .tab-btn.active .tab-inner{
+    color: var(--deepBlue);
+  }
+
+  .tab-btn.active .icon-box{
+    background: var(--iconBoxActiveBg);
+    border: 1px solid var(--iconBoxActiveBorder);
+    box-shadow: 0 10px 22px rgba(0,45,98,0.14);
+  }
+
+  /* ✅ Ripple effect */
+  .icon-box::after{
+    content:"";
+    position:absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--ripple);
+    opacity: 0;
+    transform: scale(1);
+    pointer-events: none;
+  }
+
+  .tab-btn.ripple .icon-box::after{
+    left: var(--rx);
+    top: var(--ry);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    animation: rippleAnim 520ms ease-out forwards;
+  }
+
+  @keyframes rippleAnim{
+    0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.35; }
+    100% { transform: translate(-50%, -50%) scale(14); opacity: 0; }
+  }
+
+  /* ✅ Hover feedback (desktop) */
   @media (hover: hover){
-    .tab-btn:hover .tab-inner{
-      border: 1px solid rgba(0,0,0,0.06);
-      background: rgba(0,0,0,0.02);
+    .tab-btn:hover .icon-box{
+      background: var(--iconBoxBg);
+      border-color: var(--iconBoxBorder);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.05);
     }
-    .tab-btn.active:hover .tab-inner{
-      background: var(--pillBg);
-      border: 1px solid var(--pillBorder);
+
+    .tab-btn.active:hover .icon-box{
+      background: var(--iconBoxActiveBg);
+      border-color: var(--iconBoxActiveBorder);
+      box-shadow: 0 12px 26px rgba(0,45,98,0.16);
     }
   }
 </style>
 
 <div class="bottom-tabs" id="bottomTabs">
-  <!-- Earning (Wallet) -->
-  <button class="tab-btn" data-tab="calculator" onclick="location.href='index.html'" aria-label="Earning">
+
+  <!-- ✅ 1) Calculate (Wallet) -->
+  <button class="tab-btn" data-tab="calculator" onclick="location.href='index.html'" aria-label="Calculate">
     <div class="tab-inner">
-      <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 7H6a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"></path>
-        <path d="M16 3H6a3 3 0 0 0-3 3"></path>
-        <path d="M17 13h.01"></path>
-      </svg>
-      <div class="tab-label">Earning</div>
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 7H6a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"></path>
+          <path d="M16 3H6a3 3 0 0 0-3 3"></path>
+          <path d="M17 13h.01"></path>
+        </svg>
+      </div>
+      <div class="tab-label">Calculate</div>
     </div>
   </button>
 
-  <!-- Learn (Play Circle) -->
+  <!-- ✅ 2) Goal (Bullseye) -->
+  <button class="tab-btn" data-tab="reverse" onclick="location.href='reverse.html'" aria-label="Goal">
+    <div class="tab-inner">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="6"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+        </svg>
+      </div>
+      <div class="tab-label">Goal</div>
+    </div>
+  </button>
+
+  <!-- ✅ 3) Learn (Play Circle) -->
   <button class="tab-btn" data-tab="training" onclick="location.href='training.html'" aria-label="Learn">
     <div class="tab-inner">
-      <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M10 8l6 4-6 4V8z"></path>
-      </svg>
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M10 8l6 4-6 4V8z"></path>
+        </svg>
+      </div>
       <div class="tab-label">Learn</div>
     </div>
   </button>
 
-  <!-- Goal (Bullseye) -->
-  <button class="tab-btn" data-tab="reverse" onclick="location.href='reverse.html'" aria-label="Goal">
-    <div class="tab-inner">
-      <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <circle cx="12" cy="12" r="6"></circle>
-        <circle cx="12" cy="12" r="2"></circle>
-      </svg>
-      <div class="tab-label">Goal</div>
-    </div>
-  </button>
 </div>
 
 <script>
-  // ✅ Auto-highlight active tab by current page
+  // ✅ Highlight active tab by current page
   (function setActiveTab(){
     const path = window.location.pathname.toLowerCase();
     let active = "calculator";
@@ -168,5 +230,29 @@
       btn.classList.toggle("active", btn.dataset.tab === active);
     });
   })();
-</script>
 
+  // ✅ Ripple click animation (WhatsApp-like)
+  (function rippleInit(){
+    const buttons = document.querySelectorAll(".tab-btn");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const iconBox = btn.querySelector(".icon-box");
+        if (!iconBox) return;
+
+        const rect = iconBox.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        btn.style.setProperty("--rx", x + "px");
+        btn.style.setProperty("--ry", y + "px");
+
+        btn.classList.remove("ripple");
+        void btn.offsetWidth;
+        btn.classList.add("ripple");
+
+        setTimeout(() => btn.classList.remove("ripple"), 520);
+      }, { passive: true });
+    });
+  })();
+</script>
