@@ -1,4 +1,4 @@
-<!-- VERSION C32.1 – Training Hub (JSON Driven + Bottom Tabs) -->
+<!-- VERSION C32.2 – Training Hub (Learn & Earn + Search + Badge + Open CTA) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +37,12 @@
       --tagBlueBg:#e8f0fe;
       --tagBlueText:#0b57d0;
 
+      --badgeNewBg:#ecfdf5;
+      --badgeNewText:#047857;
+
+      --badgeUpdBg:#fff7ed;
+      --badgeUpdText:#9a3412;
+
       --shadow: 0 1px 2px rgba(0,0,0,0.10);
       --tabH: 68px;
     }
@@ -58,11 +64,14 @@
       max-width: 820px;
       margin: 0 auto;
       padding: 14px 14px 18px;
-      padding-bottom: calc(var(--tabH) + 18px); /* ✅ no content hidden behind bottom tabs */
+      padding-bottom: calc(var(--tabH) + 18px);
     }
 
     /* ===== Header ===== */
-    .header{ padding: 10px 0 8px; }
+    .header{
+      padding: 10px 0 8px;
+      text-align: center; /* ✅ center align headline & subtext */
+    }
 
     .title{
       margin: 0;
@@ -71,7 +80,6 @@
       color: var(--deepBlue);
       letter-spacing: -0.8px;
       line-height: 1.1;
-      text-align: left;
     }
 
     .subtitle{
@@ -79,18 +87,43 @@
       font-size: 14px;
       font-weight: 500;
       color: var(--sub);
-      line-height: 1.3;
+      line-height: 1.35;
     }
 
     .divider{
       border: none;
       border-top: 1px solid #eef0f3;
-      margin: 14px 0;
+      margin: 14px 0 12px;
     }
 
-    /* ===== Cards List ===== */
+    /* ===== Search ===== */
+    .search-wrap{
+      margin: 0 auto 10px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .search{
+      width: 100%;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 0 14px;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+
+    .search:focus{
+      border-color: var(--btnBlue1);
+      box-shadow: 0 0 0 4px rgba(0,94,255,0.10);
+    }
+
+    /* ===== List ===== */
     .list{
-      margin-top: 10px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -114,7 +147,6 @@
       transform: scale(0.99);
     }
 
-    /* Thumbnail */
     .thumb{
       width: 92px;
       height: 58px;
@@ -129,7 +161,6 @@
       background-repeat: no-repeat;
     }
 
-    /* Video overlay */
     .play{
       width: 40px;
       height: 40px;
@@ -151,7 +182,6 @@
       margin-left: 2px;
     }
 
-    /* PDF fallback */
     .pdfIcon{
       width: 46px;
       height: 46px;
@@ -175,6 +205,14 @@
       min-width: 0;
     }
 
+    .topline{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
     .tag{
       display: inline-block;
       padding: 4px 10px;
@@ -183,19 +221,26 @@
       font-weight: 900;
       letter-spacing: 0.7px;
       text-transform: uppercase;
-      margin-bottom: 6px;
       white-space: nowrap;
     }
 
-    .tag.video{
-      background: var(--tagRedBg);
-      color: var(--tagRedText);
+    .tag.video{ background: var(--tagRedBg); color: var(--tagRedText); }
+    .tag.pdf{ background: var(--tagBlueBg); color: var(--tagBlueText); }
+
+    .badge{
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border: 1px solid transparent;
     }
 
-    .tag.pdf{
-      background: var(--tagBlueBg);
-      color: var(--tagBlueText);
-    }
+    .badge.new{ background: var(--badgeNewBg); color: var(--badgeNewText); border-color: rgba(4,120,87,0.25); }
+    .badge.updated{ background: var(--badgeUpdBg); color: var(--badgeUpdText); border-color: rgba(154,52,18,0.25); }
 
     .card-title{
       font-size: 16px;
@@ -207,13 +252,24 @@
       text-overflow: ellipsis;
     }
 
-    /* meta optional */
-    .meta{
-      margin-top: 3px;
+    /* Right CTA */
+    .open-btn{
+      flex: 0 0 auto;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--deepBlue);
+      font-weight: 900;
       font-size: 12px;
-      font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    .open-btn:active{
+      transform: scale(0.98);
     }
 
     .empty-state{
@@ -233,7 +289,7 @@
       font-weight: 500;
       color: var(--sub);
       line-height: 1.35;
-      text-align: left;
+      text-align: center;
     }
 
     /* ===== Bottom Tabs (Fixed) ===== */
@@ -276,9 +332,7 @@
       height: 100%;
     }
 
-    .tab-btn:active{
-      transform: scale(0.98);
-    }
+    .tab-btn:active{ transform: scale(0.98); }
 
     .tab-ic{
       width: 22px;
@@ -291,17 +345,13 @@
       font-weight: 900;
     }
 
-    .tab-btn.active{
-      color: var(--deepBlue);
-    }
-    .tab-btn.active .tab-label{
-      color: var(--deepBlue);
-    }
+    .tab-btn.active{ color: var(--deepBlue); }
+    .tab-btn.active .tab-label{ color: var(--deepBlue); }
 
     @media (max-width: 420px){
-      .title{ font-size: 28px; }
       .thumb{ width: 86px; height: 56px; }
       .card-title{ font-size: 15px; }
+      .open-btn{ padding: 0 12px; }
     }
   </style>
 </head>
@@ -310,8 +360,12 @@
 
 <div class="page">
   <div class="header">
-    <h1 class="title">Training Hub</h1>
-    <div class="subtitle">Video guides & process documents</div>
+    <h1 class="title">Learn & Earn</h1>
+    <div class="subtitle">Watch videos, & step-by-step guides to help you sell more and earn more</div>
+  </div>
+
+  <div class="search-wrap">
+    <input id="searchInput" class="search" type="text" placeholder="Search videos & guides...">
   </div>
 
   <hr class="divider">
@@ -327,7 +381,7 @@
 
 <!-- ===== Bottom Tabs ===== -->
 <div class="bottom-tabs">
-  <button class="tab-btn" id="tabCalc" onclick="location.href='index.html'" aria-label="Calculator">
+  <button class="tab-btn" onclick="location.href='index.html'" aria-label="Calculator">
     <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="4" y="3" width="16" height="18" rx="3"></rect>
       <line x1="8" y1="8" x2="16" y2="8"></line>
@@ -337,7 +391,7 @@
     <div class="tab-label">Calculator</div>
   </button>
 
-  <button class="tab-btn active" id="tabTrain" aria-label="Training">
+  <button class="tab-btn active" aria-label="Training">
     <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 19V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v13"></path>
       <path d="M6 4v16"></path>
@@ -348,7 +402,7 @@
     <div class="tab-label">Training</div>
   </button>
 
-  <button class="tab-btn" id="tabReverse" onclick="location.href='reverse.html'" aria-label="Reverse">
+  <button class="tab-btn" onclick="location.href='reverse.html'" aria-label="Reverse">
     <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 12a9 9 0 0 1 15-6"></path>
       <polyline points="18 3 18 7 14 7"></polyline>
@@ -383,6 +437,115 @@
     return u.includes("youtube.com") || u.includes("youtu.be");
   }
 
+  let allItems = [];
+
+  function normalizeBadge(b){
+    const v = safeText(b).trim().toUpperCase();
+    if (v === "NEW") return "new";
+    if (v === "UPDATED") return "updated";
+    return "";
+  }
+
+  function openItem(item){
+    const title = safeText(item.title) || "Training Item";
+    const url = safeText(item.url).trim().replace(/,+$/, "");
+
+    try{
+      if (typeof gtag === "function") {
+        gtag("event", "training_item_opened", {
+          event_category: "TrainingHub",
+          event_label: title
+        });
+      }
+    } catch(e){}
+
+    if (url && url !== "#") {
+      location.href = url;
+    }
+  }
+
+  function renderList(items){
+    const listEl = document.getElementById("trainingList");
+
+    if (!items || items.length === 0) {
+      listEl.innerHTML = `<div class="empty-state">No matching results found.</div>`;
+      return;
+    }
+
+    listEl.innerHTML = "";
+
+    items.forEach(item => {
+      const typeRaw = safeText(item.type).toLowerCase().trim();
+      const title = safeText(item.title) || "Untitled";
+      let url = safeText(item.url).trim().replace(/,+$/, "");
+      const tagText = safeText(item.tag);
+
+      const treatAsVideo = (typeRaw === "video") || isLikelyYouTube(url);
+
+      const tagClass = treatAsVideo ? "video" : "pdf";
+      const tagLabel = tagText || (treatAsVideo ? "Video Guide" : "Document (PDF)");
+
+      const badgeClass = normalizeBadge(item.badge);
+      const badgeHtml = badgeClass
+        ? `<span class="badge ${badgeClass}">${badgeClass === "new" ? "NEW" : "UPDATED"}</span>`
+        : "";
+
+      let thumbHtml = "";
+
+      if (treatAsVideo) {
+        const ytId = extractYouTubeId(url);
+        const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : "";
+
+        thumbHtml = `
+          <div class="thumb" style="${thumbUrl ? `background-image:url('${thumbUrl}')` : ""}">
+            <div class="play"></div>
+          </div>
+        `;
+      } else {
+        const docThumb = safeText(item.thumbnail).trim();
+
+        if (docThumb) {
+          thumbHtml = `
+            <div class="thumb" style="background-image:url('${docThumb}'); background-color:#eaf2ff;"></div>
+          `;
+        } else {
+          thumbHtml = `
+            <div class="thumb" style="background:#eaf2ff;">
+              <div class="pdfIcon">PDF</div>
+            </div>
+          `;
+        }
+      }
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        ${thumbHtml}
+        <div class="info">
+          <div class="topline">
+            <span class="tag ${tagClass}">${tagLabel}</span>
+            ${badgeHtml}
+          </div>
+          <div class="card-title">${title}</div>
+        </div>
+        <button class="open-btn" type="button">OPEN</button>
+      `;
+
+      // card click -> open
+      card.addEventListener("click", () => openItem(item));
+
+      // open button click -> open (but prevent card click double)
+      const openBtn = card.querySelector(".open-btn");
+      openBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openItem(item);
+      });
+
+      document.getElementById("trainingList").appendChild(card);
+    });
+  }
+
   async function loadTraining() {
     const listEl = document.getElementById("trainingList");
     listEl.innerHTML = `<div class="empty-state">Loading training content...</div>`;
@@ -392,86 +555,14 @@
       if (!res.ok) throw new Error("training.json not found or not accessible");
 
       const data = await res.json();
-      const items = Array.isArray(data.items) ? data.items : [];
+      allItems = Array.isArray(data.items) ? data.items : [];
 
-      if (items.length === 0) {
+      if (allItems.length === 0) {
         listEl.innerHTML = `<div class="empty-state">No training content added yet.</div>`;
         return;
       }
 
-      listEl.innerHTML = "";
-
-      items.forEach(item => {
-        const typeRaw = safeText(item.type).toLowerCase().trim();
-        const title = safeText(item.title) || "Untitled";
-        let url = safeText(item.url).trim().replace(/,+$/, "");
-        const tagText = safeText(item.tag);
-        const meta = safeText(item.meta).trim(); // ✅ optional
-
-        // video detection: either type=video or url is youtube
-        const treatAsVideo = (typeRaw === "video") || isLikelyYouTube(url);
-
-        const tagClass = treatAsVideo ? "video" : "pdf";
-        const tagLabel = tagText || (treatAsVideo ? "Video Guide" : "Document (PDF)");
-
-        // thumbnail logic
-        let thumbHtml = "";
-
-        if (treatAsVideo) {
-          const ytId = extractYouTubeId(url);
-          const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : "";
-
-          thumbHtml = `
-            <div class="thumb" style="${thumbUrl ? `background-image:url('${thumbUrl}')` : ""}">
-              <div class="play"></div>
-            </div>
-          `;
-        } else {
-          // docs can support direct thumbnails from JSON
-          const docThumb = safeText(item.thumbnail).trim();
-
-          if (docThumb) {
-            thumbHtml = `
-              <div class="thumb" style="background-image:url('${docThumb}'); background-color:#eaf2ff;"></div>
-            `;
-          } else {
-            thumbHtml = `
-              <div class="thumb" style="background:#eaf2ff;">
-                <div class="pdfIcon">PDF</div>
-              </div>
-            `;
-          }
-        }
-
-        const card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-          ${thumbHtml}
-          <div class="info">
-            <div class="tag ${tagClass}">${tagLabel}</div>
-            <div class="card-title">${title}</div>
-            ${meta ? `<div class="meta">${meta}</div>` : ``}
-          </div>
-        `;
-
-        card.addEventListener("click", () => {
-          try{
-            if (typeof gtag === "function") {
-              gtag("event", "training_item_opened", {
-                event_category: "TrainingHub",
-                event_label: title
-              });
-            }
-          } catch(e){}
-
-          if (url && url !== "#") {
-            location.href = url;
-          }
-        });
-
-        listEl.appendChild(card);
-      });
+      renderList(allItems);
 
     } catch (err) {
       listEl.innerHTML = `
@@ -482,6 +573,26 @@
       `;
     }
   }
+
+  // Search logic
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    const q = safeText(e.target.value).toLowerCase().trim();
+
+    if (!q) {
+      renderList(allItems);
+      return;
+    }
+
+    const filtered = allItems.filter(item => {
+      const title = safeText(item.title).toLowerCase();
+      const tag = safeText(item.tag).toLowerCase();
+      const type = safeText(item.type).toLowerCase();
+      const badge = safeText(item.badge).toLowerCase();
+      return title.includes(q) || tag.includes(q) || type.includes(q) || badge.includes(q);
+    });
+
+    renderList(filtered);
+  });
 
   loadTraining();
 </script>
