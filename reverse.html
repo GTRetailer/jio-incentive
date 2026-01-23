@@ -1,22 +1,12 @@
-<!-- VERSION C32.1 (Calculator + Bottom Tabs Navigation) -->
+<!-- VERSION C32 – Reverse Calculator -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jio Retailer - Lap Incentive Calculator - C32.1</title>
+  <title>Jio Retailer – Reverse Earning Calculator</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GH8905Y6B"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9GH8905Y6B');
-  </script>
 
   <style>
     :root{
@@ -29,593 +19,177 @@
       --border:#dadce0;
       --bg:#ffffff;
       --inputBg:#f8f9fa;
-      --danger:#d93025;
-
-      --cardBg:#f7fafc;
-      --cardBorder:#eef2f6;
-      --bonusBg:#eef6ff;
-      --bonusBorder:#d6e9ff;
 
       --shadow: 0 1px 2px rgba(0,0,0,0.10);
-
       --tabH: 68px;
     }
 
     *{
-      box-sizing: border-box;
-      font-family: Inter, sans-serif;
-      -webkit-font-smoothing: antialiased;
+      box-sizing:border-box;
+      font-family:Inter,sans-serif;
+      -webkit-font-smoothing:antialiased;
     }
 
     body{
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      overflow-y: auto;
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
     }
 
     .page{
-      width: 100%;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 14px 14px 18px;
-      padding-bottom: calc(var(--tabH) + 18px); /* ✅ avoids hiding behind fixed bottom tabs */
+      max-width:820px;
+      margin:0 auto;
+      padding:16px 14px;
+      padding-bottom:calc(var(--tabH) + 20px);
     }
 
     /* ===== Header ===== */
-    .header{ padding: 10px 0 8px; }
-
     .title{
-      margin: 0;
-      text-align: center;
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--deepBlue);
-      letter-spacing: -0.6px;
-      line-height: 1.1;
+      text-align:center;
+      font-size:26px;
+      font-weight:900;
+      color:var(--deepBlue);
+      letter-spacing:-0.6px;
     }
 
     .subtitle{
-      margin: 8px 0 0;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--sub);
-      line-height: 1.3;
+      margin-top:6px;
+      text-align:center;
+      font-size:13px;
+      font-weight:500;
+      color:var(--sub);
     }
 
-    .disclaimer{
-      margin: 10px 0 0;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--sub);
-      line-height: 1.35;
-      text-align: left;
+    .divider{
+      border:none;
+      border-top:1px solid #eef0f3;
+      margin:14px 0;
     }
 
-    .top-divider{
-      border: none;
-      border-top: 1px solid #eef0f3;
-      margin: 0px 0 0px;
-    }
-
-    /* ===== Rows ===== */
-    .row{
-      display: grid;
-      grid-template-columns: 1fr 96px;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0 0px 0;
-      border-bottom: 1px solid #eef0f3;
-    }
-    .row:last-child{ border-bottom: none; }
-
-    .label{
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
-    .error{
-      font-size: 10.5px;
-      font-weight: 500;
-      color: var(--danger);
-      margin-top: 4px;
-      min-height: 12px;
-    }
-
-    .input{
-      width: 96px;
-      height: 36px;
-      padding: 0 8px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--inputBg);
-      text-align: center;
-
-      font-size: 15px;
-      font-weight: 700;
-
-      outline: none;
-      justify-self: end;
-      color: var(--text);
-      line-height: 36px; /* vertical center */
-    }
-
-    .input:focus{
-      border-color: var(--btnBlue1);
-      box-shadow: 0 0 0 3px rgba(0, 94, 255, 0.15);
-      background: #ffffff;
-    }
-
-    /* ===== Section Title ===== */
-    .section-title{
-      margin: 14px 0 8px;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.2px;
-    }
-
-    /* ===== JioBharat block ===== */
-    .jb-wrap{
-      border-top: 1px solid #eef0f3;
-      margin-top: 12px;
-      padding-top: 10px;
-    }
-
-    /* remove line after V4 Device row => no border */
-    .jb-row{
-      display: grid;
-      grid-template-columns: 1fr 96px;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0 0px 0;
-      border-bottom: none; /* ✅ no line after V4 Device */
-    }
-
-    .booking-row{
-      display: grid;
-      grid-template-columns: 1fr 96px;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0 0px 0;
-      border-bottom: 1px solid #eef0f3; /* ✅ line after booking row */
-    }
-
-    .booking-left{
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .booking-note{
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--btnBlue2);
-      line-height: 1.1;
-      margin-top: -2px;
-      white-space: nowrap;
-    }
-
-    /* ===== Bottom Actions ===== */
-    .actions{
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary{
-      flex: 1;
-      min-width: 170px;
-      height: 52px;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      font-size: 17px;
-      font-weight: 900;
-      color: #fff;
-      background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2));
-    }
-
-    .btn-secondary{
-      flex: 1;
-      min-width: 170px;
-      height: 52px;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      font-size: 14px;
-      font-weight: 700;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .footer-note{
-      margin-top: 10px;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--sub);
-      line-height: 1.3;
-    }
-
-    /* ===== Modal ===== */
-    .overlay{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.55);
-      z-index:100;
-    }
-
-    .modal{
-      display:none;
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%, -50%);
-      width: 92%;
-      max-width: 620px;
-      background:#fff;
-      border:1px solid var(--border);
+    /* ===== Target Card ===== */
+    .target-card{
+      background:#f7fafc;
+      border:1px solid #eef2f6;
       border-radius:18px;
-      padding: 10px 10px 12px;
-      z-index:101;
-      box-shadow: 0 16px 34px rgba(0,0,0,0.28);
-      max-height: 82%;
-      overflow:auto;
+      padding:18px 14px;
+      text-align:center;
     }
 
-    .modal-title{
-      margin: 0;
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--deepBlue);
-      text-align: center;
-      letter-spacing: -0.5px;
-      line-height: 1.15;
+    .target-label{
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      color:#94a3b8;
     }
 
-    /* ===== Partner Tier Card (Bronze/Silver/Gold Only) ===== */
-    .partner-wrap{
-      display:none;
-      margin: 10px 0 10px;
-      text-align: center;
-    }
-
-    .partner-card{
-      position: relative;
-      overflow: hidden;
-      background: #ffffff;
-      border: 1px solid var(--cardBorder);
-      border-radius: 16px;
-      padding: 10px 10px;
-      display: inline-block;
-      width: 100%;
-      animation: cardFadeIn 450ms ease-out;
-      text-align: center;
-    }
-
-    .partner-badge{
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      position: relative;
-      z-index: 2;
-      border: 1px solid transparent;
-      white-space: nowrap;
-      animation: popIn 420ms cubic-bezier(.2,.9,.25,1.4);
-    }
-
-    .partner-msg{
-      margin-top: 6px;
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--deepBlue);
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      position: relative;
-      z-index: 2;
-      animation: slideUp 520ms ease-out 0s 1;
-    }
-
-    .tier-bronze{ background:#fff7ed; border-color:#fed7aa; color:#9a3412; }
-    .tier-silver{ background:#f1f5f9; border-color:#cbd5e1; color:#334155; }
-    .tier-gold{ background:#fffbeb; border-color:#fde68a; color:#92400e; }
-
-    .partner-card::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: radial-gradient(circle at 50% 30%, var(--tierGlow, rgba(0,94,255,0.10)), transparent 55%);
-      opacity: 0.75;
-      z-index: 1;
-      pointer-events:none;
-    }
-
-    .partner-card::before{
-      content:"";
-      position:absolute;
-      left: 50%;
-      top: 18px;
-      transform: translateX(-50%) scale(0.2);
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: rgba(0,94,255,0.18);
-      opacity: 0;
-      animation: burstRing 650ms ease-out;
-      z-index: 1;
-      pointer-events:none;
-    }
-
-    @keyframes popIn{
-      0%   { transform: scale(0.7); opacity: 0; }
-      60%  { transform: scale(1.08); opacity: 1; }
-      100% { transform: scale(1.0); }
-    }
-    @keyframes slideUp{
-      0%   { transform: translateY(8px); opacity: 0; }
-      100% { transform: translateY(0px); opacity: 1; }
-    }
-    @keyframes burstRing{
-      0%   { transform: translateX(-50%) scale(0.2); opacity: 0; }
-      30%  { opacity: 1; }
-      100% { transform: translateX(-50%) scale(18); opacity: 0; }
-    }
-    @keyframes cardFadeIn{
-      0%   { transform: translateY(6px); opacity: 0; }
-      100% { transform: translateY(0px); opacity: 1; }
-    }
-
-    /* ===== Dual payout tiles (Lap + Monthly) ===== */
-    .payout-grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-
-    .payout-tile{
-      background: var(--deepBlue);
-      border-radius: 16px;
-      padding: 12px 10px;
-      text-align: center;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-      min-height: 78px;
-    }
-
-    .payout-tile.monthly{
-      background: linear-gradient(90deg, #1d4ed8, #003bba);
-    }
-
-    .payout-tile::after{
-      content:"";
-      position:absolute;
-      right:-60px;
-      top:-60px;
-      width:160px;
-      height:160px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .payout-label{
-      font-size: 11px;
-      font-weight: 700;
-      opacity: 0.85;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-    }
-
-    .payout-sub{
-      margin-top: 3px;
-      font-size: 10.5px;
-      font-weight: 600;
-      opacity: 0.85;
-    }
-
-    .payout-amount{
-      margin-top: 6px;
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: -0.8px;
-      line-height: 1.05;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* ===== Summary List ===== */
-    .summary-list{
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 0;
-      margin: 0;
-    }
-
-    .summary-card{
-      background: var(--cardBg);
-      border: 1px solid var(--cardBorder);
-      border-radius: 14px;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .summary-left{
-      min-width: 0;
-      flex: 1;
-    }
-
-    .card-title{
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #1f2937;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .card-sub{
-      margin-top: 2px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #94a3b8;
-      line-height: 1.15;
-    }
-
-    .card-amount{
-      font-size: 14.5px;
-      font-weight: 800;
-      color: var(--deepBlue);
-      white-space: nowrap;
-    }
-
-    .summary-card.bonus{
-      background: var(--bonusBg);
-      border: 1px solid var(--bonusBorder);
-    }
-    .summary-card.bonus .card-title{
-      color: var(--btnBlue2);
-      font-weight: 800;
-    }
-    .summary-card.bonus .card-sub{
-      color: #4b83d8;
-      font-weight: 600;
-    }
-
-    .empty-state{
-      background: #fff;
-      border: 1px dashed var(--border);
-      border-radius: 14px;
-      padding: 12px 10px;
-      text-align: center;
-      color: var(--sub);
-      font-size: 12.5px;
-      font-weight: 600;
-    }
-
-    .modal-actions{
-      display:flex;
-      gap:10px;
+    .target-input{
       margin-top:10px;
-      flex-wrap: wrap;
+      width:100%;
+      max-width:220px;
+      height:56px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:var(--inputBg);
+      font-size:32px;
+      font-weight:900;
+      text-align:center;
+      outline:none;
+      color:var(--deepBlue);
     }
 
-    .share-btn, .download-btn{
-      flex: 1;
-      min-width: 160px;
-      height: 46px;
-      border: none;
-      border-radius: 14px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      font-size: 15px;
+    .target-input:focus{
+      border-color:var(--btnBlue1);
+      box-shadow:0 0 0 4px rgba(0,94,255,0.12);
+      background:#fff;
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--sub);
+      line-height:1.4;
+    }
+
+    /* ===== Result ===== */
+    .result{
+      margin-top:18px;
+      display:none;
+    }
+
+    .result-card{
+      background:linear-gradient(90deg,var(--btnBlue1),var(--btnBlue2));
+      border-radius:18px;
+      padding:18px 14px;
       color:#fff;
+      text-align:center;
     }
 
-    .share-btn{ background:#25d366; }
-    .download-btn{ background: linear-gradient(90deg, var(--btnBlue1), var(--btnBlue2)); }
-
-    .modal-footnote{
-      margin-top: 8px;
-      font-size: 11.5px;
-      font-weight: 500;
-      color: var(--sub);
-      line-height: 1.35;
-      text-align: center;
+    .result-label{
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      opacity:.9;
     }
 
-    /* ===== Bottom Tabs (Fixed) ===== */
+    .result-value{
+      margin-top:8px;
+      font-size:30px;
+      font-weight:900;
+      letter-spacing:-0.6px;
+    }
+
+    /* ===== Footer note ===== */
+    .note{
+      margin-top:14px;
+      font-size:12px;
+      color:var(--sub);
+      line-height:1.4;
+      text-align:center;
+    }
+
+    /* ===== Bottom Tabs ===== */
     .bottom-tabs{
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0;
-      width: 100%;
-      max-width: 820px;
-
-      height: var(--tabH);
-      background: rgba(255,255,255,0.96);
-      border-top: 1px solid #eef0f3;
-      z-index: 9999;
-
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      align-items: center;
-
-      padding: 6px 12px 8px;
-      backdrop-filter: blur(8px);
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:0;
+      width:100%;
+      max-width:820px;
+      height:var(--tabH);
+      background:rgba(255,255,255,0.96);
+      border-top:1px solid #eef0f3;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      z-index:999;
+      backdrop-filter:blur(8px);
     }
 
     .tab-btn{
-      border: none;
-      background: transparent;
-      cursor: pointer;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-
-      color: #6b7280;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-
-      width: 100%;
-      height: 100%;
-    }
-
-    .tab-btn:active{
-      transform: scale(0.98);
-    }
-
-    .tab-ic{
-      width: 22px;
-      height: 22px;
-      display: block;
-    }
-
-    .tab-label{
-      font-size: 11px;
-      font-weight: 900;
+      border:none;
+      background:none;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      font-weight:900;
+      font-size:11px;
+      color:#6b7280;
+      cursor:pointer;
     }
 
     .tab-btn.active{
-      color: var(--deepBlue);
-    }
-    .tab-btn.active .tab-label{
-      color: var(--deepBlue);
+      color:var(--deepBlue);
     }
 
-    @media (max-width: 420px){
-      .row{ grid-template-columns: 1fr 90px; }
-      .input{ width: 90px; height: 36px; line-height: 36px; }
-      .jb-row{ grid-template-columns: 1fr 90px; }
-      .booking-row{ grid-template-columns: 1fr 90px; }
-      .title{ font-size: 23px; }
-      .payout-amount{ font-size: 24px; }
+    .tab-ic{
+      width:22px;
+      height:22px;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
     }
   </style>
 </head>
@@ -623,414 +197,81 @@
 <body>
 
 <div class="page">
-  <div class="header">
-    <h1 class="title">Jio Retailer – Lap Commission Calculator</h1>
-    <div class="subtitle">Enter your committed numbers for current lap</div>
-    <div class="disclaimer">
-      *This calculator provides tentative payouts for non-DSS retailer.<br>
-      *Final commission will be as per company system, subject to eligibility and conditions.<br>
+  <h1 class="title">Reverse Earning</h1>
+  <div class="subtitle">Plan your sales based on goal amount</div>
+
+  <hr class="divider">
+
+  <div class="target-card">
+    <div class="target-label">Target Payout (₹)</div>
+    <input class="target-input" id="targetAmount" type="number" min="0" placeholder="0">
+    <div class="hint">
+      Enter the payout you want to achieve.  
+      This will help you plan required sales.
     </div>
   </div>
 
-  <hr class="top-divider">
-
-  <!-- ✅ Line before MNP row already via divider above -->
-  <div class="row">
-    <div>
-      <div class="label">MNP Activation (₹349)</div>
-    </div>
-    <div>
-      <input class="input" type="number" id="mnp349" min="0" max="999">
-      <div class="error" id="err-mnp349"></div>
+  <div class="result" id="resultBox">
+    <div class="result-card">
+      <div class="result-label">Required MNP Activations (Approx.)</div>
+      <div class="result-value" id="requiredMnp">0</div>
     </div>
   </div>
 
-  <div class="row">
-    <div>
-      <div class="label">New SIM Activation (₹349)</div>
-    </div>
-    <div>
-      <input class="input" type="number" id="sim349" min="0" max="999">
-      <div class="error" id="err-sim349"></div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div>
-      <div class="label">JioHome Booking (₹1200)</div>
-    </div>
-    <div>
-      <input class="input" type="number" id="jaf1111" min="0" max="999">
-      <div class="error" id="err-jaf1111"></div>
-    </div>
-  </div>
-
-  <div class="jb-wrap">
-    <div class="section-title" style="margin-top:0;">JioBharat</div>
-
-    <!-- ✅ V4 Device row (no line after) -->
-    <div class="jb-row">
-      <div>
-        <div class="label">V4 Device (₹799)</div>
-      </div>
-      <div>
-        <input class="input" type="number" id="jbV4" min="0" max="999">
-        <div class="error" id="err-jbV4"></div>
-      </div>
-    </div>
-
-    <!-- ✅ Booking row (has line after) -->
-    <div class="booking-row">
-      <div class="booking-left">
-        <div class="label">Booking</div>
-        <div class="booking-note">(₹100 → ₹30)</div>
-      </div>
-      <div>
-        <input class="input" type="number" id="BKG" min="0" max="999">
-        <div class="error" id="err-BKG"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn-primary" onclick="calculate()">Calculate</button>
-    <button class="btn-secondary" onclick="resetFields()">Reset</button>
-  </div>
-
-  <div class="footer-note">
-    * This calculator provides tentative payouts.<br>
-    * Created by GT retailer.
-  </div>
-</div>
-
-<div class="overlay" id="overlay" onclick="closePopup()"></div>
-
-<div class="modal" id="resultModal">
-  <h2 class="modal-title">Earnings Summary</h2>
-
-  <div class="partner-wrap" id="partnerWrap"></div>
-
-  <!-- ✅ Payout tiles first -->
-  <div class="payout-grid">
-    <div class="payout-tile">
-      <div class="payout-label">Lap Payout (Est.)</div>
-      <div class="payout-amount" id="lapPayout">₹0</div>
-    </div>
-
-    <div class="payout-tile monthly">
-      <div class="payout-label">Monthly Payout (Est.)</div>
-      <div class="payout-amount" id="monthlyPayout">₹0</div>
-      <div class="payout-sub">(3 × Lap Payout)</div>
-    </div>
-  </div>
-
-  <!-- ✅ Summary list after payout tiles -->
-  <div class="summary-list" id="summaryList"></div>
-
-  <div class="modal-actions">
-    <button class="share-btn" onclick="shareWhatsApp()">Share via WhatsApp</button>
-    <button class="download-btn" onclick="downloadImage()">Download as Image</button>
-  </div>
-
-  <div class="modal-footnote">
-    Final commission will be as per company system, subject to eligibility and conditions.
+  <div class="note">
+    *Calculation is indicative. Final payout will depend on actual mix and company system.
   </div>
 </div>
 
 <!-- ===== Bottom Tabs ===== -->
 <div class="bottom-tabs">
-  <button class="tab-btn" id="tabCalc" onclick="location.href='index.html'" aria-label="Calculator">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <button class="tab-btn" onclick="location.href='index.html'">
+    <svg class="tab-ic" viewBox="0 0 24 24">
       <rect x="4" y="3" width="16" height="18" rx="3"></rect>
       <line x1="8" y1="8" x2="16" y2="8"></line>
-      <line x1="8" y1="12" x2="10" y2="12"></line>
-      <line x1="12" y1="12" x2="14" y2="12"></line>
-      <line x1="16" y1="12" x2="16" y2="12"></line>
-      <line x1="8" y1="16" x2="10" y2="16"></line>
-      <line x1="12" y1="16" x2="14" y2="16"></line>
-      <line x1="16" y1="16" x2="16" y2="16"></line>
+      <line x1="8" y1="12" x2="16" y2="12"></line>
+      <line x1="8" y1="16" x2="16" y2="16"></line>
     </svg>
-    <div class="tab-label">Calculator</div>
+    Calculator
   </button>
 
-  <button class="tab-btn" id="tabTrain" onclick="location.href='training.html'" aria-label="Training">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <button class="tab-btn" onclick="location.href='training.html'">
+    <svg class="tab-ic" viewBox="0 0 24 24">
       <path d="M4 19V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v13"></path>
       <path d="M6 4v16"></path>
-      <path d="M8 8h8"></path>
-      <path d="M8 12h8"></path>
-      <path d="M8 16h6"></path>
     </svg>
-    <div class="tab-label">Training</div>
+    Training
   </button>
 
-  <button class="tab-btn" id="tabReverse" onclick="location.href='reverse.html'" aria-label="Reverse">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <button class="tab-btn active">
+    <svg class="tab-ic" viewBox="0 0 24 24">
       <path d="M3 12a9 9 0 0 1 15-6"></path>
       <polyline points="18 3 18 7 14 7"></polyline>
       <path d="M21 12a9 9 0 0 1-15 6"></path>
       <polyline points="6 21 6 17 10 17"></polyline>
     </svg>
-    <div class="tab-label">Reverse</div>
+    Reverse
   </button>
 </div>
 
 <script>
-  // ✅ Active tab highlight
-  document.getElementById("tabCalc").classList.add("active");
+  const input = document.getElementById("targetAmount");
+  const resultBox = document.getElementById("resultBox");
+  const resultVal = document.getElementById("requiredMnp");
 
-  function resetFields() {
-    const inputs = document.querySelectorAll("input[type='number']");
-    inputs.forEach(input => input.value = "");
-  }
+  input.addEventListener("input", () => {
+    const target = parseInt(input.value) || 0;
 
-  function closePopup() {
-    document.getElementById("resultModal").style.display = "none";
-    document.getElementById("overlay").style.display = "none";
-  }
-
-  function get(id) {
-    const value = document.getElementById(id)?.value;
-    return parseInt(value) || 0;
-  }
-
-  function formatINR(n) {
-    return "₹" + Math.round(n).toLocaleString("en-IN");
-  }
-
-  function renderCard(title, qty, amount) {
-    return `
-      <div class="summary-card">
-        <div class="summary-left">
-          <div class="card-title">${title}</div>
-          <div class="card-sub">${qty} × ₹${Math.round(amount/qty)}</div>
-        </div>
-        <div class="card-amount">${formatINR(amount)}</div>
-      </div>
-    `;
-  }
-
-  function renderBonusCard(title, subtitle, amount) {
-    return `
-      <div class="summary-card bonus">
-        <div class="summary-left">
-          <div class="card-title">${title}</div>
-          <div class="card-sub">${subtitle}</div>
-        </div>
-        <div class="card-amount">${formatINR(amount)}</div>
-      </div>
-    `;
-  }
-
-  function renderEmptyState() {
-    return `<div class="empty-state">No entries added for this lap. Please enter values and calculate.</div>`;
-  }
-
-  // ✅ Tier logic (Bronze/Silver/Gold only)
-  function getPartnerTier(mnpCount) {
-    if (mnpCount >= 10) {
-      return { tier: "Gold Partner", msg: "Outstanding! Gold Partner unlocked", className: "tier-gold", glow: "rgba(146,64,14,0.14)" };
-    }
-    if (mnpCount >= 3 && mnpCount <= 9) {
-      return { tier: "Silver Partner", msg: "Great work! Silver Partner unlocked", className: "tier-silver", glow: "rgba(51,65,85,0.12)" };
-    }
-    if (mnpCount >= 1 && mnpCount <= 2) {
-      return { tier: "Bronze Partner", msg: "Congratulations! Bronze Partner unlocked", className: "tier-bronze", glow: "rgba(154,52,18,0.14)" };
-    }
-    return null;
-  }
-
-  function shareWhatsApp() {
-    const modal = document.getElementById("resultModal");
-    const total = document.getElementById("lapPayout").innerText;
-
-    // ✅ motivational message + finger pointing UP
-    const message = `My lap payout (est.) is ${total}. Summary above 👆`;
-
-    const originalMaxHeight = modal.style.maxHeight;
-    const originalOverflow = modal.style.overflow;
-    modal.style.maxHeight = 'none';
-    modal.style.overflow = 'visible';
-
-    setTimeout(() => {
-      html2canvas(modal).then(canvas => {
-        modal.style.maxHeight = originalMaxHeight;
-        modal.style.overflow = originalOverflow;
-
-        canvas.toBlob(function(blob) {
-          if (!blob) {
-            alert("Unable to generate image. Please try again.");
-            return;
-          }
-
-          const file = new File([blob], "summary.png", { type: "image/png" });
-
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            navigator.share({ files: [file], text: message });
-          } else {
-            alert("Sharing not supported on this browser. Use a mobile device or take a screenshot manually.");
-          }
-        });
-      });
-    }, 100);
-  }
-
-  function downloadImage() {
-    const modal = document.getElementById("resultModal");
-    const originalMaxHeight = modal.style.maxHeight;
-    const originalOverflow = modal.style.overflow;
-    modal.style.maxHeight = 'none';
-    modal.style.overflow = 'visible';
-
-    setTimeout(() => {
-      html2canvas(modal).then(canvas => {
-        modal.style.maxHeight = originalMaxHeight;
-        modal.style.overflow = originalOverflow;
-
-        const link = document.createElement("a");
-        link.download = "lap-earning-summary.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      });
-    }, 100);
-  }
-
-  function calculate() {
-    if (typeof gtag === "function") {
-      gtag('event', 'calculate_clicked', {
-        event_category: 'Calculator',
-        event_label: 'Retailer Lap Incentive'
-      });
+    if (target <= 0) {
+      resultBox.style.display = "none";
+      return;
     }
 
-    const summaryList = document.getElementById("summaryList");
-    const partnerWrap = document.getElementById("partnerWrap");
+    // Approx logic: avg ₹234 per MNP (same as calculator)
+    const mnpRequired = Math.ceil(target / 234);
 
-    summaryList.innerHTML = "";
-    partnerWrap.innerHTML = "";
-    partnerWrap.style.display = "none";
-
-    // Inputs
-    const mnp349 = get("mnp349");
-    const sim349 = get("sim349");
-    const jaf1111 = get("jaf1111");
-    const jbV4 = get("jbV4");
-    const bkg = get("BKG");
-
-    // Partner card display
-    const partner = getPartnerTier(mnp349);
-    if (partner) {
-      partnerWrap.style.display = "block";
-      partnerWrap.innerHTML = `
-        <div class="partner-card" style="--tierGlow:${partner.glow}">
-          <div class="partner-badge ${partner.className}">${partner.tier}</div>
-          <div class="partner-msg">${partner.msg}</div>
-        </div>
-      `;
-    }
-
-    // Core entries (Lap)
-    const entries = [
-      ["MNP Activation", mnp349, mnp349 * 234],
-      ["New SIM Activation", sim349, sim349 * 132],
-      ["JioHome Booking", jaf1111, jaf1111 * 96],
-      ["JioBharat", jbV4 + bkg, (jbV4 * 125) + (bkg * 30)]
-    ];
-
-    let lapTotal = 0;
-    let shown = 0;
-
-    // Show only non-zero entries
-    for (const [label, count, amount] of entries) {
-      if (count <= 0 || amount <= 0) continue;
-
-      // card subtext: "count × ₹rate"
-      const rate = Math.round(amount / count);
-
-      summaryList.innerHTML += `
-        <div class="summary-card">
-          <div class="summary-left">
-            <div class="card-title">${label}</div>
-            <div class="card-sub">${count} × ₹${rate}</div>
-          </div>
-          <div class="card-amount">${formatINR(amount)}</div>
-        </div>
-      `;
-
-      lapTotal += amount;
-      shown++;
-    }
-
-    // ✅ MNP "Sell & Win" Comm. (Lap bonus, NOT MNP count display requested earlier)
-    // Here we show amount only, based on per-MNP slab:
-    // 1-2 => ₹50, 3-9 => ₹90, 10+ => ₹110
-    // Condition from earlier: If MNP count is 0 -> no comm.
-    let sellWinRate = 0;
-    if (mnp349 >= 1 && mnp349 <= 2) sellWinRate = 50;
-    else if (mnp349 >= 3 && mnp349 <= 9) sellWinRate = 90;
-    else if (mnp349 >= 10) sellWinRate = 110;
-
-    let sellWinAmount = mnp349 * sellWinRate;
-
-    if (sellWinAmount > 0) {
-      summaryList.innerHTML += renderBonusCard(
-        `MNP "Sell & Win" Comm.`,
-        `₹${sellWinRate} / MNP`,
-        sellWinAmount
-      );
-      lapTotal += sellWinAmount;
-      shown++;
-    }
-
-    // ✅ FR MNP Bonus (Monthly only)
-    // Rule: show if MNP is 2 or more => show amount = 3 * 10 * MNP count
-    // Add subtext: ₹10 per MNP (if monthly MNP ≥ 5)
-    const frMnpBonusMonthly = (mnp349 >= 2) ? (3 * 10 * mnp349) : 0;
-
-    // Monthly payout = 3 * lap payout + FR monthly bonus (only in monthly)
-    const monthlyTotal = (lapTotal * 3) + frMnpBonusMonthly;
-
-    // Show FR bonus card (style matches bonus)
-    if (frMnpBonusMonthly > 0) {
-      summaryList.innerHTML += renderBonusCard(
-        `FR MNP Bonus`,
-        `₹10 per MNP (if monthly MNP ≥ 5)`,
-        frMnpBonusMonthly
-      );
-      shown++;
-    }
-
-    if (shown === 0) {
-      summaryList.innerHTML = renderEmptyState();
-    }
-
-    // Output totals
-    document.getElementById("lapPayout").innerText = formatINR(lapTotal);
-    document.getElementById("monthlyPayout").innerText = formatINR(monthlyTotal);
-
-    document.getElementById("resultModal").style.display = "block";
-    document.getElementById("overlay").style.display = "block";
-  }
-
-  // Input validation (positive integer only)
-  document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.setAttribute('min', '0');
-    input.setAttribute('step', '1');
-
-    input.addEventListener('input', () => {
-      const val = input.value;
-      const errEl = document.getElementById('err-' + input.id);
-
-      if (val.includes('.')) {
-        input.value = Math.floor(val);
-        if (errEl) errEl.innerText = 'Decimal not allowed';
-      } else if (val < 0) {
-        input.value = 0;
-        if (errEl) errEl.innerText = 'Only positive numbers allowed';
-      } else {
-        if (errEl) errEl.innerText = '';
-      }
-    });
+    resultVal.innerText = mnpRequired;
+    resultBox.style.display = "block";
   });
 </script>
 
