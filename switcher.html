@@ -1,4 +1,4 @@
-<!-- switcher.html | Bottom Tab Switch (Calculate / Goal / Learn) | WhatsApp-style box + ripple -->
+<!-- switcher.html | Bottom Tab Switch (Calculate / Goal / Learn) | Box ONLY for active tab -->
 <style>
   :root{
     --deepBlue:#002d62;
@@ -7,9 +7,6 @@
 
     --muted:#6b7280;
     --tabH: 72px;
-
-    --iconBoxBg: rgba(0, 45, 98, 0.06);
-    --iconBoxBorder: rgba(0, 45, 98, 0.12);
 
     --iconBoxActiveBg: rgba(0, 45, 98, 0.13);
     --iconBoxActiveBorder: rgba(0, 45, 98, 0.22);
@@ -77,7 +74,7 @@
     transition: all 160ms ease;
   }
 
-  /* ✅ WhatsApp-like rounded rectangle only around icon */
+  /* ✅ Icon wrapper: NO BOX by default */
   .icon-box{
     width: 52px;
     height: 42px;
@@ -90,9 +87,10 @@
     position: relative;
     overflow: hidden;
 
-    background: rgba(0,0,0,0.02);
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+    /* ✅ No visible box for inactive */
+    background: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
 
     transition: all 160ms ease;
   }
@@ -104,7 +102,7 @@
     stroke: currentColor;
   }
 
-  /* ✅ Bigger label (as requested) */
+  /* ✅ Bigger label */
   .tab-label{
     font-size: 12.5px;
     font-weight: 900;
@@ -113,12 +111,7 @@
     line-height: 1.1;
   }
 
-  /* ✅ Default (inactive) */
-  .tab-btn .tab-inner{
-    color: var(--muted);
-  }
-
-  /* ✅ Active page highlight always visible */
+  /* ✅ Active page highlight ONLY */
   .tab-btn.active .tab-inner{
     color: var(--deepBlue);
   }
@@ -129,7 +122,7 @@
     box-shadow: 0 10px 22px rgba(0,45,98,0.14);
   }
 
-  /* ✅ Ripple effect */
+  /* ✅ Ripple effect (only visible for active tab) */
   .icon-box::after{
     content:"";
     position:absolute;
@@ -142,7 +135,7 @@
     pointer-events: none;
   }
 
-  .tab-btn.ripple .icon-box::after{
+  .tab-btn.active.ripple .icon-box::after{
     left: var(--rx);
     top: var(--ry);
     transform: translate(-50%, -50%) scale(1);
@@ -154,26 +147,11 @@
     0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.35; }
     100% { transform: translate(-50%, -50%) scale(14); opacity: 0; }
   }
-
-  /* ✅ Hover feedback (desktop) */
-  @media (hover: hover){
-    .tab-btn:hover .icon-box{
-      background: var(--iconBoxBg);
-      border-color: var(--iconBoxBorder);
-      box-shadow: 0 10px 18px rgba(0,0,0,0.05);
-    }
-
-    .tab-btn.active:hover .icon-box{
-      background: var(--iconBoxActiveBg);
-      border-color: var(--iconBoxActiveBorder);
-      box-shadow: 0 12px 26px rgba(0,45,98,0.16);
-    }
-  }
 </style>
 
 <div class="bottom-tabs" id="bottomTabs">
 
-  <!-- ✅ 1) Calculate (Wallet) -->
+  <!-- ✅ 1) Calculate -->
   <button class="tab-btn" data-tab="calculator" onclick="location.href='index.html'" aria-label="Calculate">
     <div class="tab-inner">
       <div class="icon-box">
@@ -187,7 +165,7 @@
     </div>
   </button>
 
-  <!-- ✅ 2) Goal (Bullseye) -->
+  <!-- ✅ 2) Goal -->
   <button class="tab-btn" data-tab="reverse" onclick="location.href='reverse.html'" aria-label="Goal">
     <div class="tab-inner">
       <div class="icon-box">
@@ -201,7 +179,7 @@
     </div>
   </button>
 
-  <!-- ✅ 3) Learn (Play Circle) -->
+  <!-- ✅ 3) Learn -->
   <button class="tab-btn" data-tab="training" onclick="location.href='training.html'" aria-label="Learn">
     <div class="tab-inner">
       <div class="icon-box">
@@ -231,12 +209,14 @@
     });
   })();
 
-  // ✅ Ripple click animation (WhatsApp-like)
+  // ✅ Ripple only for active tab
   (function rippleInit(){
     const buttons = document.querySelectorAll(".tab-btn");
 
     buttons.forEach(btn => {
       btn.addEventListener("click", (e) => {
+        if (!btn.classList.contains("active")) return;
+
         const iconBox = btn.querySelector(".icon-box");
         if (!iconBox) return;
 
