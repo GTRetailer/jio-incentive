@@ -1,4 +1,4 @@
-<!-- VERSION C32.3 – Reverse (Lap Target Goal + Quick Targets Chips + Modal Breakdown + Bottom Tabs) -->
+<!-- VERSION C32.5 – Reverse (Lap Target Goal + Chips single-line + Modal Breakdown + Bottom Tabs + Balanced Live Feed + Blink Dot + Time Mix) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,7 +55,7 @@
       max-width:820px;
       margin:0 auto;
       padding:14px 14px 18px;
-      padding-bottom:calc(var(--tabH) + 18px); /* ✅ avoids hiding behind bottom tabs */
+      padding-bottom:calc(var(--tabH) + 18px);
     }
 
     /* ===== Header ===== */
@@ -153,12 +153,20 @@
       margin-bottom: 8px;
     }
 
+    /* ✅ one-line chips on Android: no wrapping + horizontal scroll */
     .chips{
       display: flex;
       gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 2px 2px 6px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      max-width: 100%;
+      margin: 0 auto;
     }
+    .chips::-webkit-scrollbar{ display:none; }
 
     .chip{
       border: 1px solid #e5e7eb;
@@ -168,6 +176,7 @@
       padding: 0 14px;
       border-radius: 999px;
       cursor: pointer;
+      flex: 0 0 auto;
 
       font-size: 13px;
       font-weight: 900;
@@ -175,6 +184,7 @@
 
       transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
       user-select: none;
+      white-space: nowrap;
     }
 
     .chip:hover{
@@ -197,17 +207,6 @@
       margin-left: 6px;
       font-size: 12px;
       opacity: 0.95;
-    }
-
-    .rec-tag{
-      margin-left: 8px;
-      font-size: 10px;
-      font-weight: 900;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.35);
-      white-space: nowrap;
     }
 
     /* ===== Button ===== */
@@ -244,7 +243,64 @@
       line-height: 1.35;
     }
 
-    /* ===== Modal (index.html style) ===== */
+    /* ✅ LIVE FEED */
+    .live-feed{
+      margin-top: 12px;
+      width: 100%;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+
+      background: #ffffff;
+      border: 1px solid #eef2f6;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* ✅ Soft blinking dot */
+    .live-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.12);
+      flex-shrink: 0;
+      animation: blinkSoft 1.6s ease-in-out infinite;
+    }
+
+    @keyframes blinkSoft{
+      0%   { opacity: 0.35; transform: scale(0.98); }
+      50%  { opacity: 1.00; transform: scale(1.08); }
+      100% { opacity: 0.35; transform: scale(0.98); }
+    }
+
+    /* ✅ More subtle live text */
+    .live-text{
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #64748b; /* subtle slate */
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    @keyframes slideFadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0px); }
+    }
+
+    .live-animate{
+      animation: slideFadeIn 380ms ease-out;
+    }
+
+    /* ===== Modal ===== */
     .overlay{
       display:none;
       position:fixed;
@@ -412,6 +468,7 @@
     @media (max-width: 420px){
       .title{ font-size: 23px; }
       .target-input{ font-size: 30px; }
+      .live-text{ font-size: 12px; }
     }
   </style>
 </head>
@@ -444,7 +501,6 @@
 
       <button class="chip recommended" type="button" data-value="8000">
         ₹8,000 <span class="star">★</span>
-        <span class="rec-tag">Recommended</span>
       </button>
 
       <button class="chip" type="button" data-value="10000">₹10,000</button>
@@ -453,6 +509,12 @@
 
   <div class="actions">
     <button class="btn-primary" onclick="calculateTarget()">Calculate Target</button>
+  </div>
+
+  <!-- ✅ LIVE FEED -->
+  <div class="live-feed" id="liveFeed">
+    <div class="live-dot"></div>
+    <div class="live-text" id="liveText">Setting targets...</div>
   </div>
 
   <div class="footnote">
@@ -514,7 +576,7 @@
     MNP: 234,
     SIM: 132,
     HOME: 96,
-    JB_COMBINED: 155 // ✅ 125 + 30 combined
+    JB_COMBINED: 155
   };
 
   function ceilDiv(amount, rate){
@@ -566,7 +628,7 @@
       return;
     }
 
-    // ✅ allocation logic (as per requirement)
+    // ✅ allocation logic
     const mnpBucket = target * 0.60;
     const simBucket = target * 0.20;
     const homeBucket = target * 0.10;
@@ -624,9 +686,117 @@
       });
     });
 
-    // default active chip = recommended
     setActiveChip(8000);
   })();
+
+  /* =========================
+     ✅ BALANCED LIVE TARGET FEED
+     Requirements:
+     - 4.5 sec per line
+     - Time mix: 2x just now, 2x 1 min back, 1x 2 min back, 1x 3 min back
+     - North > West > South > WB/Odisha rotation
+     - Avoid repeating same name+amount across refresh/session
+     ========================= */
+
+  const liveNamesByRegion = {
+    "North": ["Gurpreet", "Harjeet", "Amit", "Naveen"],
+    "West": ["Mahesh", "Kunal", "Irfan", "Sameer"],
+    "South": ["Raghu", "Nirad", "Prakash", "Jacob"],
+    "WB/Odisha": ["Arijit", "Subham", "Sourav", "Rakesh"]
+  };
+
+  const regionCycle = ["North", "West", "South", "WB/Odisha"];
+
+  // ✅ fixed time distribution (cycle)
+  const timeCycle = [
+    "just now", "just now",
+    "1 min back", "1 min back",
+    "2 min back",
+    "3 min back"
+  ];
+
+  function generateAllowedTargets() {
+    const allowed = new Set();
+    for (let amt = 2500; amt <= 4500; amt += 100) {
+      if (amt % 200 === 0 || amt % 300 === 0) allowed.add(amt);
+    }
+    return Array.from(allowed);
+  }
+  const allowedTargets = generateAllowedTargets();
+
+  function formatINRPlain(n){
+    return "₹" + Math.round(n).toLocaleString("en-IN");
+  }
+
+  function rand(arr){
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function getHistory() {
+    try {
+      return JSON.parse(sessionStorage.getItem("lapTargetFeedHistory") || "[]");
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function setHistory(arr) {
+    sessionStorage.setItem("lapTargetFeedHistory", JSON.stringify(arr.slice(-16)));
+  }
+
+  function pickUniquePair(region) {
+    const history = getHistory();
+    const names = liveNamesByRegion[region];
+
+    let attempts = 0;
+    let name = "";
+    let amount = 0;
+
+    while (attempts < 60) {
+      name = rand(names);
+      amount = rand(allowedTargets);
+
+      const key = `${name}_${amount}`;
+      if (!history.includes(key)) {
+        history.push(key);
+        setHistory(history);
+        return { name, amount };
+      }
+      attempts++;
+    }
+
+    return { name: rand(names), amount: rand(allowedTargets) };
+  }
+
+  function startLiveFeed(){
+    const el = document.getElementById("liveText");
+    if (!el) return;
+
+    let idx = 0;
+
+    function renderLine(){
+      const region = regionCycle[idx % regionCycle.length];
+      const ex = pickUniquePair(region);
+
+      const timeTxt = timeCycle[idx % timeCycle.length];
+
+      el.classList.remove("live-animate");
+      void el.offsetWidth;
+
+      el.innerText = `${ex.name} set ${formatINRPlain(ex.amount)} as lap target • ${timeTxt}`;
+      el.classList.add("live-animate");
+
+      idx++;
+    }
+
+    // render first line immediately
+    renderLine();
+
+    // ✅ 4.5 seconds per line
+    setInterval(renderLine, 4500);
+  }
+
+  startLiveFeed();
 </script>
 
 </body>
