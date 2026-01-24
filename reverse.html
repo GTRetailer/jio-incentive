@@ -1,4 +1,4 @@
-<!-- VERSION C32.7 – Reverse (Quick Targets 1-row + No Recommended text + Chip click opens result modal) -->
+<!-- VERSION C32.8 – Reverse (80% MNP + 20% New SIM only | Hide JioHome + JioBharat counts) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -343,7 +343,8 @@
     .modal-actions{
       display:flex;
       justify-content:center;
-      margin: 6px 0 10px;
+      margin-top: 14px;
+      margin-bottom: 6px;
     }
 
     .download-btn{
@@ -418,7 +419,7 @@
       text-align: center;
     }
 
-    /* ===== Bottom Tabs ===== */
+    /* ===== Bottom Tabs (kept for safety, but switcher.html will override) ===== */
     .bottom-tabs{
       position: fixed;
       left: 50%;
@@ -496,12 +497,11 @@
   <hr class="divider">
 
   <div class="target-card">
-    <div class="target-label"> Lap Commission Goal(₹)</div>
+    <div class="target-label">Lap Commission Goal (₹)</div>
     <input class="target-input" id="targetAmount" type="number" min="0" placeholder="0">
     <div class="error" id="errTarget"></div>
   </div>
 
-  <!-- ✅ Quick Targets Chips -->
   <div class="quick-wrap">
     <div class="quick-title">Quick Targets</div>
 
@@ -509,7 +509,6 @@
       <button class="chip" type="button" data-value="3000">₹3,000</button>
       <button class="chip" type="button" data-value="5000">₹5,000</button>
 
-      <!-- ✅ removed word "Recommended" -->
       <button class="chip" type="button" data-value="8000">
         ₹8,000 <span class="star">★</span>
       </button>
@@ -540,60 +539,25 @@
   <h2 class="modal-title">Required Lap Targets</h2>
   <div class="modal-subtitle">Based on your commission goal</div>
 
-
-
   <div class="summary-list" id="summaryList"></div>
- 
+
   <div class="modal-actions">
     <button class="download-btn" onclick="downloadTargetImage()">Download as Image</button>
   </div>
-  
+
   <div class="modal-footnote">
     This is the preferred combination to achieve the desired commission. T & C Apply.
   </div>
 </div>
 
-<!-- Bottom Tabs -->
-<div class="bottom-tabs">
-  <button class="tab-btn" onclick="location.href='index.html'" aria-label="Calculator">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="4" y="3" width="16" height="18" rx="3"></rect>
-      <line x1="8" y1="8" x2="16" y2="8"></line>
-      <line x1="8" y1="12" x2="16" y2="12"></line>
-      <line x1="8" y1="16" x2="16" y2="16"></line>
-    </svg>
-    <div class="tab-label">Calculator</div>
-  </button>
-
-  <button class="tab-btn" onclick="location.href='training.html'" aria-label="Training">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 19V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v13"></path>
-      <path d="M6 4v16"></path>
-      <path d="M8 8h8"></path>
-      <path d="M8 12h8"></path>
-      <path d="M8 16h6"></path>
-    </svg>
-    <div class="tab-label">Training</div>
-  </button>
-
-  <button class="tab-btn active" aria-label="Reverse">
-    <svg viewBox="0 0 24 24" class="tab-ic" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 12a9 9 0 0 1 15-6"></path>
-      <polyline points="18 3 18 7 14 7"></polyline>
-      <path d="M21 12a9 9 0 0 1-15 6"></path>
-      <polyline points="6 21 6 17 10 17"></polyline>
-    </svg>
-    <div class="tab-label">Reverse</div>
-  </button>
-</div>
+<!-- ✅ Switcher Mount (only once) -->
+<div id="switcherMount"></div>
 
 <script>
-  // ✅ constants from baseline payouts
+  // ✅ constants from baseline payouts (updated to ONLY MNP + SIM)
   const PAYOUT = {
     MNP: 234,
-    SIM: 132,
-    HOME: 96,
-    JB_COMBINED: 155
+    SIM: 132
   };
 
   function ceilDiv(amount, rate){
@@ -645,24 +609,18 @@
       return;
     }
 
-    // ✅ allocation logic
-    const mnpBucket = target * 0.60;
+    // ✅ allocation logic (updated)
+    const mnpBucket = target * 0.80;
     const simBucket = target * 0.20;
-    const homeBucket = target * 0.10;
-    const jbBucket = target * 0.10;
 
     const mnpCount = ceilDiv(mnpBucket, PAYOUT.MNP);
     const simCount = ceilDiv(simBucket, PAYOUT.SIM);
-    const homeCount = ceilDiv(homeBucket, PAYOUT.HOME);
-    const jbCount = ceilDiv(jbBucket, PAYOUT.JB_COMBINED);
 
     const summaryList = document.getElementById("summaryList");
     summaryList.innerHTML = "";
 
     summaryList.innerHTML += renderCard("MNP (₹349)", mnpCount, PAYOUT.MNP, "MNP");
     summaryList.innerHTML += renderCard("New SIM (₹349)", simCount, PAYOUT.SIM, "SIM");
-    summaryList.innerHTML += renderCard("JioHome Booking", homeCount, PAYOUT.HOME, "Booking");
-    summaryList.innerHTML += renderCard("JioBharat (V4 + Booking)", jbCount, PAYOUT.JB_COMBINED, "JB");
 
     openPopup();
   }
@@ -734,7 +692,7 @@
   })();
 
   /* =========================
-     ✅ BALANCED LIVE TARGET FEED
+     ✅ BALANCED LIVE TARGET FEED (unchanged)
      ========================= */
 
   const liveNamesByRegion = {
@@ -831,27 +789,19 @@
   }
 
   startLiveFeed();
-</script>
 
-
-
-
-<!-- ✅ Switcher Mount -->
-<div id="switcherMount"></div>
-
-<!-- ✅ Load switcher.html -->
-<div id="switcherMount"></div>
-
-<script>
-  fetch("switcher.html")
+  /* =========================
+     ✅ Load switcher.html + activate correct tab
+     ========================= */
+  fetch("./switcher.html")
     .then(res => res.text())
     .then(html => {
-      document.getElementById("switcherMount").innerHTML = html;
+      const mount = document.getElementById("switcherMount");
+      if (!mount) return;
+      mount.innerHTML = html;
 
-      // ✅ RUN active tab logic after injection
       const path = window.location.pathname.toLowerCase();
       let active = "calculator";
-
       if (path.includes("training.html")) active = "training";
       else if (path.includes("reverse.html")) active = "reverse";
       else active = "calculator";
@@ -865,7 +815,5 @@
     });
 </script>
 
-
 </body>
 </html>
-
