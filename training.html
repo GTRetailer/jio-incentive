@@ -1,4 +1,4 @@
-<!-- VERSION C33.1 – Training Hub (Learn & Earn + Search + JSON Feed + Bottom Switcher via switcher.html) -->
+<!-- VERSION C33.2 – Training Hub (YouTube Auto Thumbnail + Asset Thumbnails + Search + JSON Feed + Bottom Switcher via switcher.html) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -254,10 +254,6 @@
     return /youtube\.com|youtu\.be/i.test(url || "");
   }
 
-  function isPDF(url){
-    return /\.pdf(\?|#|$)/i.test(url || "");
-  }
-
   function getYouTubeId(url){
     try{
       // shorts
@@ -278,18 +274,23 @@
     }
   }
 
+  // ✅ NEW: supports both YouTube auto thumbnail + user uploaded asset thumb
   function getThumbnail(item){
     const url = item.url || "";
-    // YouTube thumbnail
+
+    // ✅ 1) YouTube auto thumbnail
     if (isYouTube(url)) {
       const id = getYouTubeId(url);
       if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     }
-    // PDF thumbnail (generic)
-    if (item.type === "pdf" || isPDF(url)) {
-      return ""; // fallback handled
+
+    // ✅ 2) Non-YouTube: use uploaded thumb from JSON (asset)
+    // Example: "thumb": "thumbs/scheme.jpg"
+    if (item.thumb && typeof item.thumb === "string" && item.thumb.trim() !== "") {
+      return item.thumb.trim();
     }
-    // Otherwise no thumbnail
+
+    // ✅ fallback
     return "";
   }
 
@@ -298,27 +299,39 @@
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
+  function escapeHtml(str){
+    return String(str || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
   function renderTile(item){
     const thumb = getThumbnail(item);
-    const tag = item.tag || (item.type === "video" ? "Video" : "Document");
-
+    const tag = item.tag || (item.type === "video" ? "Video Guide" : "Document (PDF)");
     const isNew = (item.isNew === true);
 
+    // ✅ safe inline onclick url escaping
+    const safeUrl = (item.url || "").replace(/'/g, "\\'");
+
     return `
-      <div class="tile" onclick="openItem('${(item.url || "").replace(/'/g, "\\'")}')">
+      <div class="tile" onclick="openItem('${safeUrl}')">
         <div class="thumb">
           ${
             thumb
-              ? `<img src="${thumb}" alt="thumb" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'thumb-fallback\\'>OPEN</div>';">`
+              ? `<img src="${escapeHtml(thumb)}" alt="thumb"
+                    onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'thumb-fallback\\'>${item.type === "video" ? "VIDEO" : "DOC"}</div>';">`
               : `<div class="thumb-fallback">${item.type === "video" ? "VIDEO" : "DOC"}</div>`
           }
         </div>
 
         <div class="tile-right">
-          <div class="tile-title">${item.title || "Untitled"}</div>
+          <div class="tile-title">${escapeHtml(item.title || "Untitled")}</div>
 
           <div class="tile-tagrow">
-            <span class="pill">${tag}</span>
+            <span class="pill">${escapeHtml(tag)}</span>
             ${isNew ? `<span class="pill new">New / Updated</span>` : ""}
           </div>
         </div>
@@ -383,13 +396,8 @@
   loadTrainingData();
 </script>
 
-<!-- ✅ Switcher Mount -->
-<div id="switcherMount"></div>
-
-<!-- ✅ Load switcher.html -->
-<div id="switcherMount"></div>
-
 <script>
+  // ✅ Load switcher.html
   fetch("switcher.html")
     .then(res => res.text())
     .then(html => {
@@ -412,7 +420,5 @@
     });
 </script>
 
-
 </body>
 </html>
-
