@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "id": "Img_001",
-      "type": "Image",
-      "title": "Retialer Republic Day Poster",
+      "id": "img_001",
+      "type": "image",
+      "title": "Retailer Republic Day Poster",
       "url": "https://admaker.jio/",
-      "tag": "Image"
+      "tag": "Image",
       "thumb": "thumbs/img1.jpg"
     },
     {
@@ -20,9 +20,8 @@
       "type": "pdf",
       "title": "Latest Scheme PDF (Jan 24)",
       "url": "https://ebooks.lpude.in/management/bba/term_4/DMGT205_SALES_MANAGEMENT.pdf",
-      "tag": "Document (PDF)"
+      "tag": "Document (PDF)",
       "thumb": "thumbs/img2.jpg"
-      
     }
   ]
 }
