@@ -17,10 +17,10 @@
     },
     {
       "id": "pdf_001",
-      "type": "pdf",
-      "title": "Latest Scheme PDF (Jan 24)",
-      "url": "https://ebooks.lpude.in/management/bba/term_4/DMGT205_SALES_MANAGEMENT.pdf",
-      "tag": "Document (PDF)",
+      "type": "poster",
+      "title": "Jio x Gemini Poster",
+      "url": "https://drive.google.com/file/d/1rX54Ov2D0OD3bmdJq02EUOQml1tMobLf/view?usp=drivesdk",
+      "tag": "Poster (PDF)",
       "thumb": "thumbs/img2.jpg"
     }
   ]
